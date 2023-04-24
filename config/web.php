@@ -54,11 +54,9 @@ $config = [
         'material' => [
             'class' => 'app\modules\material\Module',
         ],
-        'curriculum' => [
-            'class' => 'app\modules\curriculum\Module',
-        ],
     ],
     'params' => $params,
+    'timeZone' => 'Europe/Moscow',
 ];
 
 if (YII_ENV_DEV) {
