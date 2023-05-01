@@ -6,6 +6,7 @@ $db = require __DIR__ . '/db.php';
 $config = [
     'id' => 'basic',
     'language' => 'ru',
+    'name' => 'Учебный портал ВУЗа',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'aliases' => [
@@ -53,6 +54,12 @@ $config = [
     'modules' => [
         'material' => [
             'class' => 'app\modules\material\Module',
+        ],
+        'curriculum' => [
+            'class' => 'app\modules\curriculum\Module',
+        ],
+        'event' => [
+            'class' => 'app\modules\event\Module',
         ],
     ],
     'params' => $params,
