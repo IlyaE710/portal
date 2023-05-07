@@ -24,7 +24,7 @@ class LinkAdminController extends \yii\web\Controller
 
     public function actionIndex(int $id): string
     {
-        $query = Link::find();
+        $query = Link::find()->where(['material_id' => $id]);
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);

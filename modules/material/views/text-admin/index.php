@@ -3,6 +3,7 @@
 use app\modules\material\models\Link;
 use app\modules\material\models\Material;
 use app\modules\material\models\Text;
+use app\widgets\sidebar\SidebarWidget;
 use yii\grid\SerialColumn;
 use yii\helpers\Html;
 use yii\helpers\StringHelper;
@@ -20,48 +21,31 @@ $this->params['breadcrumbs'][] = ['label' => 'Материалы', 'url' => ['ma
 $this->params['breadcrumbs'][] = ['label' => 'Материал', 'url' => ['material-admin/update', 'id' => $id]];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="container">
-    <div class="row flex-nowrap">
-        <!-- Сайдбар -->
-        <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-light">
-            <div class="sidebar">
-                <?= Menu::widget([
-                    'options' => [
-                        'class' => ['nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start'],
-                    ],
-                    'items' => [
-                        ['label' => 'Основная информация', 'url' => Url::to(['material-admin/update', 'id' => $id]), 'options' => ['class' => 'nav-link px-0 align-middle']],
-                        ['label' => 'Ссылки', 'url' => Url::toRoute(['link-admin/index', 'id' => $id]), 'options' => ['class' => 'nav-link px-0 align-middle']],
-                        ['label' => 'Файлы', 'url' => Url::toRoute(['file-admin/index', 'id' => $id]), 'options' => ['class' => 'nav-link px-0 align-middle']],
-                        ['label' => 'Тексты', 'url' => Url::toRoute(['text-admin/index', 'id' => $id]), 'options' => ['class' => 'nav-link px-0 align-middle']],
-                    ]
-                ]); ?>
-                <br>
-            </div>
-        </div>
 
-        <!-- Зона контента -->
-        <div class="col-lg-9">
-            <div class="content">
-                <div class="link-index">
-
-                    <h1><?= Html::encode($this->title) ?></h1>
-
-                    <div class="button-group" role="group"">
-                    <?= Html::a('Создать', Url::to(['create', 'id' => $id]), ['class' => ['btn btn-success']]) ?>
-                </div>
-
-                <?= GridView::widget([
-                    'dataProvider' => $dataProvider,
-                    'columns' => [
-                        ['class' => SerialColumn::class],
-                        'content:html',
-                        [
-                            'class' => ActionColumn::class,
-                        ],
-                    ],
-                ]); ?>
-            </div>
-        </div>
+<div class="row">
+    <div class="col-md-3">
+        <?= SidebarWidget::widget([
+            'items' => [
+                ['label' => 'Основная информация', 'url' => Url::to(['material-admin/update', 'id' => $id]), 'options' => ['class' => 'nav-link px-0 align-middle']],
+                ['label' => 'Ссылки', 'url' => Url::toRoute(['link-admin/index', 'id' =>$id]), 'options' => ['class' => 'nav-link px-0 align-middle']],
+                ['label' => 'Файлы', 'url' => Url::toRoute(['file-admin/index', 'id' => $id]), 'options' => ['class' => 'nav-link px-0 align-middle']],
+                ['label' => 'Тексты', 'url' => Url::toRoute(['text-admin/index', 'id' =>$id]), 'options' => ['class' => 'nav-link px-0 align-middle']],
+            ]
+        ]); ?>
+    </div>
+    <div class="col-md-9">
+        <p>
+            <?= Html::a('Создать', Url::to(['create', 'id' => $id]), ['class' => 'btn btn-success']) ?>
+        </p>
+        <?= GridView::widget([
+            'dataProvider' => $dataProvider,
+            'columns' => [
+                ['class' => SerialColumn::class],
+                'content:html',
+                [
+                    'class' => ActionColumn::class,
+                ],
+            ],
+        ]); ?>
     </div>
 </div>

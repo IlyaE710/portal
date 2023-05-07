@@ -27,7 +27,7 @@ class FileAdminController extends Controller
 
     public function actionIndex(int $id): string
     {
-        $query = File::find();
+        $query = File::find()->where(['material_id' => $id]);
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);

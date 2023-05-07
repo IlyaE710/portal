@@ -1,8 +1,11 @@
 <?php
 
 use app\modules\material\models\Material;
+use app\widgets\sidebar\SidebarWidget;
+use mihaildev\ckeditor\CKEditor;
 use yii\helpers\Html;
 use yii\helpers\Url;
+use yii\widgets\ActiveForm;
 use yii\widgets\Menu;
 
 /** @var yii\web\View $this */
@@ -15,33 +18,33 @@ $this->params['breadcrumbs'][] = ['label' => 'тексты', 'url' => ['index', 
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
-<div class="container">
-    <div class="row flex-nowrap">
-        <!-- Сайдбар -->
-        <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-light">
-            <div class="sidebar">
-                <?= Menu::widget([
-                    'options' => [
-                        'class' => ['nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start'],
-                    ],
-                    'items' => [
-                        ['label' => 'Основная информация', 'url' => Url::to(['material-admin/update', 'id' => $id]), 'options' => ['class' => 'nav-link px-0 align-middle']],
-                        ['label' => 'Ссылки', 'url' => Url::toRoute(['link-admin/index', 'id' => $id]), 'options' => ['class' => 'nav-link px-0 align-middle']],
-                        ['label' => 'Файлы', 'url' => Url::toRoute(['file-admin/index', 'id' => $id]), 'options' => ['class' => 'nav-link px-0 align-middle']],
-                        ['label' => 'Тексты', 'url' => Url::toRoute(['text-admin/index', 'id' => $id]), 'options' => ['class' => 'nav-link px-0 align-middle']],
-                    ]
-                ]); ?>
-                <br>
-            </div>
+<div class="row">
+    <div class="col-md-3">
+        <?= SidebarWidget::widget([
+            'items' => [
+                ['label' => 'Основная информация', 'url' => Url::to(['material-admin/update', 'id' => $id]), 'options' => ['class' => 'nav-link px-0 align-middle']],
+                ['label' => 'Ссылки', 'url' => Url::toRoute(['link-admin/index', 'id' => $id]), 'options' => ['class' => 'nav-link px-0 align-middle']],
+                ['label' => 'Файлы', 'url' => Url::toRoute(['file-admin/index', 'id' => $id]), 'options' => ['class' => 'nav-link px-0 align-middle']],
+                ['label' => 'Тексты', 'url' => Url::toRoute(['text-admin/index', 'id' => $id]), 'options' => ['class' => 'nav-link px-0 align-middle']],
+            ]
+        ]); ?>
+    </div>
+    <div class="col-md-9">
+        <div class="material-form">
+
+            <?php $form = ActiveForm::begin(); ?>
+
+            <?= $form->field($model, 'content')->widget(CKEditor::class,[
+                'editorOptions' => [
+                    'preset' => 'full', //разработанны стандартные настройки basic, standard, full данную возможность не обязательно использовать
+                ],
+            ]); ?>
+
+            <div class="form-group" role="group"">
+            <?= Html::submitButton("Сохранить", ['class' => 'btn btn-success']) ?>
         </div>
 
-        <!-- Зона контента -->
-        <div class="col-lg-9">
-            <div class="content">
-                <h1><?= Html::encode($this->title) ?></h1>
-
-                <?= $this->render('_form', [
-                    'model' => $model,
-                ]) ?>
-            </div>
-        </div>
+        <?php $form = ActiveForm::end(); ?>
+    </div>
+</div>
+</div>

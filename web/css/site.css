@@ -1,84 +1,122 @@
-main > .container {
-    padding: 70px 15px 20px;
+/* основные стили */
+.sidebar {
+    background-color: #f8f9fa;
+    border-radius: 0.25rem;
+    padding: 20px;
 }
 
-.footer {
-    background-color: #f5f5f5;
-    font-size: .9em;
-    height: 60px;
+.sidebar ul {
+    list-style-type: none;
+    padding-left: 0;
 }
 
-.footer > .container {
-    padding-right: 15px;
-    padding-left: 15px;
+.sidebar li {
+    margin-bottom: 10px;
 }
 
-.not-set {
-    color: #c55;
-    font-style: italic;
-}
-
-/* add sorting icons to gridview sort links */
-a.asc:after, a.desc:after {
-    content: '';
-    left: 3px;
-    display: inline-block;
-    width: 0;
-    height: 0;
-    border: solid 5px transparent;
-    margin: 4px 4px 2px 4px;
-    background: transparent;
-}
-
-a.asc:after {
-    border-bottom: solid 7px #212529;
-    border-top-width: 0;
-}
-
-a.desc:after {
-    border-top: solid 7px #212529;
-    border-bottom-width: 0;
-}
-
-.grid-view th {
-    white-space: nowrap;
-}
-
-.hint-block {
+/* стили для пунктов меню */
+.sidebar a {
+    color: #212529;
     display: block;
-    margin-top: 5px;
-    color: #999;
-}
-
-.error-summary {
-    color: #a94442;
-    background: #fdf7f7;
-    border-left: 3px solid #eed3d7;
-    padding: 10px 20px;
-    margin: 0 0 15px 0;
-}
-
-/* align the logout "link" (button in form) of the navbar */
-.nav li > form > button.logout {
-    padding-top: 7px;
-    color: rgba(255, 255, 255, 0.5);
-}
-
-@media(max-width:767px) {
-    .nav li > form > button.logout {
-        display:block;
-        text-align: left;
-        width: 100%;
-        padding: 10px 0;
-    }
-}
-
-.nav > li > form > button.logout:focus,
-.nav > li > form > button.logout:hover {
+    padding: 10px 15px;
+    border-radius: 0.25rem;
+    transition: background-color 0.2s ease-in-out;
     text-decoration: none;
-    color: rgba(255, 255, 255, 0.75);
 }
 
-.nav > li > form > button.logout:focus {
-    outline: none;
+.sidebar a:hover {
+    text-decoration: none;
+    background-color: #e9ecef;
+}
+
+.sidebar a.active {
+    color: #fff;
+    background-color: #007bff;
+}
+
+/* стили для кнопки */
+.toggle-sidebar {
+    border: none;
+    background-color: #007bff;
+    color: #fff;
+    border-radius: 0.25rem;
+    padding: 10px 15px;
+    margin-bottom: 20px;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.toggle-sidebar:hover {
+    background-color: #0069d9;
+    color: #fff;
+    text-decoration: none;
+}
+
+.card:hover {
+    transform: scale(1.1);
+}
+
+.card {
+    transition: transform 0.2s ease-in-out;
+}
+
+.card:hover {
+    transform: scale(1.1);
+}
+
+.card {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 16px;
+    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.3);
+    transition: transform 0.2s ease-in-out;
+}
+
+.card:hover {
+    transform: scale(1.1);
+}
+
+.card img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin-bottom: 12px;
+}
+
+.card-body {
+    text-align: center;
+}
+
+.card-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.card-text {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 12px;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 16px;
+    font-size: 14px;
+    font-weight: 600;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.btn-primary:hover {
+    background-color: #0069d9;
+    color: #fff;
+}
+
+footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
 }

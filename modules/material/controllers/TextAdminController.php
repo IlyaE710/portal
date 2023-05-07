@@ -27,7 +27,7 @@ class TextAdminController extends Controller
 
     public function actionIndex(int $id): string
     {
-        $query = Text::find();
+        $query = Text::find()->where(['material_id' => $id]);
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);

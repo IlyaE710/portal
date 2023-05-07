@@ -28,7 +28,7 @@ class UploadForm extends Model
             }
             return true;
         }
-
+echo '<pre>' . print_r($this->errors, true) . '</pre>';die;
         return false;
     }
 }

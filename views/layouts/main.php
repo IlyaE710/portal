@@ -34,7 +34,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
     NavBar::begin([
         'brandLabel' => Yii::$app->name,
         'brandUrl' => Yii::$app->homeUrl,
-        'options' => ['class' => 'navbar navbar-expand-lg navbar-light bg-light']
+        'options' => ['class' => 'navbar navbar-expand-lg navbar-dark bg-primary']
     ]);
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav'],
@@ -68,12 +68,9 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
     </div>
 </main>
 
-<footer id="footer" class="mt-auto py-3 bg-light">
+<footer class="bg-secondary text-white text-center py-3">
     <div class="container">
-        <div class="row text-muted">
-            <div class="col-md-6 text-center text-md-start">&copy; My Company <?= date('Y') ?></div>
-            <div class="col-md-6 text-center text-md-end"><?= Yii::powered() ?></div>
-        </div>
+        <p>&copy; 2023 Мой сайт</p>
     </div>
 </footer>
 

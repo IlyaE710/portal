@@ -19,14 +19,12 @@ use yii\widgets\ActiveForm;
     <?php $form = ActiveForm::begin(); ?>
 
     <?= $form->field($model, 'files[]')->widget(FileInput::class, [
-        'options' => ['multiple' => true, 'accept' => 'image/*'],
+        'options' => ['multiple' => true],
         'pluginOptions' => [
             'previewFileType' => 'image',
             'showUpload' => false,
             'browseLabel' => 'Выберите файлы',
             'removeLabel' => 'Удалить',
-//            'initialPreview' => $model->getImagePreview(),
-//            'initialPreviewConfig' => $model->getImagePreviewConfig(),
             'overwriteInitial' => false,
             'maxFileSize' => 2000,
         ]

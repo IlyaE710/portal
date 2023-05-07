@@ -1,7 +1,9 @@
 <?php
 
 use app\modules\material\models\Material;
+use app\widgets\sidebar\SidebarWidget;
 use yii\helpers\Html;
+use yii\helpers\Url;
 
 /** @var yii\web\View $this */
 /** @var Material $model */
@@ -18,5 +20,5 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= $this->render('_form', [
         'model' => $model,
     ]) ?>
-
+    </div>
 </div>
