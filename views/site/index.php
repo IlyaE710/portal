@@ -20,7 +20,7 @@ $this->title = 'My Yii Application';
                         <h5 class="card-title">Product 1</h5>
                         <p class="card-text"><?= $curriculum->description ?></p>
                         <!--                <p class="card-text"><small class="text-muted">Price: $19.99</small></p>-->
-                        <?= Html::a('Перейти', ['curriculum/curriculum-admin/view', 'id' => $curriculum->id], ['class' => '"btn btn-primary']) ?>
+                        <?= Html::a('Перейти', ['curriculum/curriculum/view', 'id' => $curriculum->id], ['class' => '"btn btn-primary']) ?>
                     </div>
                 </div>
             </div>

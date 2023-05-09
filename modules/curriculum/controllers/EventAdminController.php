@@ -43,7 +43,7 @@ class EventAdminController extends Controller
     public function actionIndex(int $id)
     {
         $dataProvider = new ActiveDataProvider([
-            'query' => Event::find(),
+            'query' => Event::find()->where(['curriculumId' => $id]),
             /*
             'pagination' => [
                 'pageSize' => 50

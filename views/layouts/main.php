@@ -43,6 +43,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
             ['label' => 'Шаблоны учебных планов', 'url' => ['/curriculum/curriculum-pattern-admin']],
             ['label' => 'Учебные планы', 'url' => ['/curriculum/curriculum-admin']],
             ['label' => 'Материалы', 'url' => ['/material/material-admin']],
+            ['label' => 'Админ', 'url' => ['/admin']],
             Yii::$app->user->isGuest
                 ? ['label' => 'Login', 'url' => ['/site/login']]
                 : '<li class="nav-item">'
