@@ -26,7 +26,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="col-md-9">
         <div class="event-index">
             <p>
-                <?= Html::a('Create Event', ['create', 'id' => $id], ['class' => 'btn btn-success']) ?>
+                <?= Html::a('Создать Event', ['create', 'id' => $id], ['class' => 'btn btn-success']) ?>
             </p>
 
 

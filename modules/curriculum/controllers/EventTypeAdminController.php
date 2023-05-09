@@ -1,8 +1,8 @@
 <?php
 
-namespace app\modules\event\controllers;
+namespace app\modules\curriculum\controllers;
 
-use app\modules\event\models\EventType;
+use app\modules\curriculum\models\EventType;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -22,7 +22,7 @@ class EventTypeAdminController extends Controller
             parent::behaviors(),
             [
                 'verbs' => [
-                    'class' => VerbFilter::className(),
+                    'class' => VerbFilter::class,
                     'actions' => [
                         'delete' => ['POST'],
                     ],

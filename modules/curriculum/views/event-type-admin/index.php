@@ -1,6 +1,6 @@
 <?php
 
-use app\modules\event\models\EventType;
+use app\modules\curriculum\models\EventType;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
@@ -29,7 +29,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             'name',
             [
-                'class' => ActionColumn::className(),
+                'class' => ActionColumn::class,
                 'urlCreator' => function ($action, EventType $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'id' => $model->id]);
                  }

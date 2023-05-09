@@ -1,10 +1,11 @@
 <?php
 
+use app\modules\curriculum\models\EventType;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /** @var yii\web\View $this */
-/** @var app\modules\event\models\EventType $model */
+/** @var EventType $model */
 /** @var yii\widgets\ActiveForm $form */
 ?>
 

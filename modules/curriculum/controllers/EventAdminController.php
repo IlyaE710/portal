@@ -3,6 +3,7 @@
 namespace app\modules\curriculum\controllers;
 
 use app\modules\curriculum\models\Event;
+use app\modules\curriculum\models\EventPattern;
 use app\modules\material\models\Material;
 use Exception;
 use Yii;
@@ -84,11 +85,17 @@ class EventAdminController extends Controller
         $model = new Event();
 
         if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+            if ($model->load($this->request->post())) {
+                $model->typeId = $this->request->post('Event')['type'];
+                $model->curriculumId = $id;
+                $model->save();
+                $materialIds = $this->request->post('Event')['materials'];
+                $materials = Material::findAll($materialIds);
+                foreach ($materials as $material) {
+                    $model->link('materials', $material);
+                }
+                return $this->redirect(['index', 'id' => $id]);
             }
-        } else {
-            $model->loadDefaultValues();
         }
 
         return $this->render('create', [
@@ -98,7 +105,7 @@ class EventAdminController extends Controller
     }
 
     /**
-     * Updates an existing Event model.
+     * Updates an existing EventPattern model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param int $id ID
      * @return string|\yii\web\Response
@@ -112,6 +119,7 @@ class EventAdminController extends Controller
             $materialIds = $this->request->post('Event')['materials'];
             $model->typeId = $this->request->post('Event')['type'];
             $model->save();
+
             $transaction = Yii::$app->db->beginTransaction();
             try {
                 $materials = Material::findAll($materialIds);
