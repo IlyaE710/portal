@@ -24,6 +24,20 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
+        'tableOptions' => ['class' => 'table table-striped table-bordered grid-view'],
+/*        'rowOptions' => function ($model, $key, $index, $grid) {
+            return [
+                'class' => 'my-class',
+                'onclick' => 'location.href=""',
+            ];
+        },*/
+        'pager' => [
+            'options' => ['class' => 'pagination'],
+            'linkOptions' => ['class' => 'page-link'],
+            'activePageCssClass' => 'active',
+            'disabledPageCssClass' => 'disabled',
+            'disabledListItemSubTagOptions' => ['tag' => 'a', 'class' => 'page-link', 'href' => '#'],
+        ],
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 

@@ -2,7 +2,7 @@
 
 namespace app\modules\curriculum\controllers;
 
-use app\modules\curriculum\models\EventPattern;
+use app\modules\curriculum\models\Event;
 use app\modules\material\models\Material;
 use Exception;
 use Yii;
@@ -12,9 +12,9 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * EventPatternAdminController implements the CRUD actions for EventPattern model.
+ * EventController implements the CRUD actions for Event model.
  */
-class EventPatternAdminController extends Controller
+class EventAdminController extends Controller
 {
     /**
      * @inheritDoc
@@ -35,14 +35,14 @@ class EventPatternAdminController extends Controller
     }
 
     /**
-     * Lists all EventPattern models.
+     * Lists all Event models.
      *
      * @return string
      */
     public function actionIndex(int $id)
     {
         $dataProvider = new ActiveDataProvider([
-            'query' => EventPattern::find(),
+            'query' => Event::find(),
             /*
             'pagination' => [
                 'pageSize' => 50
@@ -62,7 +62,7 @@ class EventPatternAdminController extends Controller
     }
 
     /**
-     * Displays a single EventPattern model.
+     * Displays a single Event model.
      * @param int $id ID
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
@@ -75,26 +75,20 @@ class EventPatternAdminController extends Controller
     }
 
     /**
-     * Creates a new EventPattern model.
+     * Creates a new Event model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
     public function actionCreate(int $id)
     {
-        $model = new EventPattern();
+        $model = new Event();
 
         if ($this->request->isPost) {
-            if ($model->load($this->request->post())) {
-                $model->typeId = $this->request->post('EventPattern')['type'];
-                $model->curriculumId = $id;
-                $model->save();
-                $materialIds = $this->request->post('EventPattern')['materials'];
-                $materials = Material::findAll($materialIds);
-                foreach ($materials as $material) {
-                    $model->link('materials', $material);
-                }
-                return $this->redirect(['index', 'id' => $id]);
+            if ($model->load($this->request->post()) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
             }
+        } else {
+            $model->loadDefaultValues();
         }
 
         return $this->render('create', [
@@ -104,7 +98,7 @@ class EventPatternAdminController extends Controller
     }
 
     /**
-     * Updates an existing EventPattern model.
+     * Updates an existing Event model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param int $id ID
      * @return string|\yii\web\Response
@@ -115,10 +109,9 @@ class EventPatternAdminController extends Controller
         $model = $this->findModel($id);
 
         if ($this->request->isPost && $model->load($this->request->post())) {
-            $materialIds = $this->request->post('EventPattern')['materials'];
-            $model->typeId = $this->request->post('EventPattern')['type'];
+            $materialIds = $this->request->post('Event')['materials'];
+            $model->typeId = $this->request->post('Event')['type'];
             $model->save();
-
             $transaction = Yii::$app->db->beginTransaction();
             try {
                 $materials = Material::findAll($materialIds);
@@ -142,31 +135,29 @@ class EventPatternAdminController extends Controller
     }
 
     /**
-     * Deletes an existing EventPattern model.
+     * Deletes an existing Event model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param int $id ID
      * @return \yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionDelete(int $id): \yii\web\Response
+    public function actionDelete($id)
     {
-        $model = $this->findModel($id);
-        $curriculumId = $model->curriculumId;
-        $model->delete();
+        $this->findModel($id)->delete();
 
-        return $this->redirect(['index', 'id' => $curriculumId]);
+        return $this->redirect(['index']);
     }
 
     /**
-     * Finds the EventPattern model based on its primary key value.
+     * Finds the Event model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param int $id ID
-     * @return EventPattern the loaded model
+     * @return Event the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = EventPattern::findOne(['id' => $id])) !== null) {
+        if (($model = Event::findOne(['id' => $id])) !== null) {
             return $model;
         }
 
