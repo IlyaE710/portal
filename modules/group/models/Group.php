@@ -1,8 +1,8 @@
 <?php
 
-namespace app\models;
+namespace app\modules\group\models;
 
-use Yii;
+use app\models\User;
 
 /**
  * This is the model class for table "group".

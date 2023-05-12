@@ -19,7 +19,7 @@ class MaterialAdminController extends \yii\web\Controller
                 'class' => AccessControl::class,
                 'rules' => [
                     [
-                        'actions' => ['index', 'view', 'update', 'delete'],
+                        'actions' => ['index', 'view', 'update', 'delete', 'create'],
                         'allow' => true,
                         'roles' => ['teacher'],
                     ],

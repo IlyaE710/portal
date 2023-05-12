@@ -24,7 +24,7 @@ class EventTypeAdminController extends Controller
                 'class' => AccessControl::class,
                 'rules' => [
                     [
-                        'actions' => ['index', 'view', 'update', 'delete'],
+                        'actions' => ['index', 'view', 'update', 'delete', 'create'],
                         'allow' => true,
                         'roles' => ['admin'],
                     ],

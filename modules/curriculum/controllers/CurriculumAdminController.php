@@ -26,7 +26,7 @@ class CurriculumAdminController extends Controller
                 'class' => AccessControl::class,
                 'rules' => [
                     [
-                        'actions' => ['index', 'view', 'update', 'delete', 'select-pattern'],
+                        'actions' => ['index', 'view', 'update', 'delete', 'select-pattern', 'create'],
                         'allow' => true,
                         'roles' => ['teacher'],
                     ],
