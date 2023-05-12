@@ -6,6 +6,7 @@ use app\modules\material\models\Link;
 use app\modules\material\models\Material;
 use app\modules\material\models\Text;
 use yii\data\ActiveDataProvider;
+use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -13,13 +14,23 @@ use yii\web\NotFoundHttpException;
 class TextAdminController extends Controller
 {
 
-    public function behaviors(): array
+    public function behaviors()
     {
         return [
+            'access' => [
+                'class' => AccessControl::class,
+                'rules' => [
+                    [
+                        'actions' => ['index', 'view', 'update', 'delete'],
+                        'allow' => true,
+                        'roles' => ['teacher'],
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::class,
                 'actions' => [
-                    'delete' => ['POST'],
+                    'delete' => ['post'],
                 ],
             ],
         ];

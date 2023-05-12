@@ -20,10 +20,10 @@ class SiteController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::class,
-                'only' => ['logout'],
+                'only' => ['index', 'logout'],
                 'rules' => [
                     [
-                        'actions' => ['logout'],
+                        'actions' => ['logout', 'index'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -66,7 +66,29 @@ class SiteController extends Controller
 
     public function actionTest()
     {
-        $this->render('test');
+/*        // Назначаем роли и разрешения
+        $auth = Yii::$app->authManager;
+
+        $adminRole = $auth->createRole('admin');
+        $auth->add($adminRole);
+
+        $studentRole = $auth->createRole('student');
+        $auth->add($studentRole);
+
+        $teacherRole = $auth->createRole('teacher');
+        $auth->add($teacherRole);
+
+        // Назначаем разрешения
+        $manageUsersPermission = $auth->createPermission('manageUsers');
+        $auth->add($manageUsersPermission);
+
+        // Связываем разрешения с ролями
+        $auth->addChild($adminRole, $manageUsersPermission);
+
+        // Назначаем роли пользователям
+        $auth->assign($adminRole, 1);*/
+
+        return '123';
     }
 
     /**

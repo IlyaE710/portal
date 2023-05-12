@@ -1,26 +1,26 @@
 <?php
 
-namespace app\modules\curriculum\models;
+namespace app\models;
 
 use Yii;
 
 /**
- * This is the model class for table "subject".
+ * This is the model class for table "group".
  *
  * @property int $id
  * @property string $name
  *
- * @property CurriculumPattern[] $curriculumPatterns
- * @property Curriculum[] $curriculums
+ * @property UserGroup[] $userGroups
+ * @property User[] $users
  */
-class Subject extends \yii\db\ActiveRecord
+class Group extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return 'subject';
+        return 'group';
     }
 
     /**
@@ -46,22 +46,22 @@ class Subject extends \yii\db\ActiveRecord
     }
 
     /**
-     * Gets query for [[CurriculumPatterns]].
+     * Gets query for [[UserGroups]].
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getCurriculumPatterns()
+    public function getUserGroups()
     {
-        return $this->hasMany(CurriculumPattern::class, ['subjectId' => 'id']);
+        return $this->hasMany(UserGroup::class, ['group_id' => 'id']);
     }
 
     /**
-     * Gets query for [[Curriculums]].
+     * Gets query for [[Users]].
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getCurriculums()
+    public function getUsers()
     {
-        return $this->hasMany(Curriculum::class, ['subjectId' => 'id']);
+        return $this->hasMany(User::class, ['id' => 'user_id'])->viaTable('user_group', ['group_id' => 'id']);
     }
 }
