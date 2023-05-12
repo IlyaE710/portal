@@ -37,4 +37,4 @@ tests/_support/_generated
 
 .env
 
-/docker/postgres/
+/docker/postgres
