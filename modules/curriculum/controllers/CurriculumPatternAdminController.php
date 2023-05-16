@@ -17,7 +17,7 @@ class CurriculumPatternAdminController extends Controller
     /**
      * @inheritDoc
      */
-    public function behaviors()
+    public function behaviors(): array
     {
         return [
             'access' => [
@@ -44,7 +44,7 @@ class CurriculumPatternAdminController extends Controller
      *
      * @return string
      */
-    public function actionIndex()
+    public function actionIndex(): string
     {
         $dataProvider = new ActiveDataProvider([
             'query' => CurriculumPattern::find(),
@@ -71,7 +71,7 @@ class CurriculumPatternAdminController extends Controller
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionView($id)
+    public function actionView(int $id): string
     {
         return $this->render('view', [
             'model' => $this->findModel($id),

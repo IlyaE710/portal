@@ -4,6 +4,10 @@
     use yii\helpers\ArrayHelper;
     use yii\helpers\Html;
     use yii\widgets\ActiveForm;
+
+$this->title = 'Выбор шаблона';
+$this->params['breadcrumbs'][] = ['label' => 'Курсы', 'url' => ['index']];
+$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="curriculum-create m-1">
     <div class="curriculum-form">

@@ -18,7 +18,7 @@ class Subject extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'subject';
     }
@@ -26,7 +26,7 @@ class Subject extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             [['name'], 'required'],
@@ -37,11 +37,11 @@ class Subject extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public function attributeLabels()
+    public function attributeLabels(): array
     {
         return [
             'id' => 'ID',
-            'name' => 'Name',
+            'name' => 'Название',
         ];
     }
 
@@ -50,7 +50,7 @@ class Subject extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getCurriculumPatterns()
+    public function getCurriculumPatterns(): \yii\db\ActiveQuery
     {
         return $this->hasMany(CurriculumPattern::class, ['subjectId' => 'id']);
     }
@@ -60,7 +60,7 @@ class Subject extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getCurriculums()
+    public function getCurriculums(): \yii\db\ActiveQuery
     {
         return $this->hasMany(Curriculum::class, ['subjectId' => 'id']);
     }

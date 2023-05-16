@@ -2,6 +2,7 @@
 
 namespace app\modules\curriculum\models;
 
+use app\modules\group\models\Group;
 use Yii;
 
 /**
@@ -9,18 +10,20 @@ use Yii;
  *
  * @property int $id
  * @property int $subjectId
+ * @property int $groupId
  * @property string $description
  * @property int $semester
  *
  * @property Event[] $events
  * @property Subject $subject
+ * @property Group $group
  */
 class Curriculum extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'curriculum';
     }
@@ -28,27 +31,31 @@ class Curriculum extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             [['subjectId', 'description'], 'required'],
-            [['subjectId', 'semester'], 'default', 'value' => null],
-            [['subjectId', 'semester'], 'integer'],
+            [['subjectId', 'semester', 'groupId'], 'default', 'value' => null],
+            [['subjectId', 'semester', 'groupId'], 'integer'],
             [['description'], 'string'],
             [['subjectId'], 'exist', 'skipOnError' => true, 'targetClass' => Subject::class, 'targetAttribute' => ['subjectId' => 'id']],
+            [['groupId'], 'exist', 'skipOnError' => true, 'targetClass' => Group::class, 'targetAttribute' => ['groupId' => 'id']],
         ];
     }
 
     /**
      * {@inheritdoc}
      */
-    public function attributeLabels()
+    public function attributeLabels(): array
     {
         return [
             'id' => 'ID',
             'subjectId' => 'Subject ID',
-            'description' => 'Description',
-            'semester' => 'Semester',
+            'subject' => 'Предмет',
+            'groupId' => 'Группа',
+            'group' => 'Группа',
+            'description' => 'Описание',
+            'semester' => 'Семестр',
         ];
     }
 
@@ -57,7 +64,7 @@ class Curriculum extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getEvents()
+    public function getEvents(): \yii\db\ActiveQuery
     {
         return $this->hasMany(Event::class, ['curriculumId' => 'id']);
     }
@@ -67,8 +74,18 @@ class Curriculum extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getSubject()
+    public function getSubject(): \yii\db\ActiveQuery
     {
         return $this->hasOne(Subject::class, ['id' => 'subjectId']);
+    }
+
+    /**
+     * Gets query for [[Group]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getGroup(): \yii\db\ActiveQuery
+    {
+        return $this->hasOne(Group::class, ['id' => 'groupId']);
     }
 }

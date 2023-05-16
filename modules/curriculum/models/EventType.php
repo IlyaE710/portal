@@ -18,7 +18,7 @@ class EventType extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'event_type';
     }
@@ -26,7 +26,7 @@ class EventType extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             [['name'], 'required'],
@@ -37,11 +37,11 @@ class EventType extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public function attributeLabels()
+    public function attributeLabels(): array
     {
         return [
             'id' => 'ID',
-            'name' => 'Name',
+            'name' => 'Название',
         ];
     }
 
@@ -50,7 +50,7 @@ class EventType extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getEventPatterns()
+    public function getEventPatterns(): \yii\db\ActiveQuery
     {
         return $this->hasMany(EventPattern::class, ['typeId' => 'id']);
     }
@@ -60,7 +60,7 @@ class EventType extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getEvents()
+    public function getEvents(): \yii\db\ActiveQuery
     {
         return $this->hasMany(Event::class, ['typeId' => 'id']);
     }

@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use app\modules\group\models\Group;
 use Yii;
 use yii\db\ActiveRecord;
 
@@ -10,9 +11,13 @@ use yii\db\ActiveRecord;
  *
  * @property int $id
  * @property string $passwordHash
+ * @property string $firstname
+ * @property string $lastname
+ * @property string $patronymic
  *
  * @property UserGroup[] $userGroups
  * @property User[] $users
+ * @property Group[] $groups
  */
 
 
@@ -84,6 +89,16 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
     public function validatePassword(string $password): bool
     {
         return Yii::$app->security->validatePassword($password, $this->passwordHash);
+    }
+
+    /**
+     * Gets query for [[Group]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getGroups()
+    {
+        return $this->hasMany(Group::class, ['id' => 'group_id'])->viaTable('user_group', ['user_id' => 'id']);
     }
 
     public function getAuthKey()

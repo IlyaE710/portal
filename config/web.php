@@ -63,8 +63,11 @@ $config = [
         'curriculum' => [
             'class' => 'app\modules\curriculum\Module',
         ],
-        'event' => [
-            'class' => 'app\modules\event\Module',
+        'group' => [
+            'class' => 'app\modules\group\Module',
+        ],
+        'profile' => [
+            'class' => 'app\modules\profile\Module',
         ],
     ],
     'params' => $params,

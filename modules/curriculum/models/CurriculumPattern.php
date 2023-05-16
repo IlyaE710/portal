@@ -19,7 +19,7 @@ class CurriculumPattern extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'curriculum_pattern';
     }
@@ -27,7 +27,7 @@ class CurriculumPattern extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             [['subjectId', 'description'], 'required'],
@@ -41,12 +41,13 @@ class CurriculumPattern extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public function attributeLabels()
+    public function attributeLabels(): array
     {
         return [
             'id' => 'ID',
             'subjectId' => 'Subject ID',
-            'description' => 'Description',
+            'subject' => 'Предмет',
+            'description' => 'Описание',
         ];
     }
 
@@ -55,7 +56,7 @@ class CurriculumPattern extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getEventPatterns()
+    public function getEventPatterns(): \yii\db\ActiveQuery
     {
         return $this->hasMany(EventPattern::class, ['curriculumId' => 'id']);
     }
@@ -65,7 +66,7 @@ class CurriculumPattern extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getSubject()
+    public function getSubject(): \yii\db\ActiveQuery
     {
         return $this->hasOne(Subject::class, ['id' => 'subjectId']);
     }

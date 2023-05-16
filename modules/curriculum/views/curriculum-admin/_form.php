@@ -1,6 +1,7 @@
 <?php
 
 use app\modules\curriculum\models\Subject;
+use app\modules\group\models\Group;
 use app\widgets\sidebar\SidebarWidget;
 use kartik\select2\Select2;
 use yii\helpers\ArrayHelper;
@@ -30,6 +31,14 @@ use yii\widgets\ActiveForm;
             <?= $form->field($model, 'subject')->widget(Select2::class, [
                 'data' => ArrayHelper::map(Subject::find()->all(), 'id', 'name'),
                 'options' => ['placeholder' => 'Select a tags ...'],
+            ]); ?>
+
+            <?= $form->field($model, 'group')->widget(Select2::class, [
+                'data' => ArrayHelper::map(Group::find()->all(), 'id', 'name'),
+                'options' => ['placeholder' => 'Выберите группу ...'],
+                'pluginOptions' => [
+                    'allowClear' => true,
+                ],
             ]); ?>
 
             <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>

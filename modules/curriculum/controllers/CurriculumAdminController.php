@@ -87,6 +87,7 @@ class CurriculumAdminController extends Controller
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
                 $model->subjectId = $this->request->post('Curriculum')['subject'];
+                $model->groupId = $this->request->post('Curriculum')['group'];
                 $model->save();
 
                 $modelForm = CurriculumPattern::findOne($modelFormId);
@@ -143,7 +144,11 @@ class CurriculumAdminController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
+        if ($this->request->isPost && $model->load($this->request->post())) {
+            $model->groupId = $this->request->post('Curriculum')['group'];
+            $model->subjectId = $this->request->post('Curriculum')['subject'];
+            $model->save();
+
             return $this->redirect(['view', 'id' => $model->id]);
         }
 

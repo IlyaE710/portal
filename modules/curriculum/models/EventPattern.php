@@ -23,7 +23,7 @@ class EventPattern extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public static function tableName()
+    public static function tableName(): string
     {
         return 'event_pattern';
     }
@@ -31,7 +31,7 @@ class EventPattern extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             [['title', 'typeId', 'curriculumId'], 'required'],
@@ -46,13 +46,15 @@ class EventPattern extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public function attributeLabels()
+    public function attributeLabels(): array
     {
         return [
             'id' => 'ID',
-            'title' => 'Title',
+            'title' => 'Заголовок',
             'typeId' => 'Type ID',
+            'type' => 'Тип',
             'curriculumId' => 'Curriculum ID',
+            'curriculum' => 'Курс',
         ];
     }
 
@@ -61,7 +63,7 @@ class EventPattern extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getCurriculum()
+    public function getCurriculum(): \yii\db\ActiveQuery
     {
         return $this->hasOne(CurriculumPattern::class, ['id' => 'curriculumId']);
     }
@@ -71,7 +73,7 @@ class EventPattern extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getMaterialEventPatterns()
+    public function getMaterialEventPatterns(): \yii\db\ActiveQuery
     {
         return $this->hasMany(MaterialEventPattern::class, ['event_pattern_id' => 'id']);
     }
@@ -81,7 +83,7 @@ class EventPattern extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getMaterials()
+    public function getMaterials(): \yii\db\ActiveQuery
     {
         return $this->hasMany(Material::class, ['id' => 'material_id'])->viaTable('material_event_pattern', ['event_pattern_id' => 'id']);
     }
@@ -91,7 +93,7 @@ class EventPattern extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getType()
+    public function getType(): \yii\db\ActiveQuery
     {
         return $this->hasOne(EventType::class, ['id' => 'typeId']);
     }

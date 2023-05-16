@@ -1,6 +1,6 @@
 <?php
 
-use app\modules\curriculum\models\Curriculum;
+use app\modules\group\models\Group;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
@@ -9,15 +9,15 @@ use yii\grid\GridView;
 /** @var yii\web\View $this */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Курс';
+$this->title = 'Группы';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="curriculum-index">
+<div class="group-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Создать', ['select-pattern'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Create Group', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
 
@@ -27,13 +27,10 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             'id',
-            'subject.name',
-            'group.name',
-            'description:ntext',
-            'semester',
+            'name',
             [
-                'class' => ActionColumn::class,
-                'urlCreator' => function ($action, Curriculum $model, $key, $index, $column) {
+                'class' => ActionColumn::className(),
+                'urlCreator' => function ($action, Group $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'id' => $model->id]);
                  }
             ],
