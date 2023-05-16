@@ -5,6 +5,7 @@ namespace app\controllers;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
+use yii\web\ForbiddenHttpException;
 use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
@@ -12,9 +13,19 @@ use app\models\ContactForm;
 
 class SiteController extends Controller
 {
-    /**
-     * {@inheritdoc}
-     */
+    public function beforeAction($action): bool
+    {
+        if (!Yii::$app->user->isGuest) {
+            $role = Yii::$app->user->identity->role;
+
+            if ($role === 'banned') {
+                throw new ForbiddenHttpException('Вам запрещен доступ к сайту.');
+            }
+        }
+
+        return parent::beforeAction($action);
+    }
+
     public function behaviors()
     {
         return [

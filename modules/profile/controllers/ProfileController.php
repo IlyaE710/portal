@@ -1,11 +1,12 @@
 <?php
 
-namespace app\modules\curriculum\controllers;
+namespace app\modules\profile\controllers;
 
-use app\modules\curriculum\models\Event;
-use app\modules\curriculum\models\EventPattern;
-use app\modules\material\models\Material;
-use Exception;
+use app\models\User;
+use app\modules\profile\models\UserCreateForm;
+use Symfony\Component\Mailer\Mailer;
+use Symfony\Component\Mailer\Transport;
+use Symfony\Component\Mime\Email;
 use Yii;
 use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
@@ -15,9 +16,9 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * EventController implements the CRUD actions for Event model.
+ * ProfileController implements the CRUD actions for User model.
  */
-class EventAdminController extends Controller
+class ProfileController extends Controller
 {
     public function beforeAction($action): bool
     {
@@ -39,7 +40,12 @@ class EventAdminController extends Controller
                 'class' => AccessControl::class,
                 'rules' => [
                     [
-                        'actions' => ['index', 'view', 'update', 'delete', 'create'],
+                        'actions' => ['index', 'create', 'create-user', 'update', 'delete'],
+                        'allow' => true,
+                        'roles' => ['admin'],
+                    ],
+                    [
+                        'actions' => ['view', 'update'],
                         'allow' => true,
                         'roles' => ['teacher'],
                     ],
@@ -48,20 +54,21 @@ class EventAdminController extends Controller
             'verbs' => [
                 'class' => VerbFilter::class,
                 'actions' => [
-                    'delete' => ['post'],
+                    'logout' => ['post'],
                 ],
             ],
         ];
     }
+
     /**
-     * Lists all Event models.
+     * Lists all User models.
      *
      * @return string
      */
-    public function actionIndex(int $id)
+    public function actionIndex()
     {
         $dataProvider = new ActiveDataProvider([
-            'query' => Event::find()->where(['curriculumId' => $id]),
+            'query' => User::find(),
             /*
             'pagination' => [
                 'pageSize' => 50
@@ -76,13 +83,12 @@ class EventAdminController extends Controller
 
         return $this->render('index', [
             'dataProvider' => $dataProvider,
-            'id' => $id,
         ]);
     }
 
     /**
-     * Displays a single Event model.
-     * @param int $id ID
+     * Displays a single User model.
+     * @param int $id
      * @return string
      * @throws NotFoundHttpException if the model cannot be found
      */
@@ -94,38 +100,62 @@ class EventAdminController extends Controller
     }
 
     /**
-     * Creates a new Event model.
+     * Creates a new User model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
-    public function actionCreate(int $id)
+    public function actionCreate()
     {
-        $model = new Event();
+        $model = new User();
 
         if ($this->request->isPost) {
-            if ($model->load($this->request->post())) {
-                $model->typeId = $this->request->post('Event')['type'];
-                $model->curriculumId = $id;
-                $model->save();
-                $materialIds = $this->request->post('Event')['materials'];
-                $materials = Material::findAll($materialIds);
-                foreach ($materials as $material) {
-                    $model->link('materials', $material);
-                }
-                return $this->redirect(['index', 'id' => $id]);
+            if ($model->load($this->request->post()) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
             }
+        } else {
+            $model->loadDefaultValues();
         }
 
         return $this->render('create', [
             'model' => $model,
-            'id' => $id,
+        ]);
+    }
+
+    public function actionCreateUser()
+    {
+        $form = new UserCreateForm();
+        if ($this->request->isPost) {
+            if ($form->load($this->request->post()) && $form->validate()) {
+                $user = new User();
+                $password = Yii::$app->security->generateRandomString();
+                $user->passwordHash = Yii::$app->security->generatePasswordHash($password);
+                $user->email = $form->email;
+                $user->role = $form->role;
+
+                $mailer = Yii::$app->mailer;
+                $message = $mailer->compose();
+                $message->setFrom('admin@mail.com'); // Адрес отправителя
+                $message->setTo($user->email); // Адрес получателя
+                $message->setSubject('Пароль'); // Тема письма
+                $message->setTextBody('пароль - ' . $password); // Текст письма в виде обычного текста
+                $mailer->send($message);
+                $user->save();
+                $auth = Yii::$app->authManager;
+                $auth->assign($auth->getRole($user->role), $user->id);
+
+                return $this->redirect(['view', 'id' => $user->id]);
+            }
+        }
+
+        return $this->render('create-user', [
+            'model' => $form,
         ]);
     }
 
     /**
-     * Updates an existing EventPattern model.
+     * Updates an existing User model.
      * If update is successful, the browser will be redirected to the 'view' page.
-     * @param int $id ID
+     * @param int $id
      * @return string|\yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
@@ -133,26 +163,11 @@ class EventAdminController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($this->request->isPost && $model->load($this->request->post())) {
-            $materialIds = $this->request->post('Event')['materials'];
-            $model->typeId = $this->request->post('Event')['type'];
-            $model->save();
+        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
 
-            $transaction = Yii::$app->db->beginTransaction();
-            try {
-                $materials = Material::findAll($materialIds);
-                $model->unlinkAll('materials', true);
-
-                foreach ($materials as $material) {
-                    $model->link('materials', $material);
-                }
-
-                $transaction->commit();
-            } catch (Exception $e) {
-                $transaction->rollBack();
-                Yii::$app->session->setFlash('error', 'Произошла ошибка при обновлении записи: ' . $e->getMessage());
-            }
-            return $this->redirect(['index', 'id' => $model->curriculumId]);
+            $auth = Yii::$app->authManager;
+            $auth->assign($auth->getRole($model->role), $model->id);
+            return $this->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('update', [
@@ -161,9 +176,9 @@ class EventAdminController extends Controller
     }
 
     /**
-     * Deletes an existing Event model.
+     * Deletes an existing User model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param int $id ID
+     * @param int $id
      * @return \yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
@@ -175,15 +190,15 @@ class EventAdminController extends Controller
     }
 
     /**
-     * Finds the Event model based on its primary key value.
+     * Finds the User model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param int $id ID
-     * @return Event the loaded model
+     * @param int $id
+     * @return User the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Event::findOne(['id' => $id])) !== null) {
+        if (($model = User::findOne(['id' => $id])) !== null) {
             return $model;
         }
 

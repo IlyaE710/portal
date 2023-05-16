@@ -14,10 +14,12 @@ use yii\db\ActiveRecord;
  * @property string $firstname
  * @property string $lastname
  * @property string $patronymic
+ * @property string $email
  *
  * @property UserGroup[] $userGroups
  * @property User[] $users
  * @property Group[] $groups
+ * @property string $role
  */
 
 
@@ -109,5 +111,10 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
     public function validateAuthKey($authKey)
     {
         // TODO: Implement validateAuthKey() method.
+    }
+
+    public function isBanned(): bool
+    {
+        return $this->role === 'banned';
     }
 }

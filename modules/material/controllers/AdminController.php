@@ -11,10 +11,24 @@ use Yii;
 use yii\data\ActiveDataProvider;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
+use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
 
 class AdminController extends Controller
 {
+    public function beforeAction($action): bool
+    {
+        if (!Yii::$app->user->isGuest) {
+            $role = Yii::$app->user->identity->role;
+
+            if ($role === 'banned') {
+                throw new ForbiddenHttpException('Вам запрещен доступ к сайту.');
+            }
+        }
+
+        return parent::beforeAction($action);
+    }
+
     public function behaviors()
     {
         return [

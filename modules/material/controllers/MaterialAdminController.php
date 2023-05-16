@@ -8,10 +8,24 @@ use Yii;
 use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
+use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
 
 class MaterialAdminController extends \yii\web\Controller
 {
+    public function beforeAction($action): bool
+    {
+        if (!Yii::$app->user->isGuest) {
+            $role = Yii::$app->user->identity->role;
+
+            if ($role === 'banned') {
+                throw new ForbiddenHttpException('Вам запрещен доступ к сайту.');
+            }
+        }
+
+        return parent::beforeAction($action);
+    }
+
     public function behaviors()
     {
         return [

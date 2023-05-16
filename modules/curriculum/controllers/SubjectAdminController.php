@@ -3,9 +3,11 @@
 namespace app\modules\curriculum\controllers;
 
 use app\modules\curriculum\models\Subject;
+use Yii;
 use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
 use yii\web\Controller;
+use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
@@ -14,9 +16,19 @@ use yii\filters\VerbFilter;
  */
 class SubjectAdminController extends Controller
 {
-    /**
-     * @inheritDoc
-     */
+    public function beforeAction($action): bool
+    {
+        if (!Yii::$app->user->isGuest) {
+            $role = Yii::$app->user->identity->role;
+
+            if ($role === 'banned') {
+                throw new ForbiddenHttpException('Вам запрещен доступ к сайту.');
+            }
+        }
+
+        return parent::beforeAction($action);
+    }
+
     public function behaviors()
     {
         return [
