@@ -22,4 +22,10 @@ use yii\helpers\Url; ?>
     <p>
         <?= Html::a('Тип мероприятия', Url::toRoute(['curriculum/event-type-admin']), ['class' => 'btn btn-success']) ?>
     </p>
+    <p>
+        <?= Html::a('Профиль', Url::toRoute(['profile/profile']), ['class' => 'btn btn-success']) ?>
+    </p>
+    <p>
+        <?= Html::a('Группа', Url::toRoute(['group/group-admin']), ['class' => 'btn btn-success']) ?>
+    </p>
 </div>

@@ -11,12 +11,15 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="curriculum-create m-1">
     <div class="curriculum-form">
+
+        <h1><?= Html::encode($this->title) ?></h1>
+
         <?php $form = ActiveForm::begin(); ?>
 
         <?= Select2::widget([
             'name' => 'id',
             'data' => ArrayHelper::map(CurriculumPattern::find()->all(), 'id', 'description'),
-            'options' => ['placeholder' => 'Select a Curriculum ...'],
+            'options' => ['placeholder' => 'Выбрать шаблон ...'],
         ]); ?>
 
         <div class="form-group">

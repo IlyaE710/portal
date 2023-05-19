@@ -17,4 +17,13 @@ class UserCreateForm extends \yii\base\Model
             [['email'], 'email'],
         ];
     }
+
+    public function attributeLabels()
+    {
+        return [
+            'id' => 'ID',
+            'email' => 'email',
+            'role' => 'роль',
+        ];
+    }
 }

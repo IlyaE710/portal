@@ -28,7 +28,7 @@ class GroupForm extends \yii\base\Model
     {
         return [
             'id' => 'ID',
-            'name' => 'Name',
+            'name' => 'Название',
             'users' => 'Студенты',
         ];
     }

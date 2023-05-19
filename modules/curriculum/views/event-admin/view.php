@@ -2,12 +2,14 @@
 
 use app\modules\material\models\File;
 use app\modules\material\models\Link;
+use app\widgets\sidebar\SidebarWidget;
 use yii\data\ActiveDataProvider;
 use yii\grid\ActionColumn;
 use yii\grid\GridView;
 use yii\grid\SerialColumn;
 use yii\helpers\Html;
 use yii\helpers\StringHelper;
+use yii\helpers\Url;
 use yii\widgets\DetailView;
 use yii\widgets\Pjax;
 
@@ -20,6 +22,32 @@ $this->params['breadcrumbs'][] = ['label' => 'Шаблон', 'url' => ['curricul
 $this->params['breadcrumbs'][] = ['label' => 'Мероприятия', 'url' => ['index', 'id' => $model->curriculumId]];
 $this->params['breadcrumbs'][] = ['label' => 'Мероприятие', 'url' => ['update', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = 'Вид';
+
+$itemsEvent = [];
+$items = [];
+foreach ($model->curriculum->events as $event) {
+    $itemsEvent[] = [
+        'label' => $event->type->name . ' ' . $event->title,
+        'url' => Url::toRoute(['event-admin/view', 'id' => $event->id]),
+    ];
+}
+$this->params['sidebar'] = SidebarWidget::widget([
+    'items' => [
+        /*        [
+                    'label' => 'Пользователи',
+                    'url' => Url::to(['curriculum/view', 'id' => $model->curriculumId]),
+                    'options' => ['class' => 'nav-link px-0 align-middle text-center'],
+                    'template' => '<a href="{url}"><div class="sidebar-item" data-bs-toggle="tooltip" data-bs-placement="right" title="{label}"><i class="bi bi-person"></i></div></a>'
+                ],*/
+        [
+            'label' => 'Список',
+            'url' => Url::to(['material-admin/update', 'id' => 1]),
+            'options' => ['class' => 'nav-link px-0 align-middle'],
+            'template' => '<div class="sidebar-item" onclick="togglePopup(\'popup-2\')" data-bs-toggle="tooltip" data-bs-placement="right" title="{label}"><i class="bi bi-list-check"></i></div>'
+        ],
+    ],
+    'collapses' => $itemsEvent,
+]);
 ?>
 <div class="event-pattern-view">
 

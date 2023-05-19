@@ -12,42 +12,52 @@ $this->title = $model->id;
 $this->params['breadcrumbs'][] = ['label' => 'Шаблоны учебных планов', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => 'Шаблон', 'url' => ['update', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = $this->title;
+$itemsEvent = [];
 $items = [];
-foreach ($model->eventPatterns as $eventPattern) {
-    $items[] = [
-            'label' => $eventPattern->type->name . ' ' . $eventPattern->title,
-            'url' => Url::toRoute(['event-pattern-admin/view', 'id' => $eventPattern->id]),
-            'options' => ['class' => 'nav-link px-0 align-middle'],
+foreach ($model->eventPatterns as $event) {
+    $itemsEvent[] = [
+        'label' => $event->type->name . ' ' . $event->title,
+        'url' => Url::toRoute(['event-pattern-admin/view', 'id' => $event->id]),
     ];
 }
+$this->params['sidebar'] = SidebarWidget::widget([
+    'items' => [
+        /*                [
+                            'label' => 'Пользователи',
+                            'url' => Url::to(['material-admin/update', 'id' => 1]),
+                            'options' => ['class' => 'nav-link px-0 align-middle text-center'],
+                            'template' => '<div class="sidebar-item" data-bs-toggle="tooltip" data-bs-placement="right" title="{label}"><i class="bi bi-person"></i></div>'
+                        ],*/
+        [
+            'label' => 'Список',
+            'url' => Url::to(['material-admin/update', 'id' => 1]),
+            'options' => ['class' => 'nav-link px-0 align-middle'],
+            'template' => '<div class="sidebar-item" onclick="togglePopup(\'popup-2\')" data-bs-toggle="tooltip" data-bs-placement="right" title="{label}"><i class="bi bi-list-check"></i></div>'
+        ],
+    ],
+    'collapses' => $itemsEvent,
+]);
 \yii\web\YiiAsset::register($this);
 ?>
 <div class="row">
-    <div class="col-md-3">
-        <?= SidebarWidget::widget([
-            'items' => $items
-        ]); ?>
-    </div>
-    <div class="col-md-9">
-        <div class="link-update">
-            <p>
-                <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-                <?= Html::a('Delete', ['delete', 'id' => $model->id], [
-                    'class' => 'btn btn-danger',
-                    'data' => [
-                        'confirm' => 'Are you sure you want to delete this item?',
-                        'method' => 'post',
-                    ],
-                ]) ?>
-            </p>
-            <?= DetailView::widget([
-                'model' => $model,
-                'attributes' => [
-                    'id',
-                    'subjectId',
-                    'description:ntext',
+    <div class="link-update">
+        <p>
+            <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+            <?= Html::a('Delete', ['delete', 'id' => $model->id], [
+                'class' => 'btn btn-danger',
+                'data' => [
+                    'confirm' => 'Are you sure you want to delete this item?',
+                    'method' => 'post',
                 ],
             ]) ?>
-        </div>
+        </p>
+        <?= DetailView::widget([
+            'model' => $model,
+            'attributes' => [
+                'id',
+                'subjectId',
+                'description:ntext',
+            ],
+        ]) ?>
     </div>
 </div>

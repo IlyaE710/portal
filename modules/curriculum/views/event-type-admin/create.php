@@ -1,12 +1,13 @@
 <?php
 
+use app\modules\curriculum\models\EventType;
 use yii\helpers\Html;
 
 /** @var yii\web\View $this */
-/** @var app\modules\event\models\EventType $model */
+/** @var EventType $model */
 
-$this->title = 'Create Event Type';
-$this->params['breadcrumbs'][] = ['label' => 'Event Types', 'url' => ['index']];
+$this->title = 'Создать мероприятие';
+$this->params['breadcrumbs'][] = ['label' => 'Типы мероприятий', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="event-type-create">

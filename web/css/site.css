@@ -1,124 +1,152 @@
-/* основные стили */
-.sidebar {
-    background-color: #f8f9fa;
-    border-radius: 0.25rem;
-    padding: 20px;
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
 }
 
-.sidebar ul {
-    list-style-type: none;
-    padding-left: 0;
+body {
+    display: flex;
+    flex-direction: column;
 }
 
-.sidebar li {
-    margin-bottom: 10px;
-}
-
-/* стили для пунктов меню */
-.sidebar a {
-    color: #212529;
-    display: block;
-    padding: 10px 15px;
-    border-radius: 0.25rem;
-    transition: background-color 0.2s ease-in-out;
-    text-decoration: none;
-}
-
-.sidebar a:hover {
-    text-decoration: none;
-    background-color: #e9ecef;
-}
-
-.sidebar a.active {
-    color: #fff;
-    background-color: #007bff;
-}
-
-/* стили для кнопки */
-.toggle-sidebar {
-    border: none;
-    background-color: #007bff;
-    color: #fff;
-    border-radius: 0.25rem;
-    padding: 10px 15px;
-    margin-bottom: 20px;
-    transition: background-color 0.2s ease-in-out;
-}
-
-.toggle-sidebar:hover {
-    background-color: #0069d9;
-    color: #fff;
-    text-decoration: none;
-}
-
-.card:hover {
-    transform: scale(1.1);
-}
-
-.card {
-    transition: transform 0.2s ease-in-out;
-}
-
-.card:hover {
-    transform: scale(1.1);
-}
-
-.card {
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    padding: 16px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-    transition: transform 0.2s ease-in-out;
-}
-
-.card:hover {
-    transform: scale(1.1);
-}
-
-.card img {
-    max-width: 100%;
-    height: auto;
-    display: block;
-    margin-bottom: 12px;
-}
-
-.card-body {
-    text-align: center;
-}
-
-.card-title {
-    font-size: 18px;
-    font-weight: 600;
-    margin-bottom: 8px;
-}
-
-.card-text {
-    font-size: 14px;
-    color: #666;
-    margin-bottom: 12px;
-}
-
-.btn-primary {
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    padding: 8px 16px;
-    font-size: 14px;
-    font-weight: 600;
-    transition: background-color 0.2s ease-in-out;
-}
-
-.btn-primary:hover {
-    background-color: #0069d9;
-    color: #fff;
+main {
+    flex: 1;
 }
 
 footer {
+    flex-shrink: 0;
+}
+
+.sidebar {
     position: fixed;
-    left: 0;
+    top: 0;
     bottom: 0;
-    width: 100%;
+    left: 0;
+    width: 80px;
+    background-color: #f8f9fa;
+    padding-top: 60px;
+    z-index: 100;
+    overflow-y: auto;
+    height: 100%;
+}
+
+.sidebar-item {
+    padding: 10px;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.sidebar-item:hover {
+    background-color: #e9ecef;
+}
+
+.popup {
+    position: fixed;
+    top: 0;
+    left: 80px;
+    bottom: 0;
+    width: 300px;
+    background-color: #f8f9fa;
+    z-index: 200;
+    display: none;
+    padding: 20px;
+    animation: fadeIn 0.4s ease-in-out;
+}
+
+.popup.active {
+    display: block;
+    animation: slideIn 0.4s ease-in-out;
+}
+
+.popup-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    color: #000;
+    font-size: 20px;
+}
+
+.popup-close:hover {
+    color: red;
+}
+
+.popup-content {
+    color: #333;
+}
+
+.popup-title {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.popup-text {
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideIn {
+    from {
+        margin-left: 20px;
+        transform: translateX(-100%);
+    }
+    to {
+        transform: translateX(0);
+    }
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 99;
+    display: none;
+}
+.overlay.active {
+    display: block;
+}
+
+.card-link {
+    text-decoration: none;
+    color: #000;
+}
+
+.card-course {
+    transition: transform 0.3s ease;
+    margin-bottom: 20px;
+}
+
+.card-course-text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    /* min-height: 80px; */
+}
+
+.card-course:hover .card-course-text {
+    overflow: visible;
+    white-space: normal;
+}
+.card-course:hover {
+    transform: scale(1.05);
+}
+
+.card-course-img-top {
+    max-width: 100%;
+    height: 250px;
 }
 
 .breadcrumb {
@@ -139,4 +167,14 @@ footer {
 
 .breadcrumb-item.active {
     color: #212529;
+}
+
+.login-form,
+.reset-password-form {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff;
 }

@@ -12,6 +12,7 @@ use Yii;
  * @property int $subjectId
  * @property int $groupId
  * @property string $description
+ * @property string previewPath
  * @property int $semester
  *
  * @property Event[] $events
@@ -37,7 +38,7 @@ class Curriculum extends \yii\db\ActiveRecord
             [['subjectId', 'description'], 'required'],
             [['subjectId', 'semester', 'groupId'], 'default', 'value' => null],
             [['subjectId', 'semester', 'groupId'], 'integer'],
-            [['description'], 'string'],
+            [['description', 'previewPath'], 'string'],
             [['subjectId'], 'exist', 'skipOnError' => true, 'targetClass' => Subject::class, 'targetAttribute' => ['subjectId' => 'id']],
             [['groupId'], 'exist', 'skipOnError' => true, 'targetClass' => Group::class, 'targetAttribute' => ['groupId' => 'id']],
         ];

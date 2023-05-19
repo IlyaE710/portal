@@ -2,12 +2,14 @@
 
 use app\modules\material\models\File;
 use app\modules\material\models\Link;
+use app\widgets\sidebar\SidebarWidget;
 use yii\data\ActiveDataProvider;
 use yii\grid\ActionColumn;
 use yii\grid\GridView;
 use yii\grid\SerialColumn;
 use yii\helpers\Html;
 use yii\helpers\StringHelper;
+use yii\helpers\Url;
 use yii\widgets\DetailView;
 use yii\widgets\Pjax;
 
@@ -15,13 +17,54 @@ use yii\widgets\Pjax;
 /** @var app\modules\curriculum\models\Event $model */
 
 $this->title = $model->type->name . ' ' . $model->title;
-$this->params['breadcrumbs'][] = ['label' => 'План', 'url' => ['curriculum/view', 'id' => $model->curriculumId]];
+$this->params['breadcrumbs'][] = ['label' => 'Курс', 'url' => ['curriculum/view', 'id' => $model->curriculumId]];
 $this->params['breadcrumbs'][] = $this->title;
+
+$currentUrl = Url::current();
+$itemsEvent = [];
+$items = [];
+foreach ($model->curriculum->events as $event) {
+    $url = Url::toRoute(['event/view', 'id' => $event->id]);
+    if ($currentUrl === $url) {
+        $url = Url::toRoute(['event/view', 'id' => $event->id, '#' => 'header-main']);
+    }
+    $itemsEvent[] = [
+        'label' => $event->type->name . ' ' . $event->title,
+        'url' => $url,
+    ];
+}
+$this->params['sidebar'] = SidebarWidget::widget([
+    'items' => [
+/*        [
+            'label' => 'Пользователи',
+            'url' => Url::to(['curriculum/view', 'id' => $model->curriculumId]),
+            'options' => ['class' => 'nav-link px-0 align-middle text-center'],
+            'template' => '<a href="{url}"><div class="sidebar-item" data-bs-toggle="tooltip" data-bs-placement="right" title="{label}"><i class="bi bi-person"></i></div></a>'
+        ],*/
+        [
+            'label' => 'Список',
+            'url' => Url::to(['material-admin/update', 'id' => 1]),
+            'options' => ['class' => 'nav-link px-0 align-middle'],
+            'template' => '<div class="sidebar-item" onclick="togglePopup(\'popup-2\')" data-bs-toggle="tooltip" data-bs-placement="right" title="{label}"><i class="bi bi-list-check"></i></div>'
+        ],
+        [
+            'label' => 'Ссылки',
+            'url' => Url::to(['event/view', 'id' => $model->curriculumId, '#' => 'link-grid-view']),
+            'options' => ['class' => 'nav-link px-0 align-middle text-center'],
+            'template' => '<a href="{url}"><div class="sidebar-item" data-bs-toggle="tooltip" data-bs-placement="right" title="{label}"><i class="bi bi-link"></i></div></a>'
+        ],
+        [
+            'label' => 'Файлы',
+            'url' => Url::to(['event/view', 'id' => $model->curriculumId, '#' => 'file-grid-view']),
+            'options' => ['class' => 'nav-link px-0 align-middle text-center'],
+            'template' => '<a href="{url}"><div class="sidebar-item" data-bs-toggle="tooltip" data-bs-placement="right" title="{label}"><i class="bi bi-file-earmark-code"></i></div></a>'
+        ],
+    ],
+    'collapses' => $itemsEvent,
+]);
 ?>
+
 <div class="event-index">
-
-    <h1><?= Html::encode($this->title) ?></h1>
-
     <?php foreach($model->materials as $material): ?>
         <?php foreach($material->texts as $text): ?>
             <?= $text->content ?>
@@ -29,6 +72,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
         <?php Pjax::begin() ?>
         <?= GridView::widget([
+            'id' => 'link-grid-view',
             'dataProvider' => new ActiveDataProvider([
                 'query' => $material->getLinks(),
             ]),
@@ -48,6 +92,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
         <?php Pjax::begin() ?>
         <?= GridView::widget([
+            'id' => 'file-grid-view',
             'dataProvider' => new ActiveDataProvider([
                 'query' => $material->getFiles(),
             ]),
@@ -56,12 +101,12 @@ $this->params['breadcrumbs'][] = $this->title;
                 'filename:raw',
                 [
                     'attribute' => 'url',
+                    'label' => 'Ссылка',
                     'format' => 'raw',
                     'value' => function (File $model) {
                         return Html::a(
                             'Посмотреть',
-                            Yii::getAlias('@web/'. $model->path),
-                            ['target' => '_blank', 'data-pjax' => '0']
+                            Yii::getAlias('@web/'. $model->path), ['target' => '_blank', 'data-pjax' => '0']
                         );
                     }
                 ],

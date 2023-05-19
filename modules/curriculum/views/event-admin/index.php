@@ -10,7 +10,9 @@ use yii\grid\GridView;
 /** @var yii\web\View $this */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Events';
+$this->title = 'Меропрития';
+$this->params['breadcrumbs'][] = ['label' => 'Курсы', 'url' => ['/curriculum/curriculum-admin/index']];
+$this->params['breadcrumbs'][] = ['label' => 'Курс', 'url' => ['/curriculum/curriculum-admin/update', 'id' => $id]];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
@@ -26,7 +28,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="col-md-9">
         <div class="event-index">
             <p>
-                <?= Html::a('Создать Event', ['create', 'id' => $id], ['class' => 'btn btn-success']) ?>
+                <?= Html::a('Создать', ['create', 'id' => $id], ['class' => 'btn btn-success']) ?>
             </p>
 
 
@@ -35,11 +37,9 @@ $this->params['breadcrumbs'][] = $this->title;
                 'columns' => [
                     ['class' => 'yii\grid\SerialColumn'],
 
-                    'id',
                     'title',
                     'duration',
-                    'typeId',
-                    'curriculumId',
+                    'type.name',
                     [
                         'class' => ActionColumn::class,
                         'urlCreator' => function ($action, Event $model, $key, $index, $column) {

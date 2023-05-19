@@ -5,8 +5,8 @@ use yii\helpers\Html;
 /** @var yii\web\View $this */
 /** @var app\modules\curriculum\models\Subject $model */
 
-$this->title = 'Create Subject';
-$this->params['breadcrumbs'][] = ['label' => 'Subjects', 'url' => ['index']];
+$this->title = 'Создать предмет';
+$this->params['breadcrumbs'][] = ['label' => 'Предметы', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="subject-create">

@@ -2,6 +2,7 @@
 
 namespace app\modules\curriculum\controllers;
 
+use app\modules\curriculum\models\CourseForm;
 use app\modules\curriculum\models\Curriculum;
 use app\modules\curriculum\models\CurriculumPattern;
 use app\modules\curriculum\models\Event;
@@ -12,6 +13,7 @@ use yii\web\Controller;
 use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
 
 /**
  * CurriculumController implements the CRUD actions for Curriculum model.
@@ -38,7 +40,7 @@ class CurriculumAdminController extends Controller
                 'class' => AccessControl::class,
                 'rules' => [
                     [
-                        'actions' => ['index', 'view', 'update', 'delete', 'select-pattern', 'create'],
+                        'actions' => ['index', 'view', 'update', 'delete', 'select-pattern', 'create', 'upload-image'],
                         'allow' => true,
                         'roles' => ['teacher'],
                     ],
@@ -92,7 +94,26 @@ class CurriculumAdminController extends Controller
         ]);
     }
 
-    public function actionCreate(int $modelFormId)
+    public function actionUploadImage()
+    {
+        $model = new CourseForm();
+
+        if (Yii::$app->request->isPost) {
+            $model->image = UploadedFile::getInstance($model, 'image');
+
+            if ($model->upload()) {
+                // Успешная загрузка изображения
+                // Обновите модель курса в соответствии с новым изображением
+                $previewPath = '/courses/' . $model->image->baseName . '.' . $model->image->extension;
+
+                return $this->redirect(['select-pattern', 'previewPath' => $previewPath]);
+            }
+        }
+
+        return $this->render('upload-image', ['model' => $model]);
+    }
+
+    public function actionCreate(int $modelFormId, string $previewPath)
     {
         $model = new Curriculum();
 
@@ -100,6 +121,7 @@ class CurriculumAdminController extends Controller
             if ($model->load($this->request->post())) {
                 $model->subjectId = $this->request->post('Curriculum')['subject'];
                 $model->groupId = $this->request->post('Curriculum')['group'];
+                $model->previewPath = $previewPath;
                 $model->save();
 
                 $modelForm = CurriculumPattern::findOne($modelFormId);
@@ -131,13 +153,13 @@ class CurriculumAdminController extends Controller
         ]);
     }
 
-    public function actionSelectPattern()
+    public function actionSelectPattern(string $previewPath)
     {
         $model = new CurriculumPattern();
 
         if ($this->request->isPost) {
             $id = $this->request->post('id');
-            return $this->redirect(['create', 'modelFormId' => $id]);
+            return $this->redirect(['create', 'modelFormId' => $id, 'previewPath' => $previewPath]);
         }
 
         return $this->render('select-pattern', [

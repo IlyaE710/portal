@@ -50,12 +50,12 @@ class File extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'filename' => 'Filename',
-            'path' => 'Path',
-            'size' => 'Size',
-            'extension' => 'Extension',
+            'filename' => 'Название',
+            'path' => 'Путь',
+            'size' => 'Размер',
+            'extension' => 'Расширение',
             'material_id' => 'Material ID',
-            'hashCode' => 'Hash Code',
+            'hashCode' => 'Хэш код',
         ];
     }
 

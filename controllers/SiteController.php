@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\PasswordResetRequestForm;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -75,6 +76,23 @@ class SiteController extends Controller
         return $this->render('index');
     }
 
+    public function actionResetPassword()
+    {
+        $model = new PasswordResetRequestForm();
+
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            if ($model->sendEmail()) {
+                Yii::$app->session->setFlash('success', 'Проверьте свою электронную почту для получения дальнейших инструкций.');
+                return $this->goHome();
+            } else {
+                Yii::$app->session->setFlash('error', 'Не удалось отправить письмо для сброса пароля.');
+            }
+        }
+
+        return $this->render('reset-password', [
+            'model' => $model,
+        ]);
+    }
     public function actionTest()
     {
 /*        // Назначаем роли и разрешения

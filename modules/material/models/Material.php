@@ -57,8 +57,8 @@ class Material extends ActiveRecord
     {
         return [
             'id' => 'ID',
-            'title' => 'Title',
-            'description' => 'Description',
+            'title' => 'Заголовок',
+            'description' => 'Описание',
             'type' => 'Type',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',

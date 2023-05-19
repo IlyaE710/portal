@@ -12,8 +12,6 @@ $this->params['breadcrumbs'][] = 'Редактирования';
 ?>
 <div class="curriculum-update">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-
     <?= $this->render('_form', [
         'model' => $model,
     ]) ?>

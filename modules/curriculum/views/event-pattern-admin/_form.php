@@ -8,6 +8,7 @@ use kartik\select2\Select2;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\helpers\Url;
+use yii\web\JsExpression;
 use yii\widgets\ActiveForm;
 
 /** @var yii\web\View $this */
@@ -26,6 +27,7 @@ use yii\widgets\ActiveForm;
         ]); ?>
     </div>
     <div class="col-md-9">
+        <?php \yii\widgets\Pjax::begin() ?>
         <div class="curriculum-pattern-form">
 
             <?php $form = ActiveForm::begin(); ?>
@@ -34,24 +36,34 @@ use yii\widgets\ActiveForm;
 
             <?= $form->field($model, 'type')->widget(Select2::class, [
                 'data' => ArrayHelper::map(EventType::find()->all(), 'id', 'name'),
-                'options' => ['placeholder' => 'Select a tags ...'],
+                'options' => ['placeholder' => 'Выберите тэги ...'],
             ]); ?>
+            <?= Html::a(
+                'Создать',
+                Url::toRoute(['event-type-admin/index']), ['target' => '_blank', 'data-pjax' => '0']
+            ); ?>
 
+            <?= '<label class="control-label w-100">Материалы</label>'; ?>
             <?= $form->field($model, 'materials')->widget(Select2::class, [
                 'data' => ArrayHelper::map(Material::find()->all(), 'id', 'title'),
-                'options' => ['placeholder' => 'Select a materials ...'],
+                'options' => ['placeholder' => 'Выберите материалы ...'],
                 'pluginOptions' => [
                     'allowClear' => true,
                     'multiple' => true,
                 ],
-            ]); ?>
+            ])->label(false); ?>
+
+            <?= Html::a(
+                'Создать',
+                Url::toRoute(['/material/material-admin/index']), ['target' => '_blank', 'data-pjax' => '0']
+            ); ?>
 
             <div class="form-group">
                 <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-success']) ?>
             </div>
 
             <?php ActiveForm::end(); ?>
-
+            <?php \yii\widgets\Pjax::end() ?>
         </div>
     </div>
 </div>

@@ -25,6 +25,7 @@ use yii\db\ActiveRecord;
 
 class User extends ActiveRecord implements \yii\web\IdentityInterface
 {
+    const STATUS_ACTIVE = ['admin', 'teacher', 'student'];
     private static array $users = [
         '100' => [
             'id' => '100',
@@ -36,6 +37,19 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
             'passwordHash' => '$2y$13$QxIN7Bo8iqvb4CvUQRSTbubbOpnlWn2swkwj3HlfOyc//RfC.T7Om',
         ],
     ];
+
+    public function attributeLabels()
+    {
+        return [
+            'id' => 'Id',
+            'firstname' => 'Имя',
+            'patronymic' => 'Отчество',
+            'lastname' => 'Фамилия',
+            'email' => 'email',
+            'role' => 'роль',
+            'passwordHash' => 'Хэш пароля',
+        ];
+    }
 
     /**
      * {@inheritdoc}

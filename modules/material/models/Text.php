@@ -44,7 +44,7 @@ class Text extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'content' => 'Content',
+            'content' => 'Контент',
             'material_id' => 'Material ID',
         ];
     }

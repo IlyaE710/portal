@@ -19,47 +19,65 @@ $this->title = 'Файлы';
 $this->params['breadcrumbs'][] = ['label' => 'Материалы', 'url' => ['material-admin/index']];
 $this->params['breadcrumbs'][] = ['label' => 'Материал', 'url' => ['material-admin/update', 'id' => $id]];
 $this->params['breadcrumbs'][] = $this->title;
+
+$this->params['sidebar'] = SidebarWidget::widget([
+    'items' => [
+        [
+            'label' => 'Основная информация',
+            'url' =>  Url::to(['material-admin/update', 'id' => $id ?? $model->material_id]),
+            'options' => ['class' => 'nav-link px-0 align-middle text-center'],
+            'template' => '<a href="{url}"><div class="sidebar-item" data-bs-toggle="tooltip" data-bs-placement="right" title="{label}"><i class="bi bi-person"></i></div></a>'
+        ],
+        [
+            'label' => 'Ссылки',
+            'url' =>  Url::to(['link-admin/index', 'id' => $id ?? $model->material_id]),
+            'options' => ['class' => 'nav-link px-0 align-middle text-center'],
+            'template' => '<a href="{url}"><div class="sidebar-item" data-bs-toggle="tooltip" data-bs-placement="right" title="{label}"><i class="bi bi-link"></i></div></a>'
+        ],
+        [
+            'label' => 'Файлы',
+            'url' =>  Url::to(['file-admin/index', 'id' => $id ??$model->material_id]),
+            'options' => ['class' => 'nav-link px-0 align-middle text-center'],
+            'template' => '<a href="{url}"><div class="sidebar-item" data-bs-toggle="tooltip" data-bs-placement="right" title="{label}"><i class="bi bi-file-earmark"></i></div></a>'
+        ],
+        [
+            'label' => 'Тексты',
+            'url' =>  Url::to(['text-admin/index', 'id' => $id ?? $model->material_id]),
+            'options' => ['class' => 'nav-link px-0 align-middle text-center text-dark'],
+            'template' => '<a href="{url}"><div class="sidebar-item" data-bs-toggle="tooltip" data-bs-placement="right" title="{label}"><i class="bi bi-card-text"></i></div></a>'
+        ],
+    ],
+]);
 ?>
 
 <div class="row">
-    <div class="col-md-3">
-        <?= SidebarWidget::widget([
-            'items' => [
-                ['label' => 'Основная информация', 'url' => Url::to(['material-admin/update', 'id' => $id]), 'options' => ['class' => 'nav-link px-0 align-middle']],
-                ['label' => 'Ссылки', 'url' => Url::toRoute(['link-admin/index', 'id' =>$id]), 'options' => ['class' => 'nav-link px-0 align-middle']],
-                ['label' => 'Файлы', 'url' => Url::toRoute(['file-admin/index', 'id' => $id]), 'options' => ['class' => 'nav-link px-0 align-middle']],
-                ['label' => 'Тексты', 'url' => Url::toRoute(['text-admin/index', 'id' =>$id]), 'options' => ['class' => 'nav-link px-0 align-middle']],
-            ]
-        ]); ?>
-    </div>
-    <div class="col-md-9">
-        <p>
-            <?= Html::a('Создать', Url::to(['create', 'id' => $id]), ['class' => 'btn btn-success']) ?>
-        </p>
-        <?= GridView::widget([
-            'dataProvider' => $dataProvider,
-            'columns' => [
-                ['class' => SerialColumn::class],
-                'filename:raw',
-                [
-                    'attribute' => 'url',
-                    'format' => 'raw',
-                    'value' => function (File $model) {
-                        return Html::a(
-                            'Посмотреть',
-                            Yii::getAlias('@web/'. $model->path),
-                            ['target' => '_blank', 'data-pjax' => '0']
-                        );
-                    }
-                ],
-                [
-                    'class' => ActionColumn::class,
-                    'template' => '{delete}',
+    <p>
+        <?= Html::a('Создать', Url::to(['create', 'id' => $id]), ['class' => 'btn btn-success']) ?>
+    </p>
+    <?= GridView::widget([
+        'dataProvider' => $dataProvider,
+        'columns' => [
+            ['class' => SerialColumn::class],
+            'filename:raw',
+            [
+                'attribute' => 'url',
+                'label' => 'Ссылка',
+                'format' => 'raw',
+                'value' => function (File $model) {
+                    return Html::a(
+                        'Посмотреть',
+                        Yii::getAlias('@web/'. $model->path),
+                        ['target' => '_blank', 'data-pjax' => '0']
+                    );
+                }
+            ],
+            [
+                'class' => ActionColumn::class,
+                'template' => '{delete}',
 //                            'urlCreator' => function ($action, Link $model, $key, $index, $column) {
 //                                return Url::toRoute([$action, 'id' => $model->id]);
 //                            }
-                ],
             ],
-        ]); ?>
-    </div>
+        ],
+    ]); ?>
 </div>

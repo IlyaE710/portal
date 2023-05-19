@@ -18,33 +18,9 @@ $this->params['breadcrumbs'][] = ['label' => 'тексты', 'url' => ['index', 
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
-<div class="row">
-    <div class="col-md-3">
-        <?= SidebarWidget::widget([
-            'items' => [
-                ['label' => 'Основная информация', 'url' => Url::to(['material-admin/update', 'id' => $id]), 'options' => ['class' => 'nav-link px-0 align-middle']],
-                ['label' => 'Ссылки', 'url' => Url::toRoute(['link-admin/index', 'id' => $id]), 'options' => ['class' => 'nav-link px-0 align-middle']],
-                ['label' => 'Файлы', 'url' => Url::toRoute(['file-admin/index', 'id' => $id]), 'options' => ['class' => 'nav-link px-0 align-middle']],
-                ['label' => 'Тексты', 'url' => Url::toRoute(['text-admin/index', 'id' => $id]), 'options' => ['class' => 'nav-link px-0 align-middle']],
-            ]
-        ]); ?>
-    </div>
-    <div class="col-md-9">
-        <div class="material-form">
-
-            <?php $form = ActiveForm::begin(); ?>
-
-            <?= $form->field($model, 'content')->widget(CKEditor::class,[
-                'editorOptions' => [
-                    'preset' => 'full', //разработанны стандартные настройки basic, standard, full данную возможность не обязательно использовать
-                ],
-            ]); ?>
-
-            <div class="form-group" role="group"">
-            <?= Html::submitButton("Сохранить", ['class' => 'btn btn-success']) ?>
-        </div>
-
-        <?php $form = ActiveForm::end(); ?>
-    </div>
-</div>
+<div class="create-text">
+    <?= $this->render('_form', [
+        'model' => $model,
+        'id' => $id,
+    ]) ?>
 </div>

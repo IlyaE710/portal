@@ -28,7 +28,7 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
     <div class="col-md-9">
         <p>
-            <?= Html::a('Create Event Pattern', ['create', 'id' => $id], ['class' => 'btn btn-success']) ?>
+            <?= Html::a('Создать', ['create', 'id' => $id], ['class' => 'btn btn-success']) ?>
         </p>
 
 
@@ -36,11 +36,8 @@ $this->params['breadcrumbs'][] = $this->title;
             'dataProvider' => $dataProvider,
             'columns' => [
                 ['class' => 'yii\grid\SerialColumn'],
-
-                'id',
                 'title',
-                'typeId',
-                'curriculumId',
+                'type.name',
                 [
                     'class' => ActionColumn::class,
                     'urlCreator' => function ($action, EventPattern $model, $key, $index, $column) {

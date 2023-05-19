@@ -34,7 +34,7 @@ class Link extends \yii\db\ActiveRecord
             [['description'], 'string'],
             [['material_id'], 'default', 'value' => null],
             [['material_id'], 'integer'],
-            [['url'], 'string', 'max' => 255],
+            [['url'], 'url'],
             [['material_id'], 'exist', 'skipOnError' => true, 'targetClass' => Material::class, 'targetAttribute' => ['material_id' => 'id']],
         ];
     }
@@ -46,9 +46,10 @@ class Link extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'url' => 'Url',
-            'description' => 'Description',
+            'url' => 'Ссылка',
+            'description' => 'Описание',
             'material_id' => 'Material ID',
+            'material' => 'Материал',
         ];
     }
 
