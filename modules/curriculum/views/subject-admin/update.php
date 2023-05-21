@@ -5,10 +5,9 @@ use yii\helpers\Html;
 /** @var yii\web\View $this */
 /** @var app\modules\curriculum\models\Subject $model */
 
-$this->title = 'Update Subject: ' . $model->name;
-$this->params['breadcrumbs'][] = ['label' => 'Subjects', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = 'Update';
+$this->title = 'Редактировать предмет: ' . $model->name;
+$this->params['breadcrumbs'][] = ['label' => 'Предметы', 'url' => ['index']];
+$this->params['breadcrumbs'][] = 'Редактировать';
 ?>
 <div class="subject-update">
 

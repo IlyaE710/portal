@@ -30,6 +30,7 @@ class Tag extends \yii\db\ActiveRecord
     {
         return [
             [['name'], 'required'],
+            [['name'], 'unique'],
             [['name'], 'string'],
         ];
     }
