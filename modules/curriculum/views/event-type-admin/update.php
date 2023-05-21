@@ -1,14 +1,14 @@
 <?php
 
+use app\modules\curriculum\models\EventType;
 use yii\helpers\Html;
 
 /** @var yii\web\View $this */
-/** @var app\modules\event\models\EventType $model */
+/** @var EventType $model */
 
-$this->title = 'Update Event Type: ' . $model->name;
-$this->params['breadcrumbs'][] = ['label' => 'Event Types', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = 'Update';
+$this->title = 'Редактирование типа: ' . $model->name;
+$this->params['breadcrumbs'][] = ['label' => 'Типы', 'url' => ['index']];
+$this->params['breadcrumbs'][] = 'Редактирование';
 ?>
 <div class="event-type-update">
 

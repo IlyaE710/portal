@@ -3,13 +3,16 @@
 namespace app\modules\curriculum\controllers;
 
 use app\modules\curriculum\models\CurriculumPattern;
+use app\modules\curriculum\models\Subject;
 use Yii;
 use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
+use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\Response;
 
 /**
  * CurriculumPatternAdminController implements the CRUD actions for CurriculumPattern model.
@@ -75,6 +78,19 @@ class CurriculumPatternAdminController extends Controller
         return $this->render('index', [
             'dataProvider' => $dataProvider,
         ]);
+    }
+
+    public function actionLoadSubjects($subject_id)
+    {
+        $subjects = Subject::find()
+            ->where(['id' => $subject_id])
+            ->all();
+
+        $data = ArrayHelper::map($subjects, 'id', 'name');
+
+        Yii::$app->response->format = Response::FORMAT_JSON;
+
+        return $data;
     }
 
     /**

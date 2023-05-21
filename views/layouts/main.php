@@ -127,8 +127,8 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                 <h3>Контакты</h3>
                 <ul>
                     <li>Адрес: ул. Название, город, страна</li>
-                    <li>Телефон: +123456789</li>
-                    <li>Email: info@example.com</li>
+                    <li>Телефон: <?= Html::a(Yii::$app->params['supportTelephone'], 'tel:' . str_replace(['+', ' '], '', Yii::$app->params['supportTelephone'])) ?></li>
+                    <li>Email: <?= Html::mailto(Yii::$app->params['supportEmail']); ?></li>
                 </ul>
             </div>
             <div class="col-md-4">
@@ -144,7 +144,6 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                 <h3>Социальные сети</h3>
                 <ul class="list-inline">
                     <li class="list-inline-item"><a href="#"><i class="fa fa-vk"></i></a></li>
-                    <?= Html::mailto(Yii::$app->params['supportEmail']); ?>
                 </ul>
             </div>
         </div>

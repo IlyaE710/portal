@@ -2,5 +2,6 @@
 
 return [
     'bsVersion' => '5.x',
-    'supportEmail' => 'support@mail.ru'
+    'supportEmail' => 'support@mail.ru',
+    'supportTelephone' => '+7999999999',
 ];
