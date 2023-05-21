@@ -12,30 +12,29 @@ use yii\widgets\ActiveForm;
 /** @var yii\web\View $this */
 /** @var Material $model */
 /** @var yii\widgets\ActiveForm $form */
-
 $this->params['sidebar'] = SidebarWidget::widget([
     'items' => [
         [
             'label' => 'Основная информация',
-            'url' =>  Url::to(['material-admin/update', 'id' => !isset($id) ?? $model->id]),
+            'url' =>  Url::to(['material-admin/update', 'id' => !isset($id) ? $model->id : $id]),
             'options' => ['class' => 'nav-link px-0 align-middle text-center'],
             'template' => '<a href="{url}"><div class="sidebar-item" data-bs-toggle="tooltip" data-bs-placement="right" title="{label}"><i class="bi bi-person"></i></div></a>'
         ],
         [
             'label' => 'Ссылки',
-            'url' =>  Url::to(['link-admin/index', 'id' => !isset($id) ?? $model->id]),
+            'url' =>  Url::to(['link-admin/index', 'id' => !isset($id) ? $model->id : $id]),
             'options' => ['class' => 'nav-link px-0 align-middle text-center'],
             'template' => '<a href="{url}"><div class="sidebar-item" data-bs-toggle="tooltip" data-bs-placement="right" title="{label}"><i class="bi bi-link"></i></div></a>'
         ],
         [
             'label' => 'Файлы',
-            'url' =>  Url::to(['file-admin/index', 'id' => !isset($id) ?? $model->id]),
+            'url' =>  Url::to(['file-admin/index', 'id' => !isset($id) ? $model->id : $id]),
             'options' => ['class' => 'nav-link px-0 align-middle text-center'],
             'template' => '<a href="{url}"><div class="sidebar-item" data-bs-toggle="tooltip" data-bs-placement="right" title="{label}"><i class="bi bi-file-earmark"></i></div></a>'
         ],
         [
             'label' => 'Тексты',
-            'url' =>  Url::to(['text-admin/index', 'id' => !isset($id) ?? $model->id]),
+            'url' =>  Url::to(['text-admin/index', 'id' => !isset($id) ? $model->id : $id]),
             'options' => ['class' => 'nav-link px-0 align-middle text-center text-dark'],
             'template' => '<a href="{url}"><div class="sidebar-item" data-bs-toggle="tooltip" data-bs-placement="right" title="{label}"><i class="bi bi-card-text"></i></div></a>'
         ],

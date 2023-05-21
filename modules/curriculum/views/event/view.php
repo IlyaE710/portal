@@ -43,19 +43,19 @@ $this->params['sidebar'] = SidebarWidget::widget([
         ],*/
         [
             'label' => 'Список',
-            'url' => Url::to(['material-admin/update', 'id' => 1]),
+            'url' => '',
             'options' => ['class' => 'nav-link px-0 align-middle'],
             'template' => '<div class="sidebar-item" onclick="togglePopup(\'popup-2\')" data-bs-toggle="tooltip" data-bs-placement="right" title="{label}"><i class="bi bi-list-check"></i></div>'
         ],
         [
             'label' => 'Ссылки',
-            'url' => Url::to(['event/view', 'id' => $model->curriculumId, '#' => 'link-grid-view']),
+            'url' => Url::to(['event/view', 'id' => $model->id, '#' => 'link-grid-view']),
             'options' => ['class' => 'nav-link px-0 align-middle text-center'],
             'template' => '<a href="{url}"><div class="sidebar-item" data-bs-toggle="tooltip" data-bs-placement="right" title="{label}"><i class="bi bi-link"></i></div></a>'
         ],
         [
             'label' => 'Файлы',
-            'url' => Url::to(['event/view', 'id' => $model->curriculumId, '#' => 'file-grid-view']),
+            'url' => Url::to(['event/view', 'id' => $model->id, '#' => 'file-grid-view']),
             'options' => ['class' => 'nav-link px-0 align-middle text-center'],
             'template' => '<a href="{url}"><div class="sidebar-item" data-bs-toggle="tooltip" data-bs-placement="right" title="{label}"><i class="bi bi-file-earmark-code"></i></div></a>'
         ],
@@ -76,6 +76,8 @@ $this->params['sidebar'] = SidebarWidget::widget([
             'dataProvider' => new ActiveDataProvider([
                 'query' => $material->getLinks(),
             ]),
+            'options' => ['class' => 'table-responsive'],
+            'tableOptions' => ['class' => 'table table-striped'],
             'columns' => [
                 ['class' => SerialColumn::class],
                 'url:url',
@@ -96,6 +98,8 @@ $this->params['sidebar'] = SidebarWidget::widget([
             'dataProvider' => new ActiveDataProvider([
                 'query' => $material->getFiles(),
             ]),
+            'options' => ['class' => 'table-responsive'],
+            'tableOptions' => ['class' => 'table table-striped'],
             'columns' => [
                 ['class' => SerialColumn::class],
                 'filename:raw',

@@ -59,7 +59,6 @@ $this->params['sidebar'] = SidebarWidget::widget([
         'dataProvider' => $dataProvider,
         'columns' => [
             ['class' => SerialColumn::class],
-            'content:html',
             [
                 'class' => ActionColumn::class,
             ],

@@ -110,6 +110,7 @@ class MaterialAdminController extends \yii\web\Controller
         }
         return $this->render('update', [
             'model' => $model,
+            'id' => $id
         ]);
     }
 
