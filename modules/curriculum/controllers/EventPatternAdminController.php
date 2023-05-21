@@ -61,7 +61,7 @@ class EventPatternAdminController extends Controller
     public function actionIndex(int $id)
     {
         $dataProvider = new ActiveDataProvider([
-            'query' => EventPattern::find(),
+            'query' => EventPattern::find()->where(['curriculumId' => $id]),
             /*
             'pagination' => [
                 'pageSize' => 50

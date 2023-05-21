@@ -14,26 +14,27 @@
     },
     "minimum-stability": "stable",
     "require": {
-        "php": ">=7.4.0",
-        "yiisoft/yii2": "~2.0.45",
-        "yiisoft/yii2-bootstrap5": "~2.0.2",
-        "yiisoft/yii2-symfonymailer": "~2.0.3",
+        "php": ">=8.0.0",
+        "yiisoft/yii2": "~2.0.47",
+        "yiisoft/yii2-bootstrap5": "*",
+        "yiisoft/yii2-symfonymailer": "*",
         "kartik-v/yii2-widget-select2": "@dev",
         "mihaildev/yii2-ckeditor": "*",
-        "kartik-v/yii2-widget-fileinput": "^1.1"
+        "kartik-v/yii2-widget-fileinput": "*",
+        "yii-dream-team/yii2-upload-behavior": "*"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",
         "yiisoft/yii2-gii": "~2.2.0",
         "yiisoft/yii2-faker": "~2.0.0",
-        "phpunit/phpunit": "~9.5.0",
-        "codeception/codeception": "^5.0.0 || ^4.0",
-        "codeception/lib-innerbrowser": "^3.0 || ^1.1",
-        "codeception/module-asserts": "^3.0 || ^1.1",
-        "codeception/module-yii2": "^1.1",
-        "codeception/module-filesystem": "^2.0 || ^1.1",
-        "codeception/verify": "^2.2",
-        "symfony/browser-kit": "^6.0 || >=2.7 <=4.2.4"
+        "phpunit/phpunit": "*",
+        "codeception/codeception": "*",
+        "codeception/lib-innerbrowser": "*",
+        "codeception/module-asserts": "*",
+        "codeception/module-yii2": "*",
+        "codeception/module-filesystem": "*",
+        "codeception/verify": "*",
+        "symfony/browser-kit": "*"
     },
     "config": {
         "allow-plugins": {

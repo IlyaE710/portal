@@ -94,26 +94,7 @@ class CurriculumAdminController extends Controller
         ]);
     }
 
-    public function actionUploadImage()
-    {
-        $model = new CourseForm();
-
-        if (Yii::$app->request->isPost) {
-            $model->image = UploadedFile::getInstance($model, 'image');
-
-            if ($model->upload()) {
-                // Успешная загрузка изображения
-                // Обновите модель курса в соответствии с новым изображением
-                $previewPath = '/courses/' . $model->image->baseName . '.' . $model->image->extension;
-
-                return $this->redirect(['select-pattern', 'previewPath' => $previewPath]);
-            }
-        }
-
-        return $this->render('upload-image', ['model' => $model]);
-    }
-
-    public function actionCreate(int $modelFormId, string $previewPath)
+    public function actionCreate(int $modelFormId): \yii\web\Response|string
     {
         $model = new Curriculum();
 
@@ -121,7 +102,6 @@ class CurriculumAdminController extends Controller
             if ($model->load($this->request->post())) {
                 $model->subjectId = $this->request->post('Curriculum')['subject'];
                 $model->groupId = $this->request->post('Curriculum')['group'];
-                $model->previewPath = $previewPath;
                 $model->save();
 
                 $modelForm = CurriculumPattern::findOne($modelFormId);
@@ -153,13 +133,13 @@ class CurriculumAdminController extends Controller
         ]);
     }
 
-    public function actionSelectPattern(string $previewPath)
+    public function actionSelectPattern()
     {
         $model = new CurriculumPattern();
 
         if ($this->request->isPost) {
             $id = $this->request->post('id');
-            return $this->redirect(['create', 'modelFormId' => $id, 'previewPath' => $previewPath]);
+            return $this->redirect(['create', 'modelFormId' => $id]);
         }
 
         return $this->render('select-pattern', [

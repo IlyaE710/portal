@@ -3,6 +3,8 @@
 namespace app\controllers;
 
 use app\models\PasswordResetRequestForm;
+use app\modules\curriculum\models\CurriculumSearch;
+use app\modules\group\models\Group;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -73,8 +75,13 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        $groups = Yii::$app->user->identity->groups;
-        return $this->render('index', ['groups' => $groups]);
+        $searchModel = new CurriculumSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->get());
+        $models = $dataProvider->models;
+        return $this->render('index', [
+            'models' => $models,
+            'searchModel' => $searchModel,
+        ]);
     }
 
     public function actionResetPassword()

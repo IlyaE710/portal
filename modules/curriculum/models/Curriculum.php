@@ -12,13 +12,14 @@ use Yii;
  * @property int $subjectId
  * @property int $groupId
  * @property string $description
- * @property string previewPath
+ * @property string $image
  * @property int $semester
  *
  * @property Event[] $events
  * @property Subject $subject
  * @property Group $group
  */
+
 class Curriculum extends \yii\db\ActiveRecord
 {
     /**
@@ -29,16 +30,24 @@ class Curriculum extends \yii\db\ActiveRecord
         return 'curriculum';
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => FileUploadBehavior::class,
+                'attribute' => 'image',
+                'filePath' => '@webroot/uploads/[[pk]].[[extension]]',
+                'fileUrl' => '/uploads/[[pk]].[[extension]]',
+            ],
+        ];
+    }
     public function rules(): array
     {
         return [
             [['subjectId', 'description'], 'required'],
             [['subjectId', 'semester', 'groupId'], 'default', 'value' => null],
             [['subjectId', 'semester', 'groupId'], 'integer'],
-            [['description', 'previewPath'], 'string'],
+            [['description'], 'string'],
             [['subjectId'], 'exist', 'skipOnError' => true, 'targetClass' => Subject::class, 'targetAttribute' => ['subjectId' => 'id']],
             [['groupId'], 'exist', 'skipOnError' => true, 'targetClass' => Group::class, 'targetAttribute' => ['groupId' => 'id']],
         ];

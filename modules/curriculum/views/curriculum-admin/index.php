@@ -17,7 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Создать', ['upload-image'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Создать', ['select-pattern'], ['class' => 'btn btn-success']) ?>
     </p>
 
 
