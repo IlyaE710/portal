@@ -2,6 +2,7 @@
 
 namespace app\modules\curriculum\models;
 
+use app\models\User;
 use app\modules\group\models\Group;
 use Yii;
 
@@ -14,10 +15,12 @@ use Yii;
  * @property string $description
  * @property string $image
  * @property int $semester
+ * @property int $authorId
  *
  * @property Event[] $events
  * @property Subject $subject
  * @property Group $group
+ * @property User $author
  */
 
 class Curriculum extends \yii\db\ActiveRecord
@@ -29,27 +32,16 @@ class Curriculum extends \yii\db\ActiveRecord
     {
         return 'curriculum';
     }
-
-    public function behaviors()
-    {
-        return [
-            [
-                'class' => FileUploadBehavior::class,
-                'attribute' => 'image',
-                'filePath' => '@webroot/uploads/[[pk]].[[extension]]',
-                'fileUrl' => '/uploads/[[pk]].[[extension]]',
-            ],
-        ];
-    }
     public function rules(): array
     {
         return [
-            [['subjectId', 'description'], 'required'],
-            [['subjectId', 'semester', 'groupId'], 'default', 'value' => null],
+            [['subjectId', 'description', 'semester'], 'required'],
+            [['subjectId', 'semester', 'groupId', 'authorId'], 'default', 'value' => null],
             [['subjectId', 'semester', 'groupId'], 'integer'],
             [['description'], 'string'],
             [['subjectId'], 'exist', 'skipOnError' => true, 'targetClass' => Subject::class, 'targetAttribute' => ['subjectId' => 'id']],
             [['groupId'], 'exist', 'skipOnError' => true, 'targetClass' => Group::class, 'targetAttribute' => ['groupId' => 'id']],
+            [['authorId'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['authorId' => 'id']],
         ];
     }
 
@@ -66,6 +58,7 @@ class Curriculum extends \yii\db\ActiveRecord
             'group' => 'Группа',
             'description' => 'Описание',
             'semester' => 'Семестр',
+            'author' => 'Автор',
         ];
     }
 
@@ -87,6 +80,11 @@ class Curriculum extends \yii\db\ActiveRecord
     public function getSubject(): \yii\db\ActiveQuery
     {
         return $this->hasOne(Subject::class, ['id' => 'subjectId']);
+    }
+
+    public function getAuthor(): \yii\db\ActiveQuery
+    {
+        return $this->hasOne(User::class, ['id' => 'authorId']);
     }
 
     /**

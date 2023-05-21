@@ -104,14 +104,27 @@ class EventPatternAdminController extends Controller
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
-                $model->typeId = $this->request->post('EventPattern')['type'];
-                $model->curriculumId = $id;
-                $model->save();
-                $materialIds = $this->request->post('EventPattern')['materials'];
-                $materials = Material::findAll($materialIds);
-                foreach ($materials as $material) {
-                    $model->link('materials', $material);
+                $transaction = Yii::$app->db->beginTransaction();
+                try {
+                    $model->typeId = $this->request->post('EventPattern')['type'];
+                    $model->curriculumId = $id;
+                    $model->save();
+
+                    $materialIds = $this->request->post('EventPattern')['materials'];
+                    $materials = Material::findAll($materialIds);
+                    foreach ($materials as $material) {
+                        $model->link('materials', $material);
+                    }
+//                    if (isset($this->request->post('EventPattern')['materials'])) {
+//
+//                    }
+                    $transaction->commit();
+                } catch (Exception $e) {
+                    $transaction->rollBack();
+                    Yii::$app->session->setFlash('error', 'Произошла ошибка при обновлении записи:');
+                    return $this->redirect(['create', 'id' => $id]);
                 }
+
                 return $this->redirect(['index', 'id' => $id]);
             }
         }
@@ -150,7 +163,8 @@ class EventPatternAdminController extends Controller
                 $transaction->commit();
             } catch (Exception $e) {
                 $transaction->rollBack();
-                Yii::$app->session->setFlash('error', 'Произошла ошибка при обновлении записи: ' . $e->getMessage());
+                Yii::$app->session->setFlash('error', 'Произошла ошибка при обновлении записи:');
+                return $this->redirect(['update', 'id' => $model->id]);
             }
             return $this->redirect(['index', 'id' => $model->curriculumId]);
         }

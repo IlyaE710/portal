@@ -25,6 +25,7 @@ use yii\db\ActiveRecord;
 
 class User extends ActiveRecord implements \yii\web\IdentityInterface
 {
+    private $fullname;
     const STATUS_ACTIVE = ['admin', 'teacher', 'student'];
     private static array $users = [
         '100' => [
@@ -48,6 +49,8 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
             'email' => 'email',
             'role' => 'роль',
             'passwordHash' => 'Хэш пароля',
+            'author' => 'Автор',
+            'fullname' => 'Автор',
         ];
     }
 
@@ -130,5 +133,10 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
     public function isBanned(): bool
     {
         return $this->role === 'banned';
+    }
+
+    public function getFullname(): string
+    {
+        return $this->lastname . ' ' . $this->firstname[0] . '. ' . $this->patronymic[0] . '.';
     }
 }

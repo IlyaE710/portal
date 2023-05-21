@@ -14,42 +14,45 @@ $this->title = 'Меропрития';
 $this->params['breadcrumbs'][] = ['label' => 'Курсы', 'url' => ['/curriculum/curriculum-admin/index']];
 $this->params['breadcrumbs'][] = ['label' => 'Курс', 'url' => ['/curriculum/curriculum-admin/update', 'id' => $id]];
 $this->params['breadcrumbs'][] = $this->title;
+
+$this->params['sidebar'] = SidebarWidget::widget([
+    'items' => [
+        [
+            'label' => 'Основная информация',
+            'url' => Url::to(['curriculum-admin/update', 'id' => $id]),
+            'options' => ['class' => 'nav-link px-0 align-middle text-center'],
+            'template' => '<a href="{url}"><div class="sidebar-item" data-bs-toggle="tooltip" data-bs-placement="right" title="{label}"><i class="bi bi-person"></i></div></a>'
+        ],
+        [
+            'label' => 'Меропрития',
+            'url' => Url::toRoute(['event-admin/index', 'id' => $id]),
+            'options' => ['class' => 'nav-link px-0 align-middle text-center'],
+            'template' => '<a href="{url}"><div class="sidebar-item" data-bs-toggle="tooltip" data-bs-placement="right" title="{label}"><i class="bi bi-calendar-event"></i></div></a>'
+        ],
+    ],
+]);
 ?>
 
-<div class="row">
-    <div class="col-md-3">
-        <?= SidebarWidget::widget([
-            'items' => [
-                ['label' => 'Основная информация', 'url' => Url::to(['curriculum-admin/update', 'id' => $id]), 'options' => ['class' => 'nav-link px-0 align-middle']],
-                ['label' => 'Меропрития', 'url' => Url::toRoute(['event-admin/index', 'id' => $id]), 'options' => ['class' => 'nav-link px-0 align-middle']],
-            ]
-        ]); ?>
-    </div>
-    <div class="col-md-9">
-        <div class="event-index">
-            <p>
-                <?= Html::a('Создать', ['create', 'id' => $id], ['class' => 'btn btn-success']) ?>
-            </p>
+<div class="event-index">
+    <p>
+        <?= Html::a('Создать', ['create', 'id' => $id], ['class' => 'btn btn-success']) ?>
+    </p>
 
 
-            <?= GridView::widget([
-                'dataProvider' => $dataProvider,
-                'columns' => [
-                    ['class' => 'yii\grid\SerialColumn'],
+    <?= GridView::widget([
+        'dataProvider' => $dataProvider,
+        'columns' => [
+            ['class' => 'yii\grid\SerialColumn'],
 
-                    'title',
-                    'duration',
-                    'type.name',
-                    [
-                        'class' => ActionColumn::class,
-                        'urlCreator' => function ($action, Event $model, $key, $index, $column) {
-                            return Url::toRoute([$action, 'id' => $model->id]);
-                        }
-                    ],
-                ],
-            ]); ?>
-
-
-        </div>
-    </div>
+            'title',
+            'duration',
+            'type.name',
+            [
+                'class' => ActionColumn::class,
+                'urlCreator' => function ($action, Event $model, $key, $index, $column) {
+                    return Url::toRoute([$action, 'id' => $model->id]);
+                }
+            ],
+        ],
+    ]); ?>
 </div>

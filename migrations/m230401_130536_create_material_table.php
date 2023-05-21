@@ -17,8 +17,8 @@ class m230401_130536_create_material_table extends Migration
             'title' => $this->string()->notNull(),
             'description' => $this->text(),
             'type' => $this->integer(),
-            'created_at' => $this->timestamp(),
-            'updated_at' => $this->timestamp(),
+            'createdAt' => $this->dateTime(),
+            'updatedAt' => $this->dateTime(),
         ]);
     }
 

@@ -20,6 +20,7 @@ class m230422_192907_create_curriculum_table extends Migration
             'subjectId' => $this->integer()->notNull(),
             'description' => $this->text()->notNull(),
             'semester' => $this->integer()->notNull()->defaultValue(1),
+            'image' => $this->text()->defaultValue('thumb.png'),
         ]);
 
         // creates index for column `subjectId`

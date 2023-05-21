@@ -31,7 +31,7 @@ class CurriculumPattern extends \yii\db\ActiveRecord
     {
         return [
             [['subjectId', 'description'], 'required'],
-            [['subjectId'], 'default', 'value' => null],
+            //[['subjectId'], 'default', 'value' => null],
             [['subjectId'], 'integer'],
             [['description'], 'string'],
             [['subjectId'], 'exist', 'skipOnError' => true, 'targetClass' => Subject::class, 'targetAttribute' => ['subjectId' => 'id']],

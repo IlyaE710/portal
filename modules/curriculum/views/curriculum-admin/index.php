@@ -29,6 +29,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             'subject.name',
             'group.name',
+            'author.fullname',
             'description:ntext',
             'semester',
             [

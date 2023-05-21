@@ -6,6 +6,7 @@ use app\modules\curriculum\models\CourseForm;
 use app\modules\curriculum\models\Curriculum;
 use app\modules\curriculum\models\CurriculumPattern;
 use app\modules\curriculum\models\Event;
+use app\modules\curriculum\models\SelectCurriculumForm;
 use Yii;
 use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
@@ -102,6 +103,18 @@ class CurriculumAdminController extends Controller
             if ($model->load($this->request->post())) {
                 $model->subjectId = $this->request->post('Curriculum')['subject'];
                 $model->groupId = $this->request->post('Curriculum')['group'];
+                $model->authorId = Yii::$app->user->id;
+
+                $image = UploadedFile::getInstance($model, 'image');
+                if ($image !== null) {
+                    // Генерируем уникальное имя файла
+                    $filename = uniqid() . '.' . $image->extension;
+                    // Сохраняем изображение в папку
+                    $image->saveAs(Yii::getAlias('@app/web/uploads/course/') . $filename);
+                    // Сохраняем имя файла в модель
+                    $model->image = $filename;
+                }
+
                 $model->save();
 
                 $modelForm = CurriculumPattern::findOne($modelFormId);
@@ -133,13 +146,12 @@ class CurriculumAdminController extends Controller
         ]);
     }
 
-    public function actionSelectPattern()
+    public function actionSelectPattern(): \yii\web\Response|string
     {
-        $model = new CurriculumPattern();
+        $model = new SelectCurriculumForm();
 
-        if ($this->request->isPost) {
-            $id = $this->request->post('id');
-            return $this->redirect(['create', 'modelFormId' => $id]);
+        if ($this->request->isPost && $model->load($this->request->post()) && $model->validate()) {
+            return $this->redirect(['create', 'modelFormId' => $model->idTemplate]);
         }
 
         return $this->render('select-pattern', [
@@ -161,6 +173,21 @@ class CurriculumAdminController extends Controller
         if ($this->request->isPost && $model->load($this->request->post())) {
             $model->groupId = $this->request->post('Curriculum')['group'];
             $model->subjectId = $this->request->post('Curriculum')['subject'];
+            $imageOld = $model->image;
+
+            $image = UploadedFile::getInstance($model, 'image');
+            if ($image !== null) {
+                // Генерируем уникальное имя файла
+                $filename = uniqid() . '.' . $image->extension;
+                // Сохраняем изображение в папку
+                $image->saveAs(Yii::getAlias('@app/web/uploads/course/') . $filename);
+                // Сохраняем имя файла в модель
+                $model->image = $filename;
+                if ($imageOld !== 'thumb.png') {
+                    unlink(Yii::getAlias('@app/web/uploads/course/') . $imageOld);
+                }
+            }
+
             $model->save();
 
             return $this->redirect(['view', 'id' => $model->id]);
@@ -180,7 +207,13 @@ class CurriculumAdminController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $model = $this->findModel($id);
+        $image = $model->image;
+        if ($image !== 'thumb.png') {
+            unlink(Yii::getAlias('@app/web/uploads/course/'. $image));
+        }
+
+        $model->delete();
 
         return $this->redirect(['index']);
     }

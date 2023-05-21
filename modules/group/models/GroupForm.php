@@ -2,7 +2,10 @@
 
 namespace app\modules\group\models;
 
-class GroupForm extends \yii\base\Model
+use Yii;
+use yii\base\Model;
+
+class GroupForm extends Model
 {
     public $id;
     public $name;
@@ -14,7 +17,9 @@ class GroupForm extends \yii\base\Model
         return [
             [['name'], 'required'],
             [['name'], 'string', 'max' => 255],
+            ['name', 'unique', 'targetClass' =>Group::class, 'message' => 'Такая группа уже есть.'],
             [['users'], 'safe'],
+            [['users'], 'default', 'value' => null],
             [['newUsers'], 'safe'],
             [['newUsers'], 'default', 'value' => null],
             [['id'], 'integer'],

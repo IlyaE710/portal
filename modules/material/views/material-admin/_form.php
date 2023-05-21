@@ -58,6 +58,11 @@ $this->params['sidebar'] = SidebarWidget::widget([
                 ],
             ]); ?>
 
+            <?= Html::a(
+                'Создать',
+                Url::toRoute(['tag-admin/create']), ['target' => '_blank', 'data-pjax' => '0']
+            ); ?>
+
             <?= $form->field($model, 'description')->textarea(['rows' => 19]) ?>
 
             <div class="form-group" role="group"">

@@ -25,6 +25,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
 <head>
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body class="d-flex flex-column h-100" id="header-main">
 <?php $this->beginBody() ?>
@@ -119,9 +120,39 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
 </main>
     </div>
 
-<footer class="bg-secondary text-white text-center py-3">
-    <div class="container">
-        <p>&copy; 2023 Мой сайт</p>
+<footer class="bg-light text-muted">
+    <div class="container py-4">
+        <div class="row">
+            <div class="col-md-4">
+                <h3>Контакты</h3>
+                <ul>
+                    <li>Адрес: ул. Название, город, страна</li>
+                    <li>Телефон: +123456789</li>
+                    <li>Email: info@example.com</li>
+                </ul>
+            </div>
+            <div class="col-md-4">
+                <h3>Полезные ссылки</h3>
+                <ul>
+                    <li><a href="#">Главная</a></li>
+                    <li><a href="#">Курсы</a></li>
+                    <li><a href="#">Расписание</a></li>
+                    <li><a href="#">Контакты</a></li>
+                </ul>
+            </div>
+            <div class="col-md-4">
+                <h3>Социальные сети</h3>
+                <ul class="list-inline">
+                    <li class="list-inline-item"><a href="#"><i class="fa fa-vk"></i></a></li>
+                    <?= Html::mailto(Yii::$app->params['supportEmail']); ?>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="bg-dark text-center py-2">
+        <div class="container">
+            <p class="mb-0 text-white">&copy; 2023 Ваш Учебный Портал. Все права защищены.</p>
+        </div>
     </div>
 </footer>
 

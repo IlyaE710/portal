@@ -3,7 +3,10 @@
 namespace app\modules\material\models;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
+use yii\db\BaseActiveRecord;
+use yii\db\Expression;
 
 /**
  * This is the model class for table "material".
@@ -50,6 +53,20 @@ class Material extends ActiveRecord
         ];
     }
 
+    public function behaviors(): array
+    {
+        return [
+            [
+                'class' => TimestampBehavior::class,
+                'attributes' => [
+                    BaseActiveRecord::EVENT_BEFORE_INSERT => ['createdAt', 'updatedAt'],
+                    BaseActiveRecord::EVENT_BEFORE_UPDATE => ['updatedAt'],
+                ],
+                'value' => new Expression('NOW()'),
+            ],
+        ];
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -62,6 +79,7 @@ class Material extends ActiveRecord
             'type' => 'Type',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
+            'tags' => 'Тэги',
         ];
     }
 

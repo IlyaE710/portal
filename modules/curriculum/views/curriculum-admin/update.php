@@ -11,7 +11,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Курс', 'url' => ['view', 'id' 
 $this->params['breadcrumbs'][] = 'Редактирования';
 ?>
 <div class="curriculum-update">
-
+    <img src="<?= Yii::getAlias('@web/uploads/course/'. $model->image); ?>" alt="Изображение курса">
     <?= $this->render('_form', [
         'model' => $model,
     ]) ?>
