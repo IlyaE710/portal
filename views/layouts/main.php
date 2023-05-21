@@ -77,7 +77,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                 Yii::$app->user->identity->role == 'admin'
                     ? ['label' => 'Админ панель', 'url' => ['/admin/index']]
                     : '',
-                ['label' => 'Профиль', 'url' => ['/profile/profile/view', 'id' => Yii::$app->user->id]],
+                ['label' => 'Профиль', 'url' => ['/profile']],
                 ['label' => 'Выход', 'url' => ['/site/logout'], 'linkOptions' => ['data-method' => 'post']],
             ] : [],
         ],
