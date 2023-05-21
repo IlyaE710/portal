@@ -4,6 +4,7 @@ namespace app\modules\material\controllers;
 
 use app\modules\material\models\Material;
 use app\modules\material\models\Tag;
+use Exception;
 use Yii;
 use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
@@ -66,10 +67,12 @@ class MaterialAdminController extends \yii\web\Controller
             $post = $this->request->post();
             if ($model->load($post) && $model->validate() && $model->save()) {
                 $tagIds = $post['Material']['tags'];
-                $tags = Tag::findAll($tagIds);
+                if (!empty($tagIds)) {
+                    $tags = Tag::findAll($tagIds);
 
-                foreach ($tags as $tag) {
-                    $model->link('tags', $tag);
+                    foreach ($tags as $tag) {
+                        $model->link('tags', $tag);
+                    }
                 }
 
                 return $this->redirect(['update', 'id' => $model->id]);
@@ -88,24 +91,23 @@ class MaterialAdminController extends \yii\web\Controller
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
             $post = $this->request->post();
             $tagIds = $post['Material']['tags'];
-            $transaction = Yii::$app->db->beginTransaction();
-            try {
-                $tags = Tag::findAll($tagIds);
-                $model->unlinkAll('tags', true);
+            if (!empty($tagIds)) {
+                $transaction = Yii::$app->db->beginTransaction();
+                try {
+                    $tags = Tag::findAll($tagIds);
+                    $model->unlinkAll('tags', true);
 
-                foreach ($tags as $tag) {
-                    $model->link('tags', $tag);
+                    foreach ($tags as $tag) {
+                        $model->link('tags', $tag);
+                    }
+
+                    $transaction->commit();
+                } catch (Exception $e) {
+                    $transaction->rollBack();
+                    Yii::$app->session->setFlash('error', 'Произошла ошибка при обновлении записи: ' . $e->getMessage());
                 }
-
-                $transaction->commit();
-            } catch (Exception $e) {
-                $transaction->rollBack();
-                Yii::$app->session->setFlash('error', 'Произошла ошибка при обновлении записи: ' . $e->getMessage());
             }
-
-            return $this->redirect(['view', 'id' => $model->id]);
         }
-
         return $this->render('update', [
             'model' => $model,
         ]);

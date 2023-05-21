@@ -59,10 +59,10 @@ $this->params['sidebar'] = SidebarWidget::widget([
             'overwriteInitial' => false,
             'maxFileSize' => 2000,
         ]
-    ]) ?>
+    ])->label(false) ?>
 
     <div class="form-group" role="group"">
-        <?= Html::submitButton("Сохранить", ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton("Сохранить", ['class' => 'btn btn-success my-2']) ?>
     </div>
 
 <?php $form = ActiveForm::end(); ?>

@@ -66,7 +66,7 @@ $this->params['sidebar'] = SidebarWidget::widget([
             <?= $form->field($model, 'description')->textarea(['rows' => 19]) ?>
 
             <div class="form-group" role="group"">
-            <?= Html::submitButton("Сохранить", ['class' => 'btn btn-success']) ?>
+            <?= Html::submitButton("Сохранить", ['class' => 'btn btn-success my-2']) ?>
         </div>
 
         <?php $form = ActiveForm::end(); ?>

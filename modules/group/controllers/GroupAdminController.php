@@ -135,14 +135,17 @@ class GroupAdminController extends Controller
 
         if ($this->request->isPost) {
             $post = $this->request->post('GroupForm');
-            $model->newUsers = User::findAll(['id' => $post['newUsers']]);
-            $group = $this->findModel($groupId);
 
-            foreach ($model->newUsers as $user) {
-                try {
-                    $group->link('users', $user);
-                } catch (\Exception $e) {
-                    continue;
+            if (!empty($post['newUsers'])) {
+                $model->newUsers = User::findAll(['id' => $post['newUsers']]);
+                $group = $this->findModel($groupId);
+                
+                foreach ($model->newUsers as $user) {
+                    try {
+                        $group->link('users', $user);
+                    } catch (\Exception $e) {
+                        continue;
+                    }
                 }
             }
 

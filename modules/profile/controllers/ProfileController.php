@@ -40,21 +40,16 @@ class ProfileController extends Controller
                 'class' => AccessControl::class,
                 'rules' => [
                     [
-                        'actions' => ['index', 'create', 'create-user', 'update', 'delete'],
+                        'actions' => ['index', 'create', 'create-user', 'update', 'delete', 'view'],
                         'allow' => true,
                         'roles' => ['admin'],
-                    ],
-                    [
-                        'actions' => ['view', 'update'],
-                        'allow' => true,
-                        'roles' => ['teacher'],
                     ],
                 ],
             ],
             'verbs' => [
                 'class' => VerbFilter::class,
                 'actions' => [
-                    'logout' => ['post'],
+                    'delete' => ['post'],
                 ],
             ],
         ];

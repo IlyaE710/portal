@@ -9,12 +9,12 @@ use yii\widgets\Menu;
 /** @var app\modules\curriculum\models\CurriculumPattern $model */
 
 $this->title = 'Редактирование';
-$this->params['breadcrumbs'][] = ['label' => 'Шаблоны учебных планов', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => 'Шаблон', 'url' => ['view', 'id' => $model->id]];
+$this->params['breadcrumbs'][] = ['label' => 'Шаблоны курсов', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Курс', 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="content">
-<!--    <h1>--><?php //= Html::encode($this->title) ?><!--</h1>-->
+    <h1><?= Html::encode($this->title) ?></h1>
 
     <?= $this->render('_form', [
         'model' => $model,

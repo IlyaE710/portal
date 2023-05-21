@@ -59,7 +59,7 @@ $this->params['sidebar'] = SidebarWidget::widget([
     <?= $form->field($model, 'semester')->textInput() ?>
 
     <div class="form-group">
-        <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton(Yii::t('app', 'Сохранить'), ['class' => 'btn btn-success my-2']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

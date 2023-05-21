@@ -10,7 +10,7 @@ use yii\grid\GridView;
 /** @var yii\web\View $this */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Шаблоны учебных планов';
+$this->title = 'Шаблоны курсов';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="curriculum-pattern-index">
@@ -41,14 +41,10 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
             'subject.name',
             'description:ntext',
             [
                 'class' => ActionColumn::class,
-                'urlCreator' => function ($action, CurriculumPattern $model, $key, $index, $column) {
-                    return Url::toRoute([$action, 'id' => $model->id]);
-                 }
             ],
         ],
     ]); ?>

@@ -35,6 +35,7 @@ class GroupForm extends Model
             'id' => 'ID',
             'name' => 'Название',
             'users' => 'Студенты',
+            'newUsers' => 'Студенты',
         ];
     }
 }

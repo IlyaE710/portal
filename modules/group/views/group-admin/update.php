@@ -29,7 +29,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 
     <div class="form-group">
-        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton('Сохранить', ['class' => 'btn btn-success my-2']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>
@@ -37,8 +37,8 @@ $this->params['breadcrumbs'][] = $this->title;
 </div>
 <div class="row">
     <?php Modal::begin([
-        'title' => '<h2>Модальное окно</h2>',
-        'toggleButton' => ['label' => 'Добавить студента', 'class' => 'btn btn-primary'],
+        'title' => '<h2>Добавить студентов</h2>',
+        'toggleButton' => ['label' => 'Добавить студентов', 'class' => 'btn btn-primary mb-2 col-sm-2'],
     ]); ?>
 
     <?php $form = ActiveForm::begin([
@@ -55,7 +55,7 @@ $this->params['breadcrumbs'][] = $this->title;
     ]); ?>
 
     <div class="form-group">
-        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton('Добавить', ['class' => 'btn btn-success my-2']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

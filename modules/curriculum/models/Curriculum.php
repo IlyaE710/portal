@@ -59,6 +59,7 @@ class Curriculum extends \yii\db\ActiveRecord
             'description' => 'Описание',
             'semester' => 'Семестр',
             'author' => 'Автор',
+            'image' => 'Изображение',
         ];
     }
 

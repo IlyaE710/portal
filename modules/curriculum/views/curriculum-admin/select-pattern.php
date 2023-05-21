@@ -24,7 +24,7 @@ $this->params['breadcrumbs'][] = $this->title;
         ]); ?>
 
         <div class="form-group">
-            <?= Html::submitButton('Далее', ['class' => 'btn btn-success']) ?>
+            <?= Html::submitButton('Далее', ['class' => 'btn btn-success my-2']) ?>
         </div>
 
         <?php ActiveForm::end(); ?>

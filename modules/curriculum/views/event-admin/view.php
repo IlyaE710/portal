@@ -17,11 +17,11 @@ use yii\widgets\Pjax;
 /** @var app\modules\curriculum\models\Event $model */
 
 $this->title = $model->type->name . ' ' . $model->title;
-$this->params['breadcrumbs'][] = ['label' => 'Шаблоны учебных планов', 'url' => ['curriculum-admin/index']];
-$this->params['breadcrumbs'][] = ['label' => 'Шаблон', 'url' => ['curriculum-admin/update', 'id' => $model->curriculumId]];
+$this->params['breadcrumbs'][] = ['label' => 'Курсы', 'url' => ['curriculum-admin/index']];
+$this->params['breadcrumbs'][] = ['label' => 'Курс', 'url' => ['curriculum-admin/update', 'id' => $model->curriculumId]];
 $this->params['breadcrumbs'][] = ['label' => 'Мероприятия', 'url' => ['index', 'id' => $model->curriculumId]];
 $this->params['breadcrumbs'][] = ['label' => 'Мероприятие', 'url' => ['update', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = 'Вид';
+$this->params['breadcrumbs'][] = $this->title;
 
 $itemsEvent = [];
 $items = [];
@@ -54,8 +54,8 @@ $this->params['sidebar'] = SidebarWidget::widget([
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id], [
+        <?= Html::a('Редактировать', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Удалить', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
                 'confirm' => 'Are you sure you want to delete this item?',
