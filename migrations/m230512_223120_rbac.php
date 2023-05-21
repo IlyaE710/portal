@@ -27,12 +27,7 @@ class m230512_223120_rbac extends Migration
         $bannedRole = $auth->createRole('banned');
         $auth->add($bannedRole);
 
-        // Назначаем разрешения
-        $manageUsersPermission = $auth->createPermission('manageUsers');
-        $auth->add($manageUsersPermission);
-
         // Связываем разрешения с ролями
-        $auth->addChild($adminRole, $manageUsersPermission);
         $auth->addChild($adminRole, $teacherRole);
 
         $user = new \app\models\User();

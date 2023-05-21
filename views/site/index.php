@@ -2,15 +2,17 @@
 
 /** @var yii\web\View $this */
 /** @var Curriculum $curriculum */
+/** @var Group $groups */
 
 use app\modules\curriculum\models\Curriculum;
+use app\modules\group\models\Group;
 use yii\helpers\Html;
 
-$this->title = 'My Yii Application';
-$user = Yii::$app->user->identity;
-$groups = $user->groups;
+$this->title = 'Учебный портал ВУЗа';
 ?>
+<div class="row">
 
+</div>
 <div class="row">
         <?php foreach($groups as $group): ?>
             <?php foreach($group->curriculums as $curriculum): ?>
