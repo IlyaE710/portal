@@ -12,21 +12,21 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
+    <?= $form->field($model, 'lastname')->textInput(['maxlength' => true]) ?>
+
     <?= $form->field($model, 'firstname')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'patronymic')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'lastname')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'passwordHash')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'role')->dropDownList([
-        0 => 'student',
-        1 => 'teacher',
-        2 => 'admin',
-        3 => 'banned',
+        'student' => 'student',
+        'teacher' => 'teacher',
+        'admin' => 'admin',
+        'banned' => 'banned',
     ]) ?>
 
     <div class="form-group">

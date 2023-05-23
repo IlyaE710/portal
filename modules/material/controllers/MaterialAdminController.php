@@ -106,6 +106,8 @@ class MaterialAdminController extends \yii\web\Controller
                     $transaction->rollBack();
                     Yii::$app->session->setFlash('error', 'Произошла ошибка при обновлении записи: ' . $e->getMessage());
                 }
+            } else {
+                $model->unlinkAll('tags', true);
             }
         }
         return $this->render('update', [

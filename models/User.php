@@ -39,6 +39,16 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
         ],
     ];
 
+    public function rules()
+    {
+        return [
+            // username and password are both required
+            [['email', 'passwordHash'], 'required'],
+            [['email', 'passwordHash', 'firstname', 'lastname', 'role'], 'string'],
+            [['email'], 'email'],
+        ];
+    }
+
     public function attributeLabels()
     {
         return [
@@ -137,6 +147,9 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
 
     public function getFullname(): string
     {
-        return $this->lastname . ' ' . $this->firstname[0] . '. ' . $this->patronymic[0] . '.';
+        if (isset($this->lastname) && isset($this->firstname) && isset($this->patronymic)) {
+            return $this->lastname . ' ' . $this->firstname[0] . '. ' . $this->patronymic[0] . '.';
+        }
+        return '(не задано)';
     }
 }

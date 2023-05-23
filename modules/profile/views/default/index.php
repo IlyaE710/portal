@@ -27,7 +27,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="col-md-6">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">Группы</h5>
+                    <h5 class="card-title"><?= count($model->groups) > 1 ? 'Группы' : 'Группа' ?></h5>
                     <?php foreach($model->groups as $group): ?>
                         <p class="card-text"><strong><?= Html::encode($group->name) ?></strong></p>
                     <?php endforeach; ?>

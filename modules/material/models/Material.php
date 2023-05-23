@@ -30,6 +30,7 @@ use yii\db\Expression;
  */
 class Material extends ActiveRecord
 {
+    public array $materials;
     /**
      * {@inheritdoc}
      */

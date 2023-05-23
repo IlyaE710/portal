@@ -40,7 +40,7 @@ $this->params['sidebar'] = SidebarWidget::widget([
 
         <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
 
-        <?= $form->field($model, 'type')->widget(Select2::class, [
+        <?= $form->field($model, 'typeId')->widget(Select2::class, [
             'data' => ArrayHelper::map(EventType::find()->all(), 'id', 'name'),
             'options' => ['placeholder' => 'Выберите тэги ...'],
         ]); ?>
@@ -49,7 +49,6 @@ $this->params['sidebar'] = SidebarWidget::widget([
             Url::toRoute(['event-type-admin/index']), ['target' => '_blank', 'data-pjax' => '0']
         ); ?>
 
-        <?= '<label class="control-label w-100">Материалы</label>'; ?>
         <?= $form->field($model, 'materials')->widget(Select2::class, [
             'data' => ArrayHelper::map(Material::find()->all(), 'id', 'title'),
             'options' => ['placeholder' => 'Выберите материалы ...'],
@@ -57,7 +56,7 @@ $this->params['sidebar'] = SidebarWidget::widget([
                 'allowClear' => true,
                 'multiple' => true,
             ],
-        ])->label(false); ?>
+        ]); ?>
 
         <?= Html::a(
             'Создать',
@@ -65,7 +64,7 @@ $this->params['sidebar'] = SidebarWidget::widget([
         ); ?>
 
         <div class="form-group">
-            <?= Html::submitButton(Yii::t('app', 'Save'), ['class' => 'btn btn-success']) ?>
+            <?= Html::submitButton(Yii::t('app', 'Сохранить'), ['class' => 'btn btn-success my-2']) ?>
         </div>
 
         <?php ActiveForm::end(); ?>

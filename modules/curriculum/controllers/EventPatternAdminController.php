@@ -106,9 +106,10 @@ class EventPatternAdminController extends Controller
             if ($model->load($this->request->post())) {
                 $transaction = Yii::$app->db->beginTransaction();
                 try {
-                    $model->typeId = $this->request->post('EventPattern')['type'];
                     $model->curriculumId = $id;
-                    $model->save();
+                    if (!$model->save()) {
+                        throw new \yii\db\Exception('Не сохранились данные');
+                    }
 
                     $materialIds = $this->request->post('EventPattern')['materials'];
                     $materials = Material::findAll($materialIds);
@@ -148,7 +149,6 @@ class EventPatternAdminController extends Controller
 
         if ($this->request->isPost && $model->load($this->request->post())) {
             $materialIds = $this->request->post('EventPattern')['materials'];
-            $model->typeId = $this->request->post('EventPattern')['type'];
             $model->save();
 
             $transaction = Yii::$app->db->beginTransaction();

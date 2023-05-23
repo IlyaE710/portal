@@ -10,8 +10,8 @@ use yii\widgets\ActiveForm;
 /** @var yii\web\View $this */
 /** @var app\modules\curriculum\models\CurriculumPattern $model */
 
-$this->title = 'Создать шаблон учебного плана';
-$this->params['breadcrumbs'][] = ['label' => 'Curriculum Patterns', 'url' => ['index']];
+$this->title = 'Создать шаблон курса';
+$this->params['breadcrumbs'][] = ['label' => 'Шаблоны курсов', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="curriculum-pattern-create">
@@ -22,7 +22,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
         <?php $form = ActiveForm::begin(); ?>
 
-        <?= $form->field($model, 'subject')->widget(Select2::class, [
+        <?= $form->field($model, 'subjectId')->widget(Select2::class, [
             'data' => ArrayHelper::map(Subject::find()->all(), 'id', 'name'),
             'options' => ['placeholder' => 'Выберите прмедмет...'],
         ]); ?>

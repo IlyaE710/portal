@@ -37,6 +37,27 @@ services:
     volumes:
       - ./docker/postgres:/docker-entrypoint-initdb.d
       - ./docker/postgres:/var/lib/postgresql/data
+  pgbackups:
+    image: prodrigestivill/postgres-backup-local
+    volumes:
+      - ./backups:/backups
+    links:
+      - postgres
+    depends_on:
+      - postgres
+    environment:
+      - POSTGRES_HOST=postgres
+      - POSTGRES_PORT=5432
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      #  - POSTGRES_PASSWORD_FILE=/run/secrets/db_password <-- alternative for POSTGRES_PASSWORD (to use with docker secrets)
+      - POSTGRES_EXTRA_OPTS=-Z6 --schema=public --blobs
+      - SCHEDULE=@daily
+      - BACKUP_KEEP_DAYS=7
+      - BACKUP_KEEP_WEEKS=4
+      - BACKUP_KEEP_MONTHS=6
+      - HEALTHCHECK_PORT=8080
   composer:
     image: composer/composer:2.5.5
     container_name: composer

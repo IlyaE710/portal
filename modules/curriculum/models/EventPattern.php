@@ -51,10 +51,11 @@ class EventPattern extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'title' => 'Заголовок',
-            'typeId' => 'Type ID',
+            'typeId' => 'Тип',
             'type' => 'Тип',
             'curriculumId' => 'Curriculum ID',
             'curriculum' => 'Курс',
+            'materials' => 'Материалы',
         ];
     }
 

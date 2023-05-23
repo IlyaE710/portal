@@ -27,7 +27,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
     <?php $this->head() ?>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
-<body class="d-flex flex-column h-100" id="header-main">
+<body class="d-flex flex-column h-100">
 <?php $this->beginBody() ?>
 
 <header id="header">

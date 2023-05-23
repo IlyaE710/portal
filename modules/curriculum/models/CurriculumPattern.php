@@ -45,7 +45,7 @@ class CurriculumPattern extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'subjectId' => 'Subject ID',
+            'subjectId' => 'Предмет',
             'subject' => 'Предмет',
             'description' => 'Описание',
         ];

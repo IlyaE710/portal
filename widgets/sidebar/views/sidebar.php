@@ -1,6 +1,7 @@
 <?php
 
 use yii\bootstrap5\NavBar;
+use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\Menu; ?>
 
@@ -28,7 +29,10 @@ use yii\widgets\Menu; ?>
             <h3 class="popup-title">Содержание</h3>
             <div class="row">
                 <?php foreach($collapses as $collapse): ?>
-                    <div class="col-sm-12"><a href="<?= $collapse['url']?>"><?= $collapse['label']?></a></div>
+                    <div class="col-sm-12"><?= Html::a(
+                            $collapse['label'],
+                            $collapse['url'], ['data-pjax' => '0']
+                        ); ?></div>
                 <?php endforeach; ?>
             </div>
 

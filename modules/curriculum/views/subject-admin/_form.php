@@ -10,7 +10,12 @@ use yii\widgets\ActiveForm;
 
 <div class="subject-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin([
+        'options' => [
+            'data-pjax' => 1, // Включение PJAX
+            'class' => 'pjax-filter' // Уникальный класс для фильтра
+        ],
+    ]); ?>
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
 

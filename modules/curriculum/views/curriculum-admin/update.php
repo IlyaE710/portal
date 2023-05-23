@@ -11,7 +11,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Курс', 'url' => ['view', 'id' 
 $this->params['breadcrumbs'][] = 'Редактирования';
 ?>
 <div class="curriculum-update">
-    <?= Html::img(Yii::getAlias('@web/uploads/course/'. $model->image), ['class' => 'img-thumbnail']) ?>
+    <?= Html::img(Yii::getAlias('@web/uploads/course/'. $model->image), ['width' => '200px', 'class' => 'img-thumbnail']) ?>
     <?= $this->render('_form', [
         'model' => $model,
     ]) ?>

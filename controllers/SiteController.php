@@ -73,18 +73,18 @@ class SiteController extends Controller
      *
      * @return string
      */
-    public function actionIndex()
+    public function actionIndex(): string
     {
         $searchModel = new CurriculumSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->get());
-        $models = $dataProvider->models;
+
         return $this->render('index', [
-            'models' => $models,
+            'models' => $dataProvider->models,
             'searchModel' => $searchModel,
         ]);
     }
 
-    public function actionResetPassword()
+    public function actionResetPassword(): Response|string
     {
         $model = new PasswordResetRequestForm();
 

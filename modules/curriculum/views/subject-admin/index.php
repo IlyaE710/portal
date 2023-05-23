@@ -5,12 +5,14 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
 use yii\grid\GridView;
+use yii\widgets\Pjax;
 
 /** @var yii\web\View $this */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
 $this->title = 'Предметы';
 $this->params['breadcrumbs'][] = $this->title;
+Pjax::begin();
 ?>
 <div class="subject-index">
 
@@ -33,6 +35,5 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
         ],
     ]); ?>
-
-
 </div>
+<?php Pjax::end();

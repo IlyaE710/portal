@@ -22,8 +22,8 @@ class UserCreateForm extends \yii\base\Model
     {
         return [
             'id' => 'ID',
-            'email' => 'email',
-            'role' => 'роль',
+            'email' => 'Email',
+            'role' => 'Роль',
         ];
     }
 }

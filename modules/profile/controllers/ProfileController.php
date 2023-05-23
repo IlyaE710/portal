@@ -9,6 +9,7 @@ use Symfony\Component\Mailer\Transport;
 use Symfony\Component\Mime\Email;
 use Yii;
 use yii\data\ActiveDataProvider;
+use yii\db\Query;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\ForbiddenHttpException;
@@ -157,12 +158,22 @@ class ProfileController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        if ($this->request->isPost) {
+            $authManager = Yii::$app->authManager;
+            $oldRole = $authManager->getRole($model->role); // Получаем объект текущей роли пользователя
+            if ($model->load($this->request->post()) && $model->validate() && $model->save()) {
+                $newRole = $authManager->getRole($model->role); // Получаем объект новой роли
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
+                $authManager->revoke($oldRole, $model->id); // Удаляем текущую роль у пользователя
+                $authManager->assign($newRole, $model->id);
+            }
 
-            $auth = Yii::$app->authManager;
-            $auth->assign($auth->getRole($model->role), $model->id);
             return $this->redirect(['view', 'id' => $model->id]);
+
+/*            $auth = Yii::$app->authManager;
+            if (Yii::$app->user->identity->role !== $model->role) {
+                $auth->ro($auth->getRole($model->role), $model->id);
+            }*/
         }
 
         return $this->render('update', [

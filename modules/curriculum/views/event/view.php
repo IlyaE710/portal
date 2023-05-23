@@ -26,7 +26,7 @@ $items = [];
 foreach ($model->curriculum->events as $event) {
     $url = Url::toRoute(['event/view', 'id' => $event->id]);
     if ($currentUrl === $url) {
-        $url = Url::toRoute(['event/view', 'id' => $event->id, '#' => 'header-main']);
+        $url = Url::toRoute(['event/view', 'id' => $event->id, '#' => 'header']);
     }
     $itemsEvent[] = [
         'label' => $event->type->name . ' ' . $event->title,
@@ -62,6 +62,7 @@ $this->params['sidebar'] = SidebarWidget::widget([
     ],
     'collapses' => $itemsEvent,
 ]);
+Pjax::begin();
 ?>
 
 <div class="event-index">
@@ -123,3 +124,4 @@ $this->params['sidebar'] = SidebarWidget::widget([
         <?php Pjax::end() ?>
     <?php endforeach; ?>
 </div>
+<?php Pjax::end();

@@ -80,19 +80,6 @@ class CurriculumPatternAdminController extends Controller
         ]);
     }
 
-    public function actionLoadSubjects($subject_id)
-    {
-        $subjects = Subject::find()
-            ->where(['id' => $subject_id])
-            ->all();
-
-        $data = ArrayHelper::map($subjects, 'id', 'name');
-
-        Yii::$app->response->format = Response::FORMAT_JSON;
-
-        return $data;
-    }
-
     /**
      * Displays a single CurriculumPattern model.
      * @param int $id ID
@@ -116,9 +103,7 @@ class CurriculumPatternAdminController extends Controller
         $model = new CurriculumPattern();
 
         if ($this->request->isPost) {
-            if ($model->load($this->request->post())) {
-                $model->subjectId = $this->request->post('CurriculumPattern')['subject'];
-                $model->save();
+            if ($model->load($this->request->post()) && $model->save()) {
                 return $this->redirect(['update', 'id' => $model->id]);
             }
         }
