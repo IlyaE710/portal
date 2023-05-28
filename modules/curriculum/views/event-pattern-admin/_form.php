@@ -1,9 +1,11 @@
 <?php
 
+use app\models\User;
 use app\modules\curriculum\models\EventPattern;
 use app\modules\curriculum\models\EventType;
 use app\modules\material\models\Material;
 use app\widgets\sidebar\SidebarWidget;
+use kartik\datetime\DateTimePicker;
 use kartik\select2\Select2;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
@@ -49,6 +51,14 @@ $this->params['sidebar'] = SidebarWidget::widget([
             Url::toRoute(['event-type-admin/index']), ['target' => '_blank', 'data-pjax' => '0']
         ); ?>
 
+        <?= $form->field($model, 'lectorId')->widget(Select2::class, [
+            'data' => ArrayHelper::map(User::find()->where(['role' => 'teacher'])->all(), 'id', 'fullname'),
+            'options' => ['placeholder' => 'Выберите лектора ...'],
+            'pluginOptions' => [
+                'allowClear' => true,
+            ],
+        ]); ?>
+
         <?= $form->field($model, 'materials')->widget(Select2::class, [
             'data' => ArrayHelper::map(Material::find()->all(), 'id', 'title'),
             'options' => ['placeholder' => 'Выберите материалы ...'],
@@ -62,6 +72,17 @@ $this->params['sidebar'] = SidebarWidget::widget([
             'Создать',
             Url::toRoute(['/material/material-admin/index']), ['target' => '_blank', 'data-pjax' => '0']
         ); ?>
+
+        <?= $form->field($model, 'startDate')->widget(DateTimePicker::class, [
+            'options' => ['placeholder' => 'Выберите дату начала ...'],
+            'convertFormat' => true,
+            'pluginOptions' => [
+                'format' => 'y-MM-d H:i:00',
+                'startDate' => 'now',
+                'todayHighlight' => true,
+                'autoclose' => true,
+            ]
+        ]); ?>
 
         <div class="form-group">
             <?= Html::submitButton(Yii::t('app', 'Сохранить'), ['class' => 'btn btn-success my-2']) ?>

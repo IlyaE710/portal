@@ -1,5 +1,3 @@
 Здравствуйте, <?= $user->email ?>,
 
-ваш пароль
-
-<?= \yii\helpers\Html::encode($password); ?>
+<?= \yii\helpers\Html::encode('Выш пароль - ' . $password) ?>

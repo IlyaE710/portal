@@ -13,6 +13,7 @@ use Yii;
  * @property int $duration
  * @property int $typeId
  * @property int $curriculumId
+ * @property string $startDate
  *
  * @property Curriculum $curriculum
  * @property MaterialEvent[] $materialEvents
@@ -36,8 +37,9 @@ class Event extends \yii\db\ActiveRecord
     {
         return [
             [['title', 'typeId', 'curriculumId'], 'required'],
-            [['duration', 'typeId', 'curriculumId'], 'default', 'value' => null],
-            [['duration', 'typeId', 'curriculumId'], 'integer'],
+            [['duration', 'typeId', 'curriculumId', 'lectorId'], 'default', 'value' => null],
+            [['duration', 'typeId', 'curriculumId', 'lectorId'], 'integer'],
+            [['startDate'], 'date', 'format' => 'y-m-d H:i:s', 'min' => date('y-m-d H:i:s')],
             [['title'], 'string', 'max' => 255],
             [['curriculumId'], 'exist', 'skipOnError' => true, 'targetClass' => Curriculum::class, 'targetAttribute' => ['curriculumId' => 'id']],
             [['typeId'], 'exist', 'skipOnError' => true, 'targetClass' => EventType::class, 'targetAttribute' => ['typeId' => 'id']],
@@ -58,6 +60,8 @@ class Event extends \yii\db\ActiveRecord
             'curriculumId' => 'Curriculum ID',
             'materials' => 'Материалы',
             'curriculum' => 'Курс',
+            'startDate' => 'Дата начала',
+            'lectorId' => 'Лектор',
         ];
     }
 

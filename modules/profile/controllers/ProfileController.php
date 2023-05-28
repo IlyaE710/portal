@@ -127,15 +127,8 @@ class ProfileController extends Controller
                 $user->passwordHash = Yii::$app->security->generatePasswordHash($password);
                 $user->email = $form->email;
                 $user->role = $form->role;
-
-                $mailer = Yii::$app->mailer;
-                $message = $mailer->compose();
-                $message->setFrom('admin@mail.com'); // Адрес отправителя
-                $message->setTo($user->email); // Адрес получателя
-                $message->setSubject('Пароль'); // Тема письма
-                $message->setTextBody('пароль - ' . $password); // Текст письма в виде обычного текста
-                $mailer->send($message);
                 $user->save();
+                $form->sendEmail();
                 $auth = Yii::$app->authManager;
                 $auth->assign($auth->getRole($user->role), $user->id);
 

@@ -1,8 +1,10 @@
 <?php
 
+use app\models\User;
 use app\modules\curriculum\models\EventType;
 use app\modules\material\models\Material;
 use app\widgets\sidebar\SidebarWidget;
+use kartik\datetime\DateTimePicker;
 use kartik\select2\Select2;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
@@ -38,16 +40,35 @@ $this->params['sidebar'] = SidebarWidget::widget([
 
     <?= $form->field($model, 'type')->widget(Select2::class, array(
         'data' => ArrayHelper::map(EventType::find()->all(), 'id', 'name'),
-        'options' => array('placeholder' => 'Select a tags ...'),
+        'options' => array('placeholder' => 'Выберите тип ...'),
     )); ?>
+
+    <?= $form->field($model, 'lectorId')->widget(Select2::class, [
+        'data' => ArrayHelper::map(User::find()->where(['role' => 'teacher'])->all(), 'id', 'fullname'),
+        'options' => ['placeholder' => 'Выберите лектора ...'],
+        'pluginOptions' => [
+            'allowClear' => true,
+        ],
+    ]); ?>
 
     <?= $form->field($model, 'materials')->widget(Select2::class, [
         'data' => ArrayHelper::map(Material::find()->all(), 'id', 'title'),
-        'options' => ['placeholder' => 'Select a materials ...'],
+        'options' => ['placeholder' => 'Выберите материалы ...'],
         'pluginOptions' => [
             'allowClear' => true,
             'multiple' => true,
         ],
+    ]); ?>
+
+    <?= $form->field($model, 'startDate')->widget(DateTimePicker::class, [
+        'options' => ['placeholder' => 'Выберите дату начала ...'],
+        'convertFormat' => true,
+        'pluginOptions' => [
+            'format' => 'y-MM-d H:i:00',
+            'startDate' => 'now',
+            'todayHighlight' => true,
+            'autoclose' => true,
+        ]
     ]); ?>
 
     <?= $form->field($model, 'duration')->textInput() ?>

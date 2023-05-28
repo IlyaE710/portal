@@ -21,7 +21,10 @@
         "kartik-v/yii2-widget-select2": "@dev",
         "mihaildev/yii2-ckeditor": "*",
         "kartik-v/yii2-widget-fileinput": "*",
-        "yii-dream-team/yii2-upload-behavior": "*"
+        "yii-dream-team/yii2-upload-behavior": "*",
+        "philippfrenzel/yii2fullcalendar": "3.9.0",
+        "kartik-v/yii2-widget-datetimepicker": "*",
+        "npm-asset/fullcalendar": "^6.1"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",

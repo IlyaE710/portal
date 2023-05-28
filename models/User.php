@@ -44,7 +44,7 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
         return [
             // username and password are both required
             [['email', 'passwordHash'], 'required'],
-            [['email', 'passwordHash', 'firstname', 'lastname', 'role'], 'string'],
+            [['email', 'passwordHash', 'firstname', 'lastname', 'role', 'patronymic'], 'string'],
             [['email'], 'email'],
         ];
     }

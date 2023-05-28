@@ -24,7 +24,8 @@ class AppAsset extends AssetBundle
         'https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css',
     ];
     public $js = [
-        'js/main.js'
+        'js/main.js',
+        //'https://cdn.jsdelivr.net/npm/fullcalendar@6.1.7/index.global.min.js',
     ];
     public $depends = [
         'yii\web\YiiAsset',

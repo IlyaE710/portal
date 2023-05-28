@@ -20,6 +20,7 @@ class m230422_193658_create_event_table extends Migration
             'id' => $this->primaryKey(),
             'title' => $this->string()->notNull(),
             'duration' => $this->integer()->notNull()->defaultValue(60),
+            'startDate' => $this->dateTime(),
             'typeId' => $this->integer()->notNull(),
             'curriculumId' => $this->integer()->notNull(),
         ]);

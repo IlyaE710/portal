@@ -123,6 +123,8 @@ class CurriculumAdminController extends Controller
                     $event = new Event();
                     $event->title = $eventPattern->title;
                     $event->typeId = $eventPattern->typeId;
+                    $event->lectorId = $eventPattern->lectorId;
+                    $event->startDate = $eventPattern->startDate;
                     $event->curriculumId = $eventPattern->curriculumId;
                     $model->link('events', $event);
 

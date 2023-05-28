@@ -107,7 +107,7 @@ class EventPatternAdminController extends Controller
                 $transaction = Yii::$app->db->beginTransaction();
                 try {
                     $model->curriculumId = $id;
-                    if (!$model->save()) {
+                    if (!$model->validate() || !$model->save()) {
                         throw new \yii\db\Exception('Не сохранились данные');
                     }
 
@@ -122,6 +122,7 @@ class EventPatternAdminController extends Controller
                     $transaction->commit();
                 } catch (Exception $e) {
                     $transaction->rollBack();
+                    echo '<pre>' . print_r($model->errors, true) . '</pre>';die;
                     Yii::$app->session->setFlash('error', 'Произошла ошибка при обновлении записи:');
                     return $this->redirect(['create', 'id' => $id]);
                 }
@@ -149,7 +150,9 @@ class EventPatternAdminController extends Controller
 
         if ($this->request->isPost && $model->load($this->request->post())) {
             $materialIds = $this->request->post('EventPattern')['materials'];
-            $model->save();
+            if (!$model->validate() || !$model->save()) {
+                throw new \yii\db\Exception('Не сохранились данные');
+            }
 
             $transaction = Yii::$app->db->beginTransaction();
             try {

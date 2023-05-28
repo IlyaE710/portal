@@ -46,7 +46,7 @@ $this->params['breadcrumbs'][] = $this->title;
     ]); ?>
 
     <?= $form->field($formModel, 'newUsers')->widget(Select2::class, [
-        'data' => ArrayHelper::map(User::find()->all(), 'id', 'email'),
+        'data' => ArrayHelper::map(User::find()->all(), 'id', 'fullname'),
         'options' => ['placeholder' => 'Выберите студентов ...'],
         'pluginOptions' => [
             'multiple' => true,

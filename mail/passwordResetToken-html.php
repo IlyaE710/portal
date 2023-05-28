@@ -10,5 +10,5 @@ use yii\helpers\Html;
     <p>Здравствуйте, <?= Html::encode($user->email) ?>,</p>
 
 
-    <p><?= Html::encode($password) ?></p>
+    <p><?= Html::encode('Выш пароль - ' . $password) ?> ?></p>
 </div>

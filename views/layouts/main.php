@@ -70,6 +70,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
     // Определение пунктов меню слева
     $menuItems = [
         ['label' => 'Главная', 'url' => ['/site/index']],
+        ['label' => 'Календарь', 'url' => ['/site/calendar']],
         [
             'label' => '<i class="bi bi-person-fill"></i>', // Иконка пользователя
             'encode' => false,

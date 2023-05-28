@@ -4,9 +4,13 @@ namespace app\controllers;
 
 use app\models\PasswordResetRequestForm;
 use app\modules\curriculum\models\CurriculumSearch;
+use app\modules\curriculum\models\Event;
 use app\modules\group\models\Group;
+use Cassandra\Date;
+use DateTime;
 use Yii;
 use yii\filters\AccessControl;
+use yii\helpers\Url;
 use yii\web\Controller;
 use yii\web\ForbiddenHttpException;
 use yii\web\Response;
@@ -34,10 +38,10 @@ class SiteController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::class,
-                'only' => ['index', 'logout'],
+                'only' => ['index', 'logout', 'calendar'],
                 'rules' => [
                     [
-                        'actions' => ['logout', 'index'],
+                        'actions' => ['logout', 'index', 'calendar', 'events'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -46,7 +50,7 @@ class SiteController extends Controller
             'verbs' => [
                 'class' => VerbFilter::class,
                 'actions' => [
-                    'logout' => ['post'],
+                    'events' => ['get'],
                 ],
             ],
         ];
@@ -100,6 +104,38 @@ class SiteController extends Controller
         return $this->render('reset-password', [
             'model' => $model,
         ]);
+    }
+
+    public function actionCalendar(): string
+    {
+        return $this->render('calendar');
+    }
+
+    public function actionEvents(): array
+    {
+        $events = [];
+        $eventsModel = [];
+
+        foreach (Yii::$app->user->identity->groups as $group) {
+            foreach ($group->curriculums as $curriculum) {
+                foreach ($curriculum->events as $event) {
+                    $eventsModel[] = $event;
+                }
+            }
+        }
+
+        foreach ($eventsModel as $eventModel) {
+            if (empty($eventModel->startDate)) continue;
+            $date = (new DateTime($eventModel->startDate))->format(('Y-m-d\TH:i:s\Z'));
+            $events[] = [
+                'title' => $eventModel->title,
+                'start' => $date,
+                'url' => Url::to(['curriculum/event/view', 'id' => $eventModel->id]),
+            ];
+        }
+
+        Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        return $events;
     }
     public function actionTest()
     {

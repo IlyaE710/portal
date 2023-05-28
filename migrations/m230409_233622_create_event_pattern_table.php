@@ -19,6 +19,7 @@ class m230409_233622_create_event_pattern_table extends Migration
             'id' => $this->primaryKey(),
             'title' => $this->string()->notNull(),
             'typeId' => $this->integer()->notNull(),
+            'startDate' => $this->dateTime(),
         ]);
 
         // creates index for column `typeId`

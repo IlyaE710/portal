@@ -22,7 +22,7 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'users')->widget(Select2::class, [
-        'data' => ArrayHelper::map(User::find()->all(), 'id', 'email'),
+        'data' => ArrayHelper::map(User::find()->all(), 'id', 'fullname'),
         'options' => ['placeholder' => 'Выберите студентов ...'],
         'pluginOptions' => [
             'allowClear' => true,
