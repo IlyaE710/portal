@@ -20,7 +20,8 @@ $this->title = 'Календарь с мероприятиями';
             headerToolbar: {
                 left: 'prev,next today',
                 center: 'title',
-                right: 'dayGridMonth,timeGridWeek,timeGridDay listWeek'
+                // right: 'dayGridMonth,timeGridWeek,timeGridDay listWeek'
+                right: 'dayGridMonth, listWeek'
             },
             buttonText: {
                 today: 'Сегодня',
@@ -28,6 +29,7 @@ $this->title = 'Календарь с мероприятиями';
                 week:'Неделя',
                 month:'Месяц',
                 list:'Список',
+                days:'Список',
             },
             events: '<?= Url::to(['site/events']) ?>',
         });

@@ -53,12 +53,15 @@ class Curriculum extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'subjectId' => 'Subject ID',
+            'subjectName' => 'Предмет',
             'subject' => 'Предмет',
             'groupId' => 'Группа',
             'group' => 'Группа',
+            'groupName' => 'Группа',
             'description' => 'Описание',
             'semester' => 'Семестр',
             'author' => 'Автор',
+            'authorName' => 'Автор',
             'image' => 'Изображение',
         ];
     }

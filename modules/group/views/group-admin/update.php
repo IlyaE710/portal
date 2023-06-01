@@ -37,8 +37,8 @@ $this->params['breadcrumbs'][] = $this->title;
 </div>
 <div class="row">
     <?php Modal::begin([
-        'title' => '<h2>Добавить студентов</h2>',
-        'toggleButton' => ['label' => 'Добавить студентов', 'class' => 'btn btn-primary mb-2 col-sm-2'],
+        'title' => 'Добавить студентов',
+        'toggleButton' => ['label' => 'Добавить студентов', 'class' => 'btn btn-primary col-sm-2 mb-2 ms-2'],
     ]); ?>
 
     <?php $form = ActiveForm::begin([

@@ -134,7 +134,6 @@ footer {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    /* min-height: 80px; */
 }
 
 .card-course:hover .card-course-text {
@@ -148,6 +147,10 @@ footer {
 .card-course-img-top {
     max-width: 100%;
     height: 250px;
+}
+
+.card-course-body {
+    height: 120px;
 }
 
 .breadcrumb {

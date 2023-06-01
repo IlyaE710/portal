@@ -1,6 +1,11 @@
 <?php
 
+use app\models\User;
 use app\modules\curriculum\models\Curriculum;
+use app\modules\curriculum\models\Subject;
+use app\modules\group\models\Group;
+use kartik\select2\Select2;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
@@ -23,11 +28,43 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
+        'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'subject.name',
-            'group.name',
+            [
+                'attribute' => 'subjectName',
+                'value' => 'subject.name',
+                'filter' => Select2::widget([
+                    'model' => $searchModel,
+                    'attribute' => 'subjectName',
+                    'data' => ArrayHelper::map(Subject::find()->all(), 'name', 'name'),
+                    'options' => ['placeholder' => 'Выберите предмет ...'],
+                    'pluginOptions' => ['allowClear' => true]
+                ]),
+            ],
+            [
+                'attribute' => 'groupName',
+                'value' => 'group.name',
+                'filter' => Select2::widget([
+                    'model' => $searchModel,
+                    'attribute' => 'groupName',
+                    'data' => ArrayHelper::map(Group::find()->all(), 'name', 'name'),
+                    'options' => ['placeholder' => 'Выберите группу ...'],
+                    'pluginOptions' => ['allowClear' => true]
+                ]),
+            ],
+/*            [
+                'attribute' => 'authorName',
+                'value' => 'author.fullname',
+                'filter' => Select2::widget([
+                    'model' => $searchModel,
+                    'attribute' => 'authorName',
+                    'data' => ArrayHelper::map(User::find()->all(), 'fullname', 'fullname'),
+                    'options' => ['placeholder' => 'Выберите автор ...'],
+                    'pluginOptions' => ['allowClear' => true]
+                ]),
+            ],*/
             'author.fullname',
             'description:ntext',
             'semester',

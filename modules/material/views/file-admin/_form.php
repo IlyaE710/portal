@@ -53,11 +53,10 @@ $this->params['sidebar'] = SidebarWidget::widget([
         'options' => ['multiple' => true],
         'pluginOptions' => [
             'previewFileType' => 'image',
-            'showUpload' => false,
+            'showUpload' => true,
             'browseLabel' => 'Выберите файлы',
             'removeLabel' => 'Удалить',
             'overwriteInitial' => false,
-            'maxFileSize' => 2000,
         ]
     ])->label(false) ?>
 

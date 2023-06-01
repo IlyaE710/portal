@@ -72,6 +72,7 @@ Pjax::begin();
         <?php endforeach; ?>
 
         <?php Pjax::begin() ?>
+    <?php if($material->getLinks()->count() !== 0): ?>
         <?= GridView::widget([
             'id' => 'link-grid-view',
             'dataProvider' => new ActiveDataProvider([
@@ -82,18 +83,15 @@ Pjax::begin();
             'columns' => [
                 ['class' => SerialColumn::class],
                 'url:url',
-                [
-                    'attribute' => 'description',
-                    'value' => function(Link $model): string {
-                        return StringHelper::truncateWords($model->description, 20, '...');
-                    }
-                ],
             ],
         ]); ?>
+        <?php endif; ?>
         <?php Pjax::end() ?>
 
 
         <?php Pjax::begin() ?>
+
+        <?php if($material->getFiles()->count() !== 0): ?>
         <?= GridView::widget([
             'id' => 'file-grid-view',
             'dataProvider' => new ActiveDataProvider([
@@ -121,6 +119,7 @@ Pjax::begin();
                 ],
             ],
         ]); ?>
+        <?php endif; ?>
         <?php Pjax::end() ?>
     <?php endforeach; ?>
 </div>

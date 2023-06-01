@@ -111,18 +111,16 @@ class EventPatternAdminController extends Controller
                         throw new \yii\db\Exception('Не сохранились данные');
                     }
 
-                    $materialIds = $this->request->post('EventPattern')['materials'];
-                    $materials = Material::findAll($materialIds);
-                    foreach ($materials as $material) {
-                        $model->link('materials', $material);
+                    if (!empty($this->request->post('EventPattern')['materials'])) {
+                        echo '<pre>' . print_r($this->request->post('EventPattern'), true) . '</pre>';die;
+                        $materialIds = $this->request->post('EventPattern')['materials'];
+                        $materials = Material::findAll($materialIds);
+                        foreach ($materials as $material) {
+                            $model->link('materials', $material);
+                        }
                     }
-//                    if (isset($this->request->post('EventPattern')['materials'])) {
-//
-//                    }
                     $transaction->commit();
                 } catch (Exception $e) {
-                    $transaction->rollBack();
-                    echo '<pre>' . print_r($model->errors, true) . '</pre>';die;
                     Yii::$app->session->setFlash('error', 'Произошла ошибка при обновлении записи:');
                     return $this->redirect(['create', 'id' => $id]);
                 }
@@ -156,13 +154,14 @@ class EventPatternAdminController extends Controller
 
             $transaction = Yii::$app->db->beginTransaction();
             try {
-                $materials = Material::findAll($materialIds);
-                $model->unlinkAll('materials', true);
+                if (!empty($this->request->post('EventPattern')['materials'])) {
+                    $materials = Material::findAll($materialIds);
+                    $model->unlinkAll('materials', true);
 
-                foreach ($materials as $material) {
-                    $model->link('materials', $material);
+                    foreach ($materials as $material) {
+                        $model->link('materials', $material);
+                    }
                 }
-
                 $transaction->commit();
             } catch (Exception $e) {
                 $transaction->rollBack();

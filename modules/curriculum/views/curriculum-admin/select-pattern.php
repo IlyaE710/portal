@@ -10,6 +10,13 @@ use kartik\select2\Select2;
 $this->title = 'Выбор шаблона';
 $this->params['breadcrumbs'][] = ['label' => 'Курсы', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
+$models = CurriculumPattern::find()->all();
+$data = [];
+
+foreach ($models as $item) {
+    $data[$item->id] = $item->subject->name . ' ' . $item->description;
+}
+
 ?>
 <div class="curriculum-create m-1">
     <div class="curriculum-form">
@@ -19,7 +26,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <?php $form = ActiveForm::begin(); ?>
 
         <?= $form->field($model, 'idTemplate')->widget(Select2::class, [
-            'data' => ArrayHelper::map(CurriculumPattern::find()->all(), 'id', 'description'),
+            'data' => $data,
             'options' => ['placeholder' => 'Выбрать шаблон ...'],
         ]); ?>
 

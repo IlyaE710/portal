@@ -67,6 +67,9 @@ $config = [
         'profile' => [
             'class' => 'app\modules\profile\Module',
         ],
+        'homework' => [
+            'class' => 'app\modules\homework\Module',
+        ],
     ],
     'params' => $params,
     'timeZone' => 'Europe/Moscow',

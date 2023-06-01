@@ -4,6 +4,7 @@ namespace app\modules\curriculum\controllers;
 
 use app\modules\curriculum\models\CourseForm;
 use app\modules\curriculum\models\Curriculum;
+use app\modules\curriculum\models\CurriculumAdminSearch;
 use app\modules\curriculum\models\CurriculumPattern;
 use app\modules\curriculum\models\Event;
 use app\modules\curriculum\models\SelectCurriculumForm;
@@ -63,22 +64,12 @@ class CurriculumAdminController extends Controller
      */
     public function actionIndex()
     {
-        $dataProvider = new ActiveDataProvider([
-            'query' => Curriculum::find(),
-            /*
-            'pagination' => [
-                'pageSize' => 50
-            ],
-            'sort' => [
-                'defaultOrder' => [
-                    'id' => SORT_DESC,
-                ]
-            ],
-            */
-        ]);
+        $searchModel = new CurriculumAdminSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->get());
 
         return $this->render('index', [
             'dataProvider' => $dataProvider,
+            'searchModel' => $searchModel,
         ]);
     }
 

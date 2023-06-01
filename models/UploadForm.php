@@ -16,7 +16,7 @@ class UploadForm extends Model
     public function rules(): array
     {
         return [
-            [['files'], 'file', 'skipOnEmpty' => false, 'extensions' => 'png, jpg, jpeg, doc, docx, pdf', 'maxFiles' => 5],
+            [['files'], 'file', 'skipOnEmpty' => false, 'extensions' => 'png, jpg, jpeg, doc, docx, pdf', 'maxFiles' => 5, 'maxSize' => '5M'],
         ];
     }
 
@@ -28,7 +28,7 @@ class UploadForm extends Model
             }
             return true;
         }
-echo '<pre>' . print_r($this->errors, true) . '</pre>';die;
+        echo '<pre>' . print_r($this->errors, true) . '</pre>';die;
         return false;
     }
 }

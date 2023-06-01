@@ -8,7 +8,7 @@ use yii\widgets\DetailView;
 /** @var yii\web\View $this */
 /** @var app\modules\curriculum\models\Curriculum $model */
 
-$this->title = $model->id;
+$this->title = $model->subject->name;
 $this->params['breadcrumbs'][] = $this->title;
 $itemsEvent = [];
 $items = [];
