@@ -7,6 +7,7 @@ use yii\widgets\DetailView;
 /** @var app\modules\material\models\Tag $model */
 
 $this->title = $model->name;
+$this->params['breadcrumbs'][] = ['label' => 'Админ панель', 'url' => ['/admin/']];
 $this->params['breadcrumbs'][] = ['label' => 'Tags', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);

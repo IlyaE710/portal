@@ -11,6 +11,7 @@ use yii\widgets\Pjax;
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
 $this->title = 'Предметы';
+$this->params['breadcrumbs'][] = ['label' => 'Админ панель', 'url' => ['/admin/']];
 $this->params['breadcrumbs'][] = $this->title;
 Pjax::begin();
 ?>

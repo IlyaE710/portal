@@ -13,22 +13,24 @@ use yii\widgets\ActiveForm;
 /** @var app\modules\curriculum\models\Curriculum $model */
 /** @var yii\widgets\ActiveForm $form */
 
-$this->params['sidebar'] = SidebarWidget::widget([
-    'items' => [
-        [
-            'label' => 'Основная информация',
-            'url' =>  Url::to(['curriculum-admin/update', 'id' => $id ?? $model->id]),
-            'options' => ['class' => 'nav-link px-0 align-middle text-center'],
-            'template' => '<a href="{url}"><div class="sidebar-item" data-bs-toggle="tooltip" data-bs-placement="right" title="{label}"><i class="bi bi-person"></i></div></a>'
+if (isset($id) || isset($model->id)) {
+    $this->params['sidebar'] = SidebarWidget::widget([
+        'items' => [
+            [
+                'label' => 'Основная информация',
+                'url' => Url::to(['curriculum-admin/update', 'id' => $id ?? $model->id]),
+                'options' => ['class' => 'nav-link px-0 align-middle text-center'],
+                'template' => '<a href="{url}"><div class="sidebar-item" data-bs-toggle="tooltip" data-bs-placement="right" title="{label}"><i class="bi bi-person"></i></div></a>'
+            ],
+            [
+                'label' => 'Меропрития',
+                'url' => Url::toRoute(['event-admin/index', 'id' => $id ?? $model->id]),
+                'options' => ['class' => 'nav-link px-0 align-middle text-center'],
+                'template' => '<a href="{url}"><div class="sidebar-item" data-bs-toggle="tooltip" data-bs-placement="right" title="{label}"><i class="bi bi-calendar-event"></i></div></a>'
+            ],
         ],
-        [
-            'label' => 'Меропрития',
-            'url' => Url::toRoute(['event-admin/index', 'id' => $id ?? $model->id]),
-            'options' => ['class' => 'nav-link px-0 align-middle text-center'],
-            'template' => '<a href="{url}"><div class="sidebar-item" data-bs-toggle="tooltip" data-bs-placement="right" title="{label}"><i class="bi bi-calendar-event"></i></div></a>'
-        ],
-    ],
-]);
+    ]);
+}
 ?>
 
 <div class="curriculum-form">

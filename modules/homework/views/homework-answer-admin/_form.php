@@ -1,5 +1,6 @@
 <?php
 
+use mihaildev\ckeditor\CKEditor;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -12,14 +13,25 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'studentId')->textInput() ?>
+    <?= $form->field($model, 'comment')->widget(CKEditor::class,[
+        'editorOptions' => [
+            'preset' => 'full', //разработанны стандартные настройки basic, standard, full данную возможность не обязательно использовать
+        ],
+    ])
+        ->label(false); ?>
 
-    <?= $form->field($model, 'homeworkId')->textInput() ?>
-
-    <?= $form->field($model, 'content')->textarea(['rows' => 6]) ?>
+    <?= $form->field($model, 'mark')->dropDownList([
+            '1' => '1',
+            '2' => '2',
+            '3' => '3',
+            '4' => '4',
+            '5' => '5',
+            'Зачет' => 'Зачет',
+            'Незачет' => 'Незачет',
+    ]); ?>
 
     <div class="form-group">
-        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton('Сохранить', ['class' => 'btn btn-success my-2']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

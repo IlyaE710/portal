@@ -42,7 +42,7 @@ class PasswordResetRequestForm extends Model
         ]);
 
         if ($user) {
-            $password = Yii::$app->security->generateRandomString();
+            $password = Yii::$app->security->generateRandomString(10);
             $user->passwordHash = Yii::$app->security->generatePasswordHash($password);
             $user->save();
 

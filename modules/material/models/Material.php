@@ -2,6 +2,7 @@
 
 namespace app\modules\material\models;
 
+use app\modules\curriculum\models\Event;
 use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;

@@ -88,7 +88,6 @@ Pjax::begin();
         <?php endif; ?>
         <?php Pjax::end() ?>
 
-
         <?php Pjax::begin() ?>
 
         <?php if($material->getFiles()->count() !== 0): ?>
@@ -122,5 +121,35 @@ Pjax::begin();
         <?php endif; ?>
         <?php Pjax::end() ?>
     <?php endforeach; ?>
+
+    <?php if($model->getHomeworks()->count() !== 0): ?>
+        <?= GridView::widget([
+            'id' => 'link-grid-view',
+            'dataProvider' => new ActiveDataProvider([
+                'query' => $model->getHomeworks(),
+            ]),
+            'options' => ['class' => 'table-responsive'],
+            'tableOptions' => ['class' => 'table table-striped'],
+            'columns' => [
+                ['class' => SerialColumn::class],
+                'title:text',
+                [
+                    'format' => 'raw',
+                    'value' => function ($homework) use ($model) {
+                        return Html::a(
+                            'Перейти',
+                            Url::toRoute(
+                                    [
+                                        '/homework/homework-answer/index',
+                                        'curriculumId' => $model->curriculumId,
+                                        'eventId' => $model->id,
+                                        'homeworkId' => $homework->id,
+                                    ]), ['target' => '_blank', 'data-pjax' => '0']
+                        );
+                    }
+                ],
+            ],
+        ]); ?>
+    <?php endif; ?>
 </div>
 <?php Pjax::end();

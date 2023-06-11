@@ -5,13 +5,52 @@ namespace app\modules\profile\controllers;
 use app\models\ChangeEmail;
 use app\models\ChangePassword;
 use Yii;
+use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
+use yii\web\ForbiddenHttpException;
 
 /**
  * Default controller for the `profile` module
  */
 class DefaultController extends Controller
 {
+    public function beforeAction($action): bool
+    {
+        if (!Yii::$app->user->isGuest) {
+            $role = Yii::$app->user->identity->role;
+
+            if ($role === 'banned') {
+                throw new ForbiddenHttpException('Вам запрещен доступ к сайту.');
+            }
+        }
+
+        return parent::beforeAction($action);
+    }
+
+    public function behaviors()
+    {
+        return [
+            'access' => [
+                'class' => AccessControl::class,
+                'rules' => [
+                    [
+                        'actions' => ['index', 'changePassword', 'changeEmail'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
+            'verbs' => [
+                'class' => VerbFilter::class,
+                'actions' => [
+                    'changePassword' => ['post'],
+                    'changeEmail' => ['post'],
+                ],
+            ],
+        ];
+    }
+
     /**
      * Renders the index view for the module
      * @return string

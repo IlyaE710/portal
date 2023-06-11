@@ -12,6 +12,7 @@ use Yii;
  * @property EventPattern[] $eventPatterns
  * @property Event[] $events
  * @property HomeworkAnswer[] $homeworkAnswers
+ * @property string $content
  * @property HomeworkEventPattern[] $homeworkEventPatterns
  * @property HomeworkEvent[] $homeworkEvents
  */
@@ -30,7 +31,10 @@ class Homework extends \yii\db\ActiveRecord
      */
     public function rules()
     {
-        return [];
+        return [
+            [['content', 'title'], 'required'],
+            [['content', 'title'], 'string'],
+        ];
     }
 
     /**
@@ -40,6 +44,8 @@ class Homework extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
+            'content' => 'Контенте',
+            'title' => 'Название',
         ];
     }
 
@@ -68,7 +74,7 @@ class Homework extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getHomeworkAnswers()
+    public function getAnswers()
     {
         return $this->hasMany(HomeworkAnswer::class, ['homeworkId' => 'id']);
     }

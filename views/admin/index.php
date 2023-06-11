@@ -20,6 +20,9 @@ use yii\helpers\Url; ?>
     <p class="col-auto">
         <?= Html::a('Группа', Url::toRoute(['group/group-admin']), ['class' => 'btn btn-success']) ?>
     </p>
+    <p class="col-auto">
+        <?= Html::a('Д/З', Url::toRoute(['homework/homework-answer-admin']), ['class' => 'btn btn-success']) ?>
+    </p>
 </div>
 <div class="row">
     <p>Справочники</p>

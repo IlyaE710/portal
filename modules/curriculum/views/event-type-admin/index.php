@@ -10,6 +10,7 @@ use yii\grid\GridView;
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
 $this->title = 'Типы мероприятий';
+$this->params['breadcrumbs'][] = ['label' => 'Админ панель', 'url' => ['/admin/']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="event-type-index">

@@ -3,6 +3,7 @@
 namespace app\modules\curriculum\controllers;
 
 use app\modules\curriculum\models\EventPattern;
+use app\modules\homework\models\Homework;
 use app\modules\material\models\Material;
 use Exception;
 use Yii;
@@ -112,11 +113,18 @@ class EventPatternAdminController extends Controller
                     }
 
                     if (!empty($this->request->post('EventPattern')['materials'])) {
-                        echo '<pre>' . print_r($this->request->post('EventPattern'), true) . '</pre>';die;
                         $materialIds = $this->request->post('EventPattern')['materials'];
                         $materials = Material::findAll($materialIds);
                         foreach ($materials as $material) {
                             $model->link('materials', $material);
+                        }
+                    }
+
+                    if (!empty($this->request->post('EventPattern')['homeworks'])) {
+                        $homeworkIds = $this->request->post('EventPattern')['homeworks'];
+                        $homeworks = Homework::findAll($homeworkIds);
+                        foreach ($homeworks as $homework) {
+                            $model->link('homeworks', $homework);
                         }
                     }
                     $transaction->commit();
@@ -148,6 +156,7 @@ class EventPatternAdminController extends Controller
 
         if ($this->request->isPost && $model->load($this->request->post())) {
             $materialIds = $this->request->post('EventPattern')['materials'];
+            $homeworkIds = $this->request->post('EventPattern')['homeworks'];
             if (!$model->validate() || !$model->save()) {
                 throw new \yii\db\Exception('Не сохранились данные');
             }
@@ -160,6 +169,15 @@ class EventPatternAdminController extends Controller
 
                     foreach ($materials as $material) {
                         $model->link('materials', $material);
+                    }
+                }
+
+                if (!empty($this->request->post('EventPattern')['homeworks'])) {
+                    $homeworks = Homework::findAll($homeworkIds);
+                    $model->unlinkAll('homeworks', true);
+
+                    foreach ($homeworks as $homework) {
+                        $model->link('homeworks', $homework);
                     }
                 }
                 $transaction->commit();

@@ -60,6 +60,20 @@ $this->params['sidebar'] = SidebarWidget::widget([
         ],
     ]); ?>
 
+    <?= $form->field($model, 'homeworks')->widget(Select2::class, [
+        'data' => ArrayHelper::map(\app\modules\homework\models\Homework::find()->all(), 'id', 'title'),
+        'options' => ['placeholder' => 'Выберите Д/З ...'],
+        'pluginOptions' => [
+            'allowClear' => true,
+            'multiple' => true,
+        ],
+    ]); ?>
+
+    <?= Html::a(
+        'Создать',
+        Url::toRoute(['/homework/homework-admin/create']), ['target' => '_blank', 'data-pjax' => '0']
+    ); ?>
+
     <?= $form->field($model, 'startDate')->widget(DateTimePicker::class, [
         'options' => ['placeholder' => 'Выберите дату начала ...'],
         'convertFormat' => true,

@@ -2,11 +2,17 @@
 
 namespace app\modules\homework\controllers;
 
+use app\models\User;
+use app\modules\curriculum\models\Event;
 use app\modules\homework\models\HomeworkAnswer;
 use app\modules\homework\models\HomeworkAnswerSearch;
+use Yii;
+use yii\data\ActiveDataProvider;
+use yii\db\Exception;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\Response;
 
 /**
  * HomeworkAnswerAdminController implements the CRUD actions for HomeworkAnswer model.
@@ -47,6 +53,25 @@ class HomeworkAnswerAdminController extends Controller
         ]);
     }
 
+    public function actionList()
+    {
+        $answerIds = [];
+        $events = Event::find()->where(['lectorId' => Yii::$app->user->id])->all();
+        foreach ($events as $event) {
+            foreach ($event->homeworks as $homework) {
+                foreach ($homework->answers as $answer) {
+                    if (!empty($answer->mark))
+                        continue;
+                    $answerIds[] = $answer->id;
+               }
+            }
+        }
+
+        return $this->render('list', [
+            'dataProvider' => new ActiveDataProvider(['query' => HomeworkAnswer::find()->where(['id' => $answerIds])]),
+        ]);
+    }
+
     /**
      * Displays a single HomeworkAnswer model.
      * @param int $id ID
@@ -65,16 +90,20 @@ class HomeworkAnswerAdminController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
-    public function actionCreate()
+    public function actionCreate(int $homeworkId): Response|string
     {
         $model = new HomeworkAnswer();
 
         if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
+            if ($model->load($this->request->post())) {
+                $model->homeworkId = $homeworkId;
+                $model->studentId = Yii::$app->user->id;
+                if (!$model->validate() || !$model->save())
+                {
+                    throw new Exception('not load or validate data');
+                }
                 return $this->redirect(['view', 'id' => $model->id]);
             }
-        } else {
-            $model->loadDefaultValues();
         }
 
         return $this->render('create', [
@@ -120,7 +149,7 @@ class HomeworkAnswerAdminController extends Controller
      * Finds the HomeworkAnswer model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param int $id ID
-     * @return HomeworkAnswer the loaded model
+     * @return HomeworkAnswerController the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)

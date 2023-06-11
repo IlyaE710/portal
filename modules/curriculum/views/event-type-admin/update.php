@@ -7,6 +7,7 @@ use yii\helpers\Html;
 /** @var EventType $model */
 
 $this->title = 'Редактирование типа: ' . $model->name;
+$this->params['breadcrumbs'][] = ['label' => 'Админ панель', 'url' => ['/admin/']];
 $this->params['breadcrumbs'][] = ['label' => 'Типы', 'url' => ['index']];
 $this->params['breadcrumbs'][] = 'Редактирование';
 ?>

@@ -6,6 +6,7 @@ use yii\helpers\Html;
 /** @var app\modules\curriculum\models\Subject $model */
 
 $this->title = 'Редактировать предмет: ' . $model->name;
+$this->params['breadcrumbs'][] = ['label' => 'Админ панель', 'url' => ['/admin/']];
 $this->params['breadcrumbs'][] = ['label' => 'Предметы', 'url' => ['index']];
 $this->params['breadcrumbs'][] = 'Редактировать';
 ?>

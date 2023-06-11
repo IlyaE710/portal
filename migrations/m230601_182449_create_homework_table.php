@@ -14,6 +14,8 @@ class m230601_182449_create_homework_table extends Migration
     {
         $this->createTable('{{%homework}}', [
             'id' => $this->primaryKey(),
+            'content' => $this->text()->notNull(),
+            'title' => $this->string()->notNull(),
         ]);
     }
 

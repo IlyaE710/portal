@@ -7,7 +7,7 @@ use yii\widgets\DetailView;
 /** @var app\modules\homework\models\Homework $model */
 
 $this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Homeworks', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Здания для домашних работ', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
@@ -26,11 +26,6 @@ $this->params['breadcrumbs'][] = $this->title;
         ]) ?>
     </p>
 
-    <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            'id',
-        ],
-    ]) ?>
+<?= $model->content; ?>
 
 </div>

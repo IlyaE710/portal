@@ -6,6 +6,7 @@ use yii\helpers\Html;
 /** @var app\modules\material\models\Tag $model */
 
 $this->title = 'Редактирование тэга: ' . $model->name;
+$this->params['breadcrumbs'][] = ['label' => 'Админ панель', 'url' => ['/admin/']];
 $this->params['breadcrumbs'][] = ['label' => 'Тэги', 'url' => ['index']];
 $this->params['breadcrumbs'][] = 'Редактирование';
 ?>

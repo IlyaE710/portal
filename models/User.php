@@ -148,8 +148,8 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
     public function getFullname(): string
     {
         if (isset($this->lastname) && isset($this->firstname) && isset($this->patronymic)) {
-            return $this->lastname . ' ' . $this->firstname[0] . '. ' . $this->patronymic[0] . '.';
+            return $this->lastname . ' ' . $this->firstname . ' ' . $this->patronymic;
         }
-        return '(не задано)';
+        return $this->email;
     }
 }

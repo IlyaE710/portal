@@ -2,6 +2,7 @@
 
 namespace app\modules\curriculum\models;
 
+use app\modules\homework\models\Homework;
 use app\modules\material\models\Material;
 use Yii;
 
@@ -18,6 +19,7 @@ use Yii;
  * @property Curriculum $curriculum
  * @property MaterialEvent[] $materialEvents
  * @property Material[] $materials
+ * @property Homework[] $homeworks
  * @property EventType $type
  */
 class Event extends \yii\db\ActiveRecord
@@ -59,6 +61,7 @@ class Event extends \yii\db\ActiveRecord
             'type' => 'Тип',
             'curriculumId' => 'Curriculum ID',
             'materials' => 'Материалы',
+            'homeworks' => 'Д/З',
             'curriculum' => 'Курс',
             'startDate' => 'Дата начала',
             'lectorId' => 'Лектор',
@@ -93,6 +96,16 @@ class Event extends \yii\db\ActiveRecord
     public function getMaterials(): \yii\db\ActiveQuery
     {
         return $this->hasMany(Material::class, ['id' => 'material_id'])->viaTable('material_event', ['event_id' => 'id']);
+    }
+
+    /**
+     * Gets query for [[Materials]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getHomeworks(): \yii\db\ActiveQuery
+    {
+        return $this->hasMany(Homework::class, ['id' => 'homework_id'])->viaTable('homework_event', ['event_id' => 'id']);
     }
 
     /**

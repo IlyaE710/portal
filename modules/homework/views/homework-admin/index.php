@@ -10,7 +10,7 @@ use yii\grid\GridView;
 /** @var app\modules\homework\models\HomeworkSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Homeworks';
+$this->title = 'Здания для домашних работ';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="homework-index">
@@ -18,7 +18,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Create Homework', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Создать', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
@@ -29,9 +29,9 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
+            'title',
             [
-                'class' => ActionColumn::className(),
+                'class' => ActionColumn::class,
                 'urlCreator' => function ($action, Homework $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'id' => $model->id]);
                  }

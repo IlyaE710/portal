@@ -21,6 +21,8 @@ class m230601_183310_create_homework_answer_table extends Migration
             'studentId' => $this->integer()->notNull(),
             'homeworkId' => $this->integer()->notNull(),
             'content' => $this->text(),
+            'mark' => $this->string(),
+            'comment' => $this->text(),
         ]);
 
         // creates index for column `studentId`

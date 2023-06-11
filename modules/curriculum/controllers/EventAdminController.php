@@ -4,6 +4,7 @@ namespace app\modules\curriculum\controllers;
 
 use app\modules\curriculum\models\Event;
 use app\modules\curriculum\models\EventPattern;
+use app\modules\homework\models\Homework;
 use app\modules\material\models\Material;
 use Exception;
 use Yii;
@@ -107,10 +108,22 @@ class EventAdminController extends Controller
                 $model->typeId = $this->request->post('Event')['type'];
                 $model->curriculumId = $id;
                 $model->save();
-                $materialIds = $this->request->post('Event')['materials'];
-                $materials = Material::findAll($materialIds);
-                foreach ($materials as $material) {
-                    $model->link('materials', $material);
+                if (!empty($this->request->post('Event')['materials'])) {
+                    $materialIds = $this->request->post('Event')['materials'];
+                    $materials = Material::findAll($materialIds);
+                    foreach ($materials as $material) {
+                        $model->link('materials', $material);
+                    }
+                }
+
+                if (!empty($this->request->post('Event')['homeworks'])) {
+                    $homeworkIds = $this->request->post('Event')['materials'];
+                    $homeworks = Homework::findAll($homeworkIds);
+                    $model->unlinkAll('homeworks', true);
+
+                    foreach ($homeworks as $homework) {
+                        $model->link('homeworks', $homework);
+                    }
                 }
                 return $this->redirect(['index', 'id' => $id]);
             }
@@ -135,16 +148,28 @@ class EventAdminController extends Controller
 
         if ($this->request->isPost && $model->load($this->request->post())) {
             $materialIds = $this->request->post('Event')['materials'];
+            $homeworkIds = $this->request->post('Event')['homeworks'];
             $model->typeId = $this->request->post('Event')['type'];
             $model->save();
 
             $transaction = Yii::$app->db->beginTransaction();
             try {
-                $materials = Material::findAll($materialIds);
-                $model->unlinkAll('materials', true);
+                if (!empty($this->request->post('Event')['materials'])) {
+                    $materials = Material::findAll($materialIds);
+                    $model->unlinkAll('materials', true);
 
-                foreach ($materials as $material) {
-                    $model->link('materials', $material);
+                    foreach ($materials as $material) {
+                        $model->link('materials', $material);
+                    }
+                }
+
+                if (!empty($this->request->post('Event')['homeworks'])) {
+                    $homeworks = Homework::findAll($homeworkIds);
+                    $model->unlinkAll('homeworks', true);
+
+                    foreach ($homeworks as $homework) {
+                        $model->link('homeworks', $homework);
+                    }
                 }
 
                 $transaction->commit();

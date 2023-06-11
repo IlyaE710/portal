@@ -41,6 +41,8 @@ $this->params['sidebar'] = SidebarWidget::widget([
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
+            'author.fullname',
+            'group.name',
             'subject.name',
             'description:ntext',
         ],

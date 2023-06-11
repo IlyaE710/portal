@@ -11,13 +11,14 @@ use app\modules\homework\models\Homework;
  */
 class HomeworkSearch extends Homework
 {
+    public $title;
     /**
      * {@inheritdoc}
      */
     public function rules()
     {
         return [
-            [['id'], 'integer'],
+            [['title'], 'string'],
         ];
     }
 
@@ -56,9 +57,7 @@ class HomeworkSearch extends Homework
         }
 
         // grid filtering conditions
-        $query->andFilterWhere([
-            'id' => $this->id,
-        ]);
+        $query->andFilterWhere(['like', 'title', $this->title]);
 
         return $dataProvider;
     }

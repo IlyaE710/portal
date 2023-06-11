@@ -2,6 +2,7 @@
 
 namespace app\modules\homework\models;
 
+use app\models\User;
 use Yii;
 
 /**
@@ -11,6 +12,8 @@ use Yii;
  * @property int $studentId
  * @property int $homeworkId
  * @property string|null $content
+ * @property string $comment
+ * @property string $mark
  *
  * @property Homework $homework
  * @property HomeworkFile[] $homeworkFiles
@@ -35,7 +38,7 @@ class HomeworkAnswer extends \yii\db\ActiveRecord
             [['studentId', 'homeworkId'], 'required'],
             [['studentId', 'homeworkId'], 'default', 'value' => null],
             [['studentId', 'homeworkId'], 'integer'],
-            [['content'], 'string'],
+            [['content', 'comment', 'mark'], 'string'],
             [['homeworkId'], 'exist', 'skipOnError' => true, 'targetClass' => Homework::class, 'targetAttribute' => ['homeworkId' => 'id']],
             [['studentId'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['studentId' => 'id']],
         ];
@@ -51,6 +54,8 @@ class HomeworkAnswer extends \yii\db\ActiveRecord
             'studentId' => 'Student ID',
             'homeworkId' => 'Homework ID',
             'content' => 'Content',
+            'comment' => 'Комментарий',
+            'mark' => 'Оценка',
         ];
     }
 

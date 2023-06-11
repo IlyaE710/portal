@@ -21,7 +21,7 @@ class CurriculumAdminSearch extends Curriculum
     public function rules() : array
     {
         return [
-            [['subjectName', 'groupName', 'authorName', 'description'], 'safe'],
+            [['subjectName', 'groupName', 'authorName', 'description', 'authorName'], 'safe'],
         ];
     }
 
@@ -67,13 +67,14 @@ class CurriculumAdminSearch extends Curriculum
 
         $query->joinWith('subject');
         $query->joinWith('group');
-//        $query->joinWith('author');
+        $query->joinWith('author');
 
         // Применяем фильтры к запросу
         $query->andFilterWhere(['like', 'subject.name', $this->subjectName])
             ->andFilterWhere(['like', 'group.name', $this->groupName])
-//            ->andFilterWhere(['like', 'author.firstname', $this->authorName])
-            ->andFilterWhere(['like', 'description', $this->description]);
+            ->andFilterWhere(['like', 'author.firstname', $this->authorName])
+            ->andFilterWhere(['like', 'description', $this->description])
+            ->andFilterWhere(['like', 'semester', $this->semester]);
 
         return $dataProvider;
     }

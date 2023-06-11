@@ -7,7 +7,8 @@ use yii\widgets\DetailView;
 /** @var app\modules\event\models\EventType $model */
 
 $this->title = $model->name;
-$this->params['breadcrumbs'][] = ['label' => 'Event Types', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Админ панель', 'url' => ['/admin/']];
+$this->params['breadcrumbs'][] = ['label' => 'Типы мероприятий', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
