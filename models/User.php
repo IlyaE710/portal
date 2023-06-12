@@ -63,7 +63,10 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
             'fullname' => 'Автор',
         ];
     }
-
+    public static function tableName(): string
+    {
+        return 'user';
+    }
     /**
      * {@inheritdoc}
      */

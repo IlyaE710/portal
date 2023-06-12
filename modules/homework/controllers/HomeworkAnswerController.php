@@ -25,13 +25,24 @@ class HomeworkAnswerController extends \yii\web\Controller
 
         foreach ($event->homeworks as $homeworkFinder) {
             if ($homeworkFinder->id === $homeworkId)
-                $homework = $homeworkFinder;
+                foreach ($homeworkFinder->answers as $answer) {
+                    if ($answer->studentId === Yii::$app->user->id) {
+
+                    }
+                    $homework = $homeworkFinder;
+                }
         }
-        foreach ($homework->answers as $answer) {
-            if ($answer->mark === '5' || $answer->mark === 'Зачет') {
-                $isBlockForm = true;
-                break;
+        if (!empty($homework)) {
+            foreach ($homework->answers as $answer) {
+                if ($answer->mark === '5' || $answer->mark === 'Зачет') {
+                    $isBlockForm = true;
+                    break;
+                }
             }
+        }
+
+        if (Yii::$app->user->identity->role === 'teacher' || Yii::$app->user->identity->role === 'admin') {
+            $isBlockForm = true;
         }
 
         if ($this->request->isPost) {

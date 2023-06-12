@@ -4,11 +4,16 @@ use app\modules\homework\models\Homework;
 use app\modules\homework\models\HomeworkAnswer;
 use mihaildev\ckeditor\CKEditor;
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\widgets\ActiveForm;
 
 /** @var Homework $homework */
 /** @var HomeworkAnswer $model */
 /** @var HomeworkAnswer[] $oldAnswers */
+$this->title = 'Домашнее задание';
+$this->params['breadcrumbs'][] = ['label' => 'Курс', 'url' => Url::to(['/curriculum/curriculum/view', 'id' => $curriculumId])];
+$this->params['breadcrumbs'][] = ['label' => 'Мероприятие', 'url' => Url::to(['/curriculum/event/view', 'id' => $eventId])];
+$this->params['breadcrumbs'][] = $this->title;
 ?>
 
 <?= 'Домашнее задание' .PHP_EOL . $homework->content ?>
@@ -39,6 +44,7 @@ use yii\widgets\ActiveForm;
     <?php if(!empty($homework->answers)): ?>
         <?= Html::encode('Ответы'); ?>
         <?php foreach($homework->answers as $oldAnswer): ?>
+        <?php if($oldAnswer->studentId === Yii::$app->user->id): ?>
             <div class="card">
                 <div class="card-body">
                     <p class="card-text"><?= $oldAnswer->content; ?></p>
@@ -61,6 +67,7 @@ use yii\widgets\ActiveForm;
                         <p class="card-text"><?=$oldAnswer->comment; ?></p>
                     </div>
                 </div>
+            <?php endif; ?>
             <?php endif; ?>
         <?php endforeach; ?>
     <?php endif; ?>

@@ -3,6 +3,7 @@
 namespace app\modules\material\controllers;
 
 use app\modules\material\models\Material;
+use app\modules\material\models\MaterialSearch;
 use app\modules\material\models\Tag;
 use Exception;
 use Yii;
@@ -51,12 +52,10 @@ class MaterialAdminController extends \yii\web\Controller
 
     public function actionIndex(): string
     {
-        $query = Material::find();
-        $dataProvider = new ActiveDataProvider([
-            'query' => $query,
-        ]);
+        $searchModel = new MaterialSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->get());
 
-        return $this->render('index', ['dataProvider' => $dataProvider]);
+        return $this->render('index', ['dataProvider' => $dataProvider, 'searchModel' => $searchModel]);
     }
 
     public function actionCreate()

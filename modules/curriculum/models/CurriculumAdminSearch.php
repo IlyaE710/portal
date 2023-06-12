@@ -17,11 +17,12 @@ class CurriculumAdminSearch extends Curriculum
     public $groupName;
     public $authorName;
     public $description;
+    public $semester;
 
     public function rules() : array
     {
         return [
-            [['subjectName', 'groupName', 'authorName', 'description', 'authorName'], 'safe'],
+            [['subjectName', 'groupName', 'authorName', 'description', 'authorName', 'semester'], 'safe'],
         ];
     }
 
@@ -74,7 +75,7 @@ class CurriculumAdminSearch extends Curriculum
             ->andFilterWhere(['like', 'group.name', $this->groupName])
             ->andFilterWhere(['like', 'author.firstname', $this->authorName])
             ->andFilterWhere(['like', 'description', $this->description])
-            ->andFilterWhere(['like', 'semester', $this->semester]);
+            ->andFilterWhere(['=', 'semester', $this->semester]);
 
         return $dataProvider;
     }

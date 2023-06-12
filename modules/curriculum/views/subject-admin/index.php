@@ -1,6 +1,7 @@
 <?php
 
 use app\modules\curriculum\models\Subject;
+use app\modules\curriculum\models\SubjectSearch;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
@@ -9,6 +10,7 @@ use yii\widgets\Pjax;
 
 /** @var yii\web\View $this */
 /** @var yii\data\ActiveDataProvider $dataProvider */
+/** @var SubjectSearch $searchModel */
 
 $this->title = 'Предметы';
 $this->params['breadcrumbs'][] = ['label' => 'Админ панель', 'url' => ['/admin/']];
@@ -26,6 +28,7 @@ Pjax::begin();
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
+        'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 

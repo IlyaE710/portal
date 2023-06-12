@@ -127,7 +127,6 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
             <div class="col-md-4">
                 <h3>Контакты</h3>
                 <ul>
-                    <li>Адрес: ул. Название, город, страна</li>
                     <li>Телефон: <?= Html::a(Yii::$app->params['supportTelephone'], 'tel:' . str_replace(['+', ' '], '', Yii::$app->params['supportTelephone'])) ?></li>
                     <li>Email: <?= Html::mailto(Yii::$app->params['supportEmail']); ?></li>
                 </ul>
@@ -135,10 +134,9 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
             <div class="col-md-4">
                 <h3>Полезные ссылки</h3>
                 <ul>
-                    <li><a href="#">Главная</a></li>
-                    <li><a href="#">Курсы</a></li>
-                    <li><a href="#">Расписание</a></li>
-                    <li><a href="#">Контакты</a></li>
+                    <li><?= Html::a('Главная', ['/site/index/']) ?></li>
+                    <li><?= Html::a('Курсы', ['/site/index/']) ?></li>
+                    <li><?= Html::a('Календарь', ['/site/calendar/']) ?></li>
                 </ul>
             </div>
             <div class="col-md-4">
@@ -151,7 +149,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
     </div>
     <div class="bg-dark text-center py-2">
         <div class="container">
-            <p class="mb-0 text-white">&copy; 2023 Ваш Учебный Портал. Все права защищены.</p>
+            <p class="mb-0 text-white">&copy; 2023 Учебный Портал. Все права защищены.</p>
         </div>
     </div>
 </footer>

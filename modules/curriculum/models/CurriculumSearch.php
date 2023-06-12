@@ -32,12 +32,19 @@ class CurriculumSearch extends Curriculum
     public function search($params): ActiveDataProvider
     {
         $groupIds = null;
+        $query = Curriculum::find();
 
-        foreach (Yii::$app->user->identity->groups as $group) {
-            $groupIds[] = $group->id;
+        if (Yii::$app->user->identity->role === 'student') {
+            foreach (Yii::$app->user->identity->groups as $group) {
+                $groupIds[] = $group->id;
+            }
+            $query->where(['groupId' => $groupIds]);
         }
 
-        $query = Curriculum::find()->where(['groupId' => $groupIds]);
+        if (Yii::$app->user->identity->role === 'teacher') {
+            $query
+                ->leftJoin('event', 'event."lectorId" = ' . Yii::$app->user->identity->id);
+        }
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,

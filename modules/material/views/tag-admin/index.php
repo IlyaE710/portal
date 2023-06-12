@@ -1,6 +1,7 @@
 <?php
 
 use app\modules\material\models\Tag;
+use app\modules\material\models\TagSearch;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
@@ -8,6 +9,7 @@ use yii\grid\GridView;
 use yii\widgets\Pjax;
 /** @var yii\web\View $this */
 /** @var yii\data\ActiveDataProvider $dataProvider */
+/** @var TagSearch $searchModel */
 
 $this->title = 'Тэги';
 $this->params['breadcrumbs'][] = ['label' => 'Админ панель', 'url' => ['/admin/']];
@@ -25,6 +27,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
+        'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 

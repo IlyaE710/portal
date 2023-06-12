@@ -41,13 +41,6 @@ class DefaultController extends Controller
                     ],
                 ],
             ],
-            'verbs' => [
-                'class' => VerbFilter::class,
-                'actions' => [
-                    'changePassword' => ['post'],
-                    'changeEmail' => ['post'],
-                ],
-            ],
         ];
     }
 

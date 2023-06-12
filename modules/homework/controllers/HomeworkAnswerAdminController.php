@@ -56,8 +56,13 @@ class HomeworkAnswerAdminController extends Controller
     public function actionList()
     {
         $answerIds = [];
-        $events = Event::find()->where(['lectorId' => Yii::$app->user->id])->all();
-        foreach ($events as $event) {
+        $answers = HomeworkAnswer::find()
+            ->leftJoin('homework_event', 'homework_event.event_id = "homeworkId"')
+            //->leftJoin('group', 'homework_event.event_id = "homeworkId"')
+            ->leftJoin('event', 'event."lectorId" = ' . Yii::$app->user->id);
+        //echo '<pre>' . print_r($answers, true) . '</pre>';die;
+
+/*       foreach ($events as $event) {
             foreach ($event->homeworks as $homework) {
                 foreach ($homework->answers as $answer) {
                     if (!empty($answer->mark))
@@ -65,10 +70,21 @@ class HomeworkAnswerAdminController extends Controller
                     $answerIds[] = $answer->id;
                }
             }
-        }
+        }*/
 
-        return $this->render('list', [
-            'dataProvider' => new ActiveDataProvider(['query' => HomeworkAnswer::find()->where(['id' => $answerIds])]),
+       return $this->render('list', [
+            //'dataProvider' => new ActiveDataProvider(['query' => HomeworkAnswer::find()->where(['id' => $answerIds])]),
+            'dataProvider' => new ActiveDataProvider([
+                'query' => $answers,
+                'sort' => [
+                    'attributes' => [
+                        'mark' => [
+                            'asc' => ['mark' => SORT_ASC],
+                            'desc' => 'mark IS NULL DESC, mark DESC',
+                        ],
+                    ],
+                ],
+            ]),
         ]);
     }
 

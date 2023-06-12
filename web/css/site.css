@@ -47,7 +47,7 @@ footer {
     top: 0;
     left: 80px;
     bottom: 0;
-    width: 300px;
+    width: 600px;
     background-color: #f8f9fa;
     z-index: 200;
     display: none;
@@ -136,10 +136,6 @@ footer {
     white-space: nowrap;
 }
 
-.card-course:hover .card-course-text {
-    overflow: visible;
-    white-space: normal;
-}
 .card-course:hover {
     transform: scale(1.05);
 }

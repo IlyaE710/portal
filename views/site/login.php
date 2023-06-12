@@ -24,7 +24,7 @@ $this->title = 'Логин'
     <div class="form-group">
         <div class="col-lg-offset-1 col-lg-11">
             <?= Html::submitButton('Войти', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
-            <?= Html::a('Забыли пароль?', ['site/reset-password']) ?>
+            <?= Html::a('Забыли пароль?', ['site/reset-password'], ['class' => 'ps-2']) ?>
         </div>
     </div>
 

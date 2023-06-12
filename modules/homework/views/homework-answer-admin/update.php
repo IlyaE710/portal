@@ -6,9 +6,9 @@ use yii\helpers\Html;
 /** @var app\modules\homework\models\HomeworkAnswer $model */
 
 $this->title = 'Ответ на Д/З: ' . $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Список Д/З', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Список Д/З', 'url' => ['list']];
 $this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = 'Update';
+$this->params['breadcrumbs'][] = 'Редактировать';
 ?>
 <div class="homework-answer-update">
 

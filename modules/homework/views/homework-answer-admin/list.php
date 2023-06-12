@@ -1,5 +1,6 @@
 <?php
 
+use app\models\User;
 use app\modules\homework\models\HomeworkAnswer;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -10,7 +11,7 @@ use yii\grid\GridView;
 /** @var app\modules\homework\models\HomeworkAnswerSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Homework Answers';
+$this->title = 'Ответы студентов';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="homework-answer-index">
@@ -26,6 +27,13 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             'student.fullname',
+            [
+                'value' => function ($model) {
+                    $groups = User::findOne($model->studentId)->groups;
+                    return $groups[0]->name;
+                },
+                'label' => 'Группа',
+            ],
             'mark',
             [
                 'class' => ActionColumn::className(),
