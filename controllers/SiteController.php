@@ -83,7 +83,7 @@ class SiteController extends Controller
         $dataProvider = $searchModel->search(Yii::$app->request->get());
 
         return $this->render('index', [
-            'models' => $dataProvider->models,
+            'dataProvider' => $dataProvider,
             'searchModel' => $searchModel,
         ]);
     }

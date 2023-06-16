@@ -118,12 +118,15 @@ class ProfileController extends Controller
                 $user->passwordHash = Yii::$app->security->generatePasswordHash($password);
                 $user->email = $form->email;
                 $user->role = $form->role;
-                $user->save();
-                $form->sendEmail();
-                $auth = Yii::$app->authManager;
-                $auth->assign($auth->getRole($user->role), $user->id);
+                if ($user->validate()) {
+                    $user->save();
+                    $form->sendEmail();
+                    $auth = Yii::$app->authManager;
+                    $auth->assign($auth->getRole($user->role), $user->id);
 
-                return $this->redirect(['view', 'id' => $user->id]);
+                    return $this->redirect(['view', 'id' => $user->id]);
+                }
+                Yii::$app->session->setFlash('error', 'Произошла ошибка при обновлении записи: ' . $user->errors["email"][0]);
             }
         }
 

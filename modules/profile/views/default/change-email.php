@@ -6,6 +6,7 @@ use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
 /* @var $model ChangeEmail */
+$this->title = "Поменять Email"
 ?>
 
 <div class="card mt-4">

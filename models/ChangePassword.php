@@ -15,6 +15,12 @@ class ChangePassword extends Model
     {
         return [
             [['currentPassword', 'newPassword', 'confirmNewPassword'], 'required'],
+            ['currentPassword', function ($attribute, $params, $validator) {
+                if (!Yii::$app->security->validatePassword($this->currentPassword, Yii::$app->user->identity->passwordHash))
+                {
+                    $this->addError($attribute, 'Неправильный пароль');
+                }
+            }],
             ['confirmNewPassword', 'compare', 'compareAttribute' => 'newPassword'],
         ];
     }
@@ -32,9 +38,8 @@ class ChangePassword extends Model
     {
         if ($this->validate()) {
             $user = Yii::$app->user->identity;
-            $user->passwordHash = 'Yii::$app->security->generatePasswordHash($this->newPassword)';
+            $user->passwordHash = Yii::$app->security->generatePasswordHash($this->newPassword);
             $user->save();
-            echo '<pre>' . print_r($user->attributes, true) . '</pre>';die;
             return true;
         }
 

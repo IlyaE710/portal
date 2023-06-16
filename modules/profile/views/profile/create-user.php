@@ -1,5 +1,5 @@
 <?php
-
+$this->title = "Создать аккаунт";
 ?>
 
 <div class="user-form">

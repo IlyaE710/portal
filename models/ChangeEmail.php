@@ -13,6 +13,11 @@ class ChangeEmail extends Model
     {
         return [
             [['email'], 'required'],
+            [['email'], function ($attribute, $params, $validator) {
+                if (User::findByEmail($this->{$attribute}) !== null) {
+                    $this->addError($attribute, 'Такой Email уже есть в системе.');
+                }
+            }],
             ['email', 'email'],
         ];
     }

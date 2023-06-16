@@ -43,7 +43,8 @@ class CurriculumSearch extends Curriculum
 
         if (Yii::$app->user->identity->role === 'teacher') {
             $query
-                ->leftJoin('event', 'event."lectorId" = ' . Yii::$app->user->identity->id);
+                ->leftJoin('event', 'curriculum.id = event."curriculumId"')
+                ->andWhere(['lectorId' => Yii::$app->user->identity->id]);
         }
 
         $dataProvider = new ActiveDataProvider([
@@ -51,13 +52,13 @@ class CurriculumSearch extends Curriculum
         ]);
 
         if (!($this->load($params) && $this->validate())) {
+            //echo '<pre>' . print_r($dataProvider, true) . '</pre>';die;
             return $dataProvider;
         }
 
         $query
             ->andFilterWhere(['groupId' => $this->groupName])
             ->andFilterWhere(['subjectId' => $this->subject]);
-
         return $dataProvider;
     }
 }

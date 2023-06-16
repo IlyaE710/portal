@@ -3,7 +3,7 @@ use yii\helpers\Html;
 
 ?>
 <div class="row my-4">
-        <?php foreach($models as $curriculum): ?>
+        <?php foreach($dataProvider->models as $curriculum): ?>
             <div class="col-md-4">
                 <a href="<?= \yii\helpers\Url::toRoute(['curriculum/curriculum/view', 'id' => $curriculum->id]) ?>" class="card-link">
                     <div class="card card-course">

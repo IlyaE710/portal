@@ -6,6 +6,7 @@ use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
 /* @var $model ChangePassword */
+$this->title = "Поменять пароль"
 ?>
 
 <div class="card mt-4">

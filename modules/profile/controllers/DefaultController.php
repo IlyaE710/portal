@@ -15,7 +15,7 @@ use yii\web\ForbiddenHttpException;
  */
 class DefaultController extends Controller
 {
-    public function beforeAction($action): bool
+/*    public function beforeAction($action): bool
     {
         if (!Yii::$app->user->isGuest) {
             $role = Yii::$app->user->identity->role;
@@ -42,7 +42,7 @@ class DefaultController extends Controller
                 ],
             ],
         ];
-    }
+    }*/
 
     /**
      * Renders the index view for the module

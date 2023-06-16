@@ -46,6 +46,7 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
             [['email', 'passwordHash'], 'required'],
             [['email', 'passwordHash', 'firstname', 'lastname', 'role', 'patronymic'], 'string'],
             [['email'], 'email'],
+            [['email'], 'unique'],
         ];
     }
 
@@ -70,7 +71,7 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface
     /**
      * {@inheritdoc}
      */
-    public static function findIdentity($id)
+    public static function findIdentity($id): array|ActiveRecord|\yii\web\IdentityInterface|null
     {
         return User::find()->where(['id' => $id])->one();
     }

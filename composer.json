@@ -37,7 +37,8 @@
         "codeception/module-yii2": "*",
         "codeception/module-filesystem": "*",
         "codeception/verify": "*",
-        "symfony/browser-kit": "*"
+        "symfony/browser-kit": "*",
+        "mockery/mockery": "^1.6"
     },
     "config": {
         "allow-plugins": {

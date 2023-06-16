@@ -3,7 +3,7 @@
 /** @var yii\web\View $this */
 /** @var Curriculum $curriculum */
 /** @var CurriculumSearch $searchModel */
-/** @var Curriculum[] $models */
+/** @var \yii\data\ActiveDataProvider $dataProvider */
 
 use app\modules\curriculum\models\Curriculum;
 use app\modules\curriculum\models\CurriculumSearch;
@@ -33,7 +33,7 @@ Pjax::begin();
 
 <div id="course-list-container">
     <?= $this->render('course-list', [
-        'models' => $models,
+        'dataProvider' => $dataProvider,
     ]) ?>
 </div>
 
