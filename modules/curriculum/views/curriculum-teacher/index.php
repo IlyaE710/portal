@@ -1,7 +1,11 @@
 <?php
 
 use app\modules\curriculum\models\CurriculumPattern;
+use app\modules\curriculum\models\Subject;
+use app\modules\group\models\Group;
 use app\widgets\sidebar\SidebarWidget;
+use kartik\select2\Select2;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
@@ -19,28 +23,58 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
-        'tableOptions' => ['class' => 'table table-striped table-bordered grid-view'],
-        /*        'rowOptions' => function ($model, $key, $index, $grid) {
-                    return [
-                        'class' => 'my-class',
-                        'onclick' => 'location.href=""',
-                    ];
-                },*/
-        'pager' => [
-            'options' => ['class' => 'pagination'],
-            'linkOptions' => ['class' => 'page-link'],
-            'activePageCssClass' => 'active',
-            'disabledPageCssClass' => 'disabled',
-            'disabledListItemSubTagOptions' => ['tag' => 'a', 'class' => 'page-link', 'href' => '#'],
-        ],
+        'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'subject.name',
+            [
+                'attribute' => 'subjectName',
+                'value' => 'subject.name',
+                'filter' => Select2::widget([
+                    'model' => $searchModel,
+                    'attribute' => 'subjectName',
+                    'data' => ArrayHelper::map(Subject::find()
+                        ->leftJoin('curriculum c', 'subject.id = c."subjectId"')
+                        ->leftJoin('event e', 'c.id = e."curriculumId"')
+                        ->where(['lectorId' => Yii::$app->user->id])
+                        ->all(),
+                        'name', 'name'),
+                    'options' => ['placeholder' => 'Выберите предмет ...'],
+                    'pluginOptions' => ['allowClear' => true]
+                ]),
+            ],
+            [
+                'attribute' => 'groupName',
+                'value' => 'group.name',
+                'filter' => Select2::widget([
+                    'model' => $searchModel,
+                    'attribute' => 'groupName',
+                    'data' => ArrayHelper::map(Group::find()
+                        ->leftJoin('curriculum', '"group".id = curriculum."groupId"')
+                        ->leftJoin('event', '"curriculum".id = event."curriculumId"')
+                        ->where(['lectorId' => Yii::$app->user->id])
+                        ->all(),
+                        'name', 'name'),
+                    'options' => ['placeholder' => 'Выберите группу ...'],
+                    'pluginOptions' => ['allowClear' => true]
+                ]),
+            ],
+            /*            [
+                            'attribute' => 'authorName',
+                            'value' => 'author.fullname',
+                            'filter' => Select2::widget([
+                                'model' => $searchModel,
+                                'attribute' => 'authorName',
+                                'data' => ArrayHelper::map(User::find()->all(), 'fullname', 'fullname'),
+                                'options' => ['placeholder' => 'Выберите автор ...'],
+                                'pluginOptions' => ['allowClear' => true]
+                            ]),
+                        ],*/
+            'author.fullname',
             'description:ntext',
+            'semester',
             [
                 'class' => ActionColumn::class,
-                'template' => '{view} {update}'
             ],
         ],
     ]); ?>

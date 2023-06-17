@@ -3,6 +3,7 @@
 namespace app\modules\curriculum\controllers;
 
 use app\modules\curriculum\models\Curriculum;
+use app\modules\curriculum\models\CurriculumTeacherSearch;
 use Yii;
 use yii\data\ActiveDataProvider;
 use yii\web\NotFoundHttpException;
@@ -11,7 +12,15 @@ class CurriculumTeacherController extends \yii\web\Controller
 {
     public function actionIndex(): string
     {
-        $dataProvider = new ActiveDataProvider([
+        $searchModel = new CurriculumTeacherSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->get());
+
+        return $this->render('index', [
+            'dataProvider' => $dataProvider,
+            'searchModel' => $searchModel,
+        ]);
+
+/*        $dataProvider = new ActiveDataProvider([
             'query' => Curriculum::find()
                 ->leftJoin('event', 'curriculum.id = event."curriculumId"')
                 ->andWhere(['lectorId' => Yii::$app->user->identity->id]),
@@ -19,7 +28,7 @@ class CurriculumTeacherController extends \yii\web\Controller
 
         return $this->render('index', [
             'dataProvider' => $dataProvider,
-        ]);
+        ]);*/
     }
 
     public function actionUpdate($id): \yii\web\Response|string
