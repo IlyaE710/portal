@@ -10,6 +10,8 @@ use yii\widgets\Menu;
 
 /** @var yii\web\View $this */
 /** @var yii\data\ActiveDataProvider $dataProvider */
+/** @var string $template */
+/** @var bool $isAdmin */
 
 $this->title = 'Мероприятия';
 $this->params['breadcrumbs'][] = ['label' => 'Шаблоны учебных планов', 'url' => ['curriculum-pattern-admin/index']];
@@ -35,9 +37,11 @@ $this->params['sidebar'] = SidebarWidget::widget([
 ?>
 
 <div class="row">
-    <p>
-        <?= Html::a('Создать', ['create', 'id' => $id], ['class' => 'btn btn-success']) ?>
-    </p>
+    <?php if ($isAdmin): ?>
+        <p>
+            <?= Html::a('Создать', ['create', 'id' => $id], ['class' => 'btn btn-success']) ?>
+        </p>
+    <?php endif; ?>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
@@ -47,6 +51,7 @@ $this->params['sidebar'] = SidebarWidget::widget([
             'type.name',
             [
                 'class' => ActionColumn::class,
+                'template' => $template,
                 'urlCreator' => function ($action, EventPattern $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'id' => $model->id]);
                 }

@@ -18,6 +18,12 @@ footer {
     flex-shrink: 0;
 }
 
+a {
+    color: #007bff; /* Цвет ссылки */
+    text-decoration: none; /* Убираем подчеркивание */
+    transition: color 0.3s ease; /* Плавный переход цвета при наведении */
+}
+
 .sidebar {
     position: fixed;
     top: 0;

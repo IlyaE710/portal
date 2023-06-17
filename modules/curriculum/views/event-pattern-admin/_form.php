@@ -33,6 +33,7 @@ $this->params['sidebar'] = SidebarWidget::widget([
         ],
     ],
 ]);
+$isAdmin = Yii::$app->user->identity->role === 'admin';
 ?>
 
 <div class="row">
@@ -46,10 +47,15 @@ $this->params['sidebar'] = SidebarWidget::widget([
             'data' => ArrayHelper::map(EventType::find()->all(), 'id', 'name'),
             'options' => ['placeholder' => 'Выберите тэги ...'],
         ]); ?>
-        <?= Html::a(
-            'Создать',
-            Url::toRoute(['event-type-admin/index']), ['target' => '_blank', 'data-pjax' => '0']
-        ); ?>
+
+        <?php if ($isAdmin): ?>
+
+            <?= Html::a(
+                'Создать',
+                Url::toRoute(['event-type-admin/index']), ['target' => '_blank', 'data-pjax' => '0']
+            ); ?>
+
+        <?php endif; ?>
 
         <?= $form->field($model, 'lectorId')->widget(Select2::class, [
             'data' => ArrayHelper::map(User::find()->where(['role' => 'teacher'])->all(), 'id', 'fullname'),

@@ -75,9 +75,15 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
             'label' => '<i class="bi bi-person-fill"></i>', // Иконка пользователя
             'encode' => false,
             'items' => !Yii::$app->user->isGuest ? [
-                Yii::$app->user->identity->role == 'admin'
-                    ? ['label' => 'Админ панель', 'url' => ['/admin/index']]
-                    : '',
+                !Yii::$app->user->isGuest ? Yii::$app->user->identity->role == 'teacher'
+                    ? ['label' => 'Шаблоны курсов', 'url' => ['/curriculum/curriculum-pattern-teacher']]
+                    : '' : '',
+                !Yii::$app->user->isGuest ? Yii::$app->user->identity->role == 'teacher'
+                    ? ['label' => 'Курсы', 'url' => ['/curriculum/curriculum-teacher']]
+                    : '' : '',
+                !Yii::$app->user->isGuest ? Yii::$app->user->identity->role == 'teacher'
+                    ? ['label' => 'Домашнии задания', 'url' => ['/homework/homework-answer-admin/list']]
+                    : '' : '',
                 ['label' => 'Профиль', 'url' => ['/profile']],
                 ['label' => 'Выход', 'url' => ['/site/logout'], 'linkOptions' => ['data-method' => 'post']],
             ] : [],
@@ -147,9 +153,9 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
             </div>
         </div>
     </div>
-    <div class="bg-dark text-center py-2">
+    <div class="bg-light text-center py-2">
         <div class="container">
-            <p class="mb-0 text-white">&copy; 2023 Учебный Портал. Все права защищены.</p>
+            <p class="mb-0 text-dark">&copy; 2023 Учебный Портал. Все права защищены.</p>
         </div>
     </div>
 </footer>

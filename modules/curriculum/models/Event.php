@@ -57,7 +57,7 @@ class Event extends \yii\db\ActiveRecord
             'id' => 'ID',
             'title' => 'Заголовок',
             'duration' => 'Время',
-            'typeId' => 'Type ID',
+            'typeId' => 'Тип',
             'type' => 'Тип',
             'curriculumId' => 'Curriculum ID',
             'materials' => 'Материалы',

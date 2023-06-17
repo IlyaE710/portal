@@ -9,6 +9,8 @@ use yii\grid\GridView;
 
 /** @var yii\web\View $this */
 /** @var yii\data\ActiveDataProvider $dataProvider */
+/** @var string $template */
+/** @var bool $isAdmin */
 
 $this->title = 'Шаблоны курсов';
 $this->params['breadcrumbs'][] = $this->title;
@@ -17,9 +19,11 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <p>
-        <?= Html::a('Создать', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
+    <?php if ($isAdmin): ?>
+        <p>
+            <?= Html::a('Создать', ['create'], ['class' => 'btn btn-success']) ?>
+        </p>
+    <?php endif; ?>
 
 
     <?= GridView::widget([
@@ -45,6 +49,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'description:ntext',
             [
                 'class' => ActionColumn::class,
+                'template' => $template,
             ],
         ],
     ]); ?>

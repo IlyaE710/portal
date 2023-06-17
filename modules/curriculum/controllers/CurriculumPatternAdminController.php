@@ -39,7 +39,12 @@ class CurriculumPatternAdminController extends Controller
                 'class' => AccessControl::class,
                 'rules' => [
                     [
-                        'actions' => ['index', 'view', 'update', 'delete', 'create'],
+                        'actions' => ['index', 'update', 'delete', 'create'],
+                        'allow' => true,
+                        'roles' => ['admin'],
+                    ],
+                    [
+                        'actions' => ['view', 'index', 'update'],
                         'allow' => true,
                         'roles' => ['teacher'],
                     ],
@@ -61,22 +66,20 @@ class CurriculumPatternAdminController extends Controller
      */
     public function actionIndex(): string
     {
+        $isAdmin = Yii::$app->user->identity->role === 'admin';
+        $template = '{view} {update} {delete}';
+        if (!$isAdmin) {
+            $template = '{view} {update}';
+        }
+
         $dataProvider = new ActiveDataProvider([
             'query' => CurriculumPattern::find(),
-            /*
-            'pagination' => [
-                'pageSize' => 50
-            ],
-            'sort' => [
-                'defaultOrder' => [
-                    'id' => SORT_DESC,
-                ]
-            ],
-            */
         ]);
 
         return $this->render('index', [
             'dataProvider' => $dataProvider,
+            'isAdmin' => $isAdmin,
+            'template' => $template,
         ]);
     }
 
@@ -88,8 +91,10 @@ class CurriculumPatternAdminController extends Controller
      */
     public function actionView(int $id): string
     {
+        $isAdmin = Yii::$app->user->identity->role === 'admin';
         return $this->render('view', [
             'model' => $this->findModel($id),
+            'isAdmin' => $isAdmin,
         ]);
     }
 
@@ -123,6 +128,10 @@ class CurriculumPatternAdminController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+
+        if (Yii::$app->user->identity->role === 'teacher') {
+            return $this->redirect(['/curriculum/event-pattern-admin', 'id' => $model->id]);
+        }
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
             return $this->redirect(['index', 'id' => $model->id]);

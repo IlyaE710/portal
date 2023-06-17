@@ -2,6 +2,7 @@
 
 namespace app\modules\curriculum\controllers;
 
+use app\modules\curriculum\models\Event;
 use app\modules\curriculum\models\EventPattern;
 use app\modules\homework\models\Homework;
 use app\modules\material\models\Material;
@@ -61,23 +62,21 @@ class EventPatternAdminController extends Controller
      */
     public function actionIndex(int $id)
     {
+        $isAdmin = Yii::$app->user->identity->role === 'admin';
+        $template = '{view} {update} {delete}';
+        if (!$isAdmin) {
+            $template = '{view} {update}';
+        }
+
         $dataProvider = new ActiveDataProvider([
             'query' => EventPattern::find()->where(['curriculumId' => $id]),
-            /*
-            'pagination' => [
-                'pageSize' => 50
-            ],
-            'sort' => [
-                'defaultOrder' => [
-                    'id' => SORT_DESC,
-                ]
-            ],
-            */
         ]);
 
         return $this->render('index', [
             'dataProvider' => $dataProvider,
             'id' => $id,
+            'isAdmin' => $isAdmin,
+            'template' => $template,
         ]);
     }
 
@@ -89,8 +88,10 @@ class EventPatternAdminController extends Controller
      */
     public function actionView($id)
     {
+        $isAdmin = Yii::$app->user->identity->role === 'admin';
         return $this->render('view', [
             'model' => $this->findModel($id),
+            'isAdmin' => $isAdmin,
         ]);
     }
 
@@ -150,7 +151,7 @@ class EventPatternAdminController extends Controller
      * @return string|\yii\web\Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdate($id)
+    public function actionUpdate($id): \yii\web\Response|string
     {
         $model = $this->findModel($id);
 

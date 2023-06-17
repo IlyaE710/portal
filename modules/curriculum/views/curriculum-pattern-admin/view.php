@@ -7,6 +7,7 @@ use yii\widgets\DetailView;
 
 /** @var yii\web\View $this */
 /** @var app\modules\curriculum\models\CurriculumPattern $model */
+/** @var bool $isAdmin */
 
 $this->title = $model->subject->name;
 $this->params['breadcrumbs'][] = ['label' => 'Шаблоны курсов', 'url' => ['index']];
@@ -36,6 +37,7 @@ $this->params['sidebar'] = SidebarWidget::widget([
 <div class="row">
     <div class="link-update">
         <p>
+            <?php if ($isAdmin): ?>
             <?= Html::a('Редактировать', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
             <?= Html::a('Удалить', ['delete', 'id' => $model->id], [
                 'class' => 'btn btn-danger',
@@ -44,6 +46,7 @@ $this->params['sidebar'] = SidebarWidget::widget([
                     'method' => 'post',
                 ],
             ]) ?>
+            <?php endif; ?>
         </p>
         <?= DetailView::widget([
             'model' => $model,

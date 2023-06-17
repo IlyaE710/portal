@@ -42,6 +42,11 @@ class EventAdminController extends Controller
                     [
                         'actions' => ['index', 'view', 'update', 'delete', 'create'],
                         'allow' => true,
+                        'roles' => ['admin'],
+                    ],
+                    [
+                        'actions' => ['index', 'view', 'update'],
+                        'allow' => true,
                         'roles' => ['teacher'],
                     ],
                 ],
@@ -61,23 +66,21 @@ class EventAdminController extends Controller
      */
     public function actionIndex(int $id)
     {
+        $isAdmin = Yii::$app->user->identity->role === 'admin';
+        $template = '{view} {update} {delete}';
+        if (!$isAdmin) {
+            $template = '{view} {update}';
+        }
+
         $dataProvider = new ActiveDataProvider([
             'query' => Event::find()->where(['curriculumId' => $id]),
-            /*
-            'pagination' => [
-                'pageSize' => 50
-            ],
-            'sort' => [
-                'defaultOrder' => [
-                    'id' => SORT_DESC,
-                ]
-            ],
-            */
         ]);
 
         return $this->render('index', [
             'dataProvider' => $dataProvider,
             'id' => $id,
+            'isAdmin' => $isAdmin,
+            'template' => $template,
         ]);
     }
 

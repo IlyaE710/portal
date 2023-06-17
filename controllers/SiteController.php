@@ -111,10 +111,21 @@ class SiteController extends Controller
         return $this->render('calendar');
     }
 
+    public function actionBanned(): string
+    {
+        return 'бан';
+    }
+
     public function actionEvents(): array
     {
         $events = [];
         $eventsModel = [];
+
+        if (Yii::$app->user->identity->role === 'teacher') {
+            foreach (Event::findAll(['lectorId' => Yii::$app->user->id]) as $event) {
+                $eventsModel[] = $event;
+            }
+        }
 
         foreach (Yii::$app->user->identity->groups as $group) {
             foreach ($group->curriculums as $curriculum) {

@@ -31,7 +31,7 @@ use yii\widgets\Menu; ?>
                 <?php foreach($collapses as $collapse): ?>
                     <div class="col-sm-12"><?= Html::a(
                             $collapse['label'],
-                            $collapse['url'], ['data-pjax' => '0']
+                            $collapse['url'], ['data-pjax' => '0', 'class' => ''],
                         ); ?></div>
                 <?php endforeach; ?>
             </div>
