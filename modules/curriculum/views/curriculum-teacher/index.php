@@ -70,7 +70,6 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'pluginOptions' => ['allowClear' => true]
                             ]),
                         ],*/
-            'author.fullname',
             'description:ntext',
             'semester',
             [

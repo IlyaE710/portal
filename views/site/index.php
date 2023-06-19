@@ -19,7 +19,7 @@ use yii\widgets\Pjax;
 $this->title = 'Учебный портал ВУЗа';
 Pjax::begin();
 ?>
-<?php if(!empty($models)): ?>
+<?php if(!empty($dataProvider->models)): ?>
     <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-filter" aria-expanded="false" aria-controls="widget1">
         Открыть фильтр
     </button>

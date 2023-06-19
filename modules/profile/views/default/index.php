@@ -36,7 +36,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="card mt-4">
                 <div class="card-body">
                     <h5 class="card-title">Редактирование</h5>
-                    <p class="card-text"><strong>Email:</strong> <?= Html::a('изменить', Url::to(['change-email'])); ?></p>
+                    <p class="card-text"><strong>Основные:</strong> <?= Html::a('изменить', Url::to(['change-email'])); ?></p>
                     <p class="card-text"><strong>Пароль:</strong> <?= Html::a('изменить', Url::to(['change-password'])); ?></p>
                 </div>
             </div>

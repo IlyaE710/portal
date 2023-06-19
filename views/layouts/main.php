@@ -75,6 +75,9 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
             'label' => '<i class="bi bi-person-fill"></i>', // Иконка пользователя
             'encode' => false,
             'items' => !Yii::$app->user->isGuest ? [
+                !Yii::$app->user->isGuest ? Yii::$app->user->identity->role == 'admin'
+                    ? ['label' => 'Админ панель', 'url' => ['/admin']]
+                    : '' : '',
                 !Yii::$app->user->isGuest ? Yii::$app->user->identity->role == 'teacher'
                     ? ['label' => 'Шаблоны курсов', 'url' => ['/curriculum/curriculum-pattern-teacher']]
                     : '' : '',

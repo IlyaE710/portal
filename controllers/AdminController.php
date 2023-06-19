@@ -16,14 +16,8 @@ class AdminController extends \yii\web\Controller
                     [
                         'actions' => ['index'],
                         'allow' => true,
-                        'roles' => ['teacher'],
+                        'roles' => ['admin'],
                     ],
-                ],
-            ],
-            'verbs' => [
-                'class' => VerbFilter::class,
-                'actions' => [
-                    'logout' => ['post'],
                 ],
             ],
         ];

@@ -62,6 +62,12 @@ class DefaultController extends Controller
             return $this->redirect('index');
         }
 
+        $user = Yii::$app->user->identity;
+        $model->email = $user->email;
+        $model->patronymic = $user->patronymic;
+        $model->firstname = $user->firstname;
+        $model->lastname = $user->lastname;
+
         return $this->render('change-email', ['model' => $model]);
     }
 

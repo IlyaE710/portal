@@ -8,16 +8,24 @@ use yii\base\Model;
 class ChangeEmail extends Model
 {
     public $email;
+    public $firstname;
+    public $lastname;
+    public $patronymic;
 
     public function rules(): array
     {
         return [
-            [['email'], 'required'],
             [['email'], function ($attribute, $params, $validator) {
-                if (User::findByEmail($this->{$attribute}) !== null) {
+                $findUser = User::findByEmail($this->{$attribute});
+                if ($findUser->id === Yii::$app->user->id) {
+                    return;
+                }
+                if ($findUser !== null) {
                     $this->addError($attribute, 'Такой Email уже есть в системе.');
                 }
             }],
+            ['email', 'email'],
+            [['firstname', 'lastname', 'patronymic'], 'string'],
             ['email', 'email'],
         ];
     }
@@ -29,6 +37,9 @@ class ChangeEmail extends Model
     {
         return [
             'email' => 'Email',
+            'firstname' => 'Имя',
+            'lastname' => 'Фамилия',
+            'patronymic' => 'Отчество',
         ];
     }
 
@@ -37,10 +48,13 @@ class ChangeEmail extends Model
         if ($this->validate()) {
             $user = Yii::$app->user->identity;
             $user->email = $this->email;
+            $user->firstname = $this->firstname;
+            $user->lastname = $this->lastname;
+            $user->patronymic = $this->patronymic;
             $user->save();
             return true;
         }
-
+        echo '<pre>' . print_r($this->errors, true) . '</pre>';die;
         return false;
     }
 
