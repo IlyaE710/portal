@@ -20,7 +20,7 @@ use app\models\ContactForm;
 
 class SiteController extends Controller
 {
-    public function beforeAction($action): bool
+/*    public function beforeAction($action): bool
     {
         if (!Yii::$app->user->isGuest) {
             $role = Yii::$app->user->identity->role;
@@ -31,7 +31,7 @@ class SiteController extends Controller
         }
 
         return parent::beforeAction($action);
-    }
+    }*/
 
     public function behaviors()
     {
@@ -40,6 +40,12 @@ class SiteController extends Controller
                 'class' => AccessControl::class,
                 'only' => ['index', 'logout', 'calendar'],
                 'rules' => [
+                    [
+                        'roles' => ['banned'],
+                        'denyCallback' => function ($rule, $action) {
+                            throw new ForbiddenHttpException('Вы заблокированы!');
+                        }
+                    ],
                     [
                         'actions' => ['logout', 'index', 'calendar', 'events'],
                         'allow' => true,
