@@ -3,6 +3,7 @@
 namespace app\modules\homework\models;
 
 use Yii;
+use yii\web\UploadedFile;
 
 /**
  * This is the model class for table "homework_file".

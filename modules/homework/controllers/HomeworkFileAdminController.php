@@ -2,11 +2,14 @@
 
 namespace app\modules\homework\controllers;
 
+use app\modules\homework\models\FileUploadForm;
 use app\modules\homework\models\HomeworkFile;
 use app\modules\homework\models\HomeworkFileSearch;
+use app\modules\material\models\File;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
 
 /**
  * HomeworkFileAdminController implements the CRUD actions for HomeworkFile model.
@@ -65,20 +68,25 @@ class HomeworkFileAdminController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return string|\yii\web\Response
      */
-    public function actionCreate()
+    public function actionCreate(int $id)
     {
-        $model = new HomeworkFile();
+        $form = new FileUploadForm();
 
         if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+            $form->files = UploadedFile::getInstances($form, 'files');
+            if ($form->upload()) {
+                foreach ($form->files as $file) {
+                    $model = new HomeworkFile();
+                    $model->pathname = $file->fullPath;
+                    $model->homeworkAnswerId = $id;
+                    $model->save();
+                }
+                return $this->redirect(['index']);
             }
-        } else {
-            $model->loadDefaultValues();
         }
 
         return $this->render('create', [
-            'model' => $model,
+            'model' => $form,
         ]);
     }
 

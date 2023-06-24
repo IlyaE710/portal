@@ -41,6 +41,30 @@ class m230512_223120_rbac extends Migration
 
         // Назначаем роли пользователям
         $auth->assign($adminRole, $user->id);
+
+        $teacher = new \app\models\User();
+        $teacher->firstname = 'Петр';
+        $teacher->lastname = 'Петров';
+        $teacher->patronymic = 'Петрович';
+        $teacher->passwordHash = Yii::$app->security->generatePasswordHash('teacher');
+        $teacher->email = 'teacher@mail.com';
+        $teacher->role = 'teacher';
+        $teacher->save();
+
+        // Назначаем роли пользователям
+        $auth->assign($teacherRole, $teacher->id);
+
+        $student = new \app\models\User();
+        $student->firstname = 'Иван';
+        $student->lastname = 'Иванович';
+        $student->patronymic = 'Иванов';
+        $student->passwordHash = Yii::$app->security->generatePasswordHash('student');
+        $student->email = 'student@mail.com';
+        $student->role = 'student';
+        $student->save();
+
+        // Назначаем роли пользователям
+        $auth->assign($teacherRole, $student->id);
     }
 
     /**
