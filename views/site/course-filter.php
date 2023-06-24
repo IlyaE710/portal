@@ -1,6 +1,7 @@
 <?php
 
 use app\modules\curriculum\models\Subject;
+use app\modules\group\models\Group;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
@@ -18,7 +19,12 @@ use kartik\select2\Select2;
 <div class="row">
     <div class="col-md-6">
         <?= $form->field($model, 'groupName')->widget(Select2::class, [
-            'data' => ArrayHelper::map(Yii::$app->user->identity->groups, 'id', 'name'),
+            'data' => ArrayHelper::map(
+                    Yii::$app->user->identity->role === 'student'
+                        ? Yii::$app->user->identity->groups
+                        : Group::find()->all(),
+                    'id',
+                    'name'),
             'options' => ['class' => ['col'], 'placeholder' => 'Выберите группы ...'],
             'pluginOptions' => [
                 'allowClear' => true,
