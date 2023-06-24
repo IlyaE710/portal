@@ -138,7 +138,7 @@ class HomeworkAnswerAdminController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
+        if ($this->request->isPost && $model->load($this->request->post()) &&  $model->validate() && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
@@ -161,14 +161,7 @@ class HomeworkAnswerAdminController extends Controller
         return $this->redirect(['index']);
     }
 
-    /**
-     * Finds the HomeworkAnswer model based on its primary key value.
-     * If the model is not found, a 404 HTTP exception will be thrown.
-     * @param int $id ID
-     * @return HomeworkAnswerController the loaded model
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    protected function findModel($id)
+    protected function findModel($id): HomeworkAnswer
     {
         if (($model = HomeworkAnswer::findOne(['id' => $id])) !== null) {
             return $model;

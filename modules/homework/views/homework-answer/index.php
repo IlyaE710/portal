@@ -1,7 +1,9 @@
 <?php
 
+use app\modules\homework\models\FileUploadForm;
 use app\modules\homework\models\Homework;
 use app\modules\homework\models\HomeworkAnswer;
+use kartik\file\FileInput;
 use mihaildev\ckeditor\CKEditor;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -31,6 +33,17 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
     ])
         ->label(false); ?>
+
+    <?= $form->field($model, 'files[]')->widget(FileInput::class, [
+        'options' => ['multiple' => true],
+        'pluginOptions' => [
+            'previewFileType' => 'image',
+            'showUpload' => true,
+            'browseLabel' => 'Выберите файлы',
+            'removeLabel' => 'Удалить',
+            'overwriteInitial' => false,
+        ]
+    ])->label(false) ?>
 
     <div class="form-group">
         <?= Html::submitButton('Сохранить', ['class' => 'btn btn-success my-2']) ?>

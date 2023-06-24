@@ -4,6 +4,7 @@ namespace app\modules\homework\models;
 
 use app\models\User;
 use Yii;
+use yii\web\UploadedFile;
 
 /**
  * This is the model class for table "homework_answer".
@@ -21,6 +22,10 @@ use Yii;
  */
 class HomeworkAnswer extends \yii\db\ActiveRecord
 {
+    /**
+     * @var UploadedFile[] массив для хранения загруженных файлов
+     */
+    public $files;
     /**
      * {@inheritdoc}
      */
@@ -40,6 +45,7 @@ class HomeworkAnswer extends \yii\db\ActiveRecord
             [['studentId', 'homeworkId'], 'integer'],
             [['content', 'comment', 'mark'], 'string'],
             [['homeworkId'], 'exist', 'skipOnError' => true, 'targetClass' => Homework::class, 'targetAttribute' => ['homeworkId' => 'id']],
+            [['files'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg, jpeg, doc, docx, pdf', 'maxFiles' => 5, 'maxSize' => '5M'],
             [['studentId'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['studentId' => 'id']],
         ];
     }
@@ -87,5 +93,24 @@ class HomeworkAnswer extends \yii\db\ActiveRecord
     public function getStudent()
     {
         return $this->hasOne(User::class, ['id' => 'studentId']);
+    }
+
+    public function upload(): bool
+    {
+        if (!empty($this->files)) return false;
+        if ($this->validate()) {
+            foreach ($this->files as $file) {
+                $filename = $this->generateUniqueFileName($file->name);
+                $file->name = $filename;
+                $file->saveAs('uploads' . '/homeworks/' . $filename);
+            }
+            return true;
+        }
+        return false;
+    }
+
+    protected function generateUniqueFileName($filename): string
+    {
+        return uniqid() . '_' . $filename;
     }
 }

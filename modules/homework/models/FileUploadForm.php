@@ -2,9 +2,10 @@
 
 namespace app\modules\homework\models;
 
+use yii\base\Model;
 use yii\web\UploadedFile;
 
-class FileUploadForm extends \yii\base\Model
+class FileUploadForm extends Model
 {
     /**
      * @var UploadedFile[] массив для хранения загруженных файлов

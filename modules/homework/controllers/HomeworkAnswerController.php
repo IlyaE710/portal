@@ -4,9 +4,13 @@ namespace app\modules\homework\controllers;
 
 use app\modules\curriculum\models\Curriculum;
 use app\modules\curriculum\models\Event;
+use app\modules\homework\models\FileUploadForm;
+use app\modules\homework\models\Homework;
 use app\modules\homework\models\HomeworkAnswer;
+use app\modules\homework\models\HomeworkFile;
 use Yii;
 use yii\db\Exception;
+use yii\web\UploadedFile;
 
 class HomeworkAnswerController extends \yii\web\Controller
 {
@@ -14,24 +18,16 @@ class HomeworkAnswerController extends \yii\web\Controller
     {
         $model = new HomeworkAnswer();
         $isBlockForm = false;
-        $event = Event::find()
-            ->where(
+        $homework = Homework::find()
+            ->leftJoin('homework_event', 'homework_event.homework_id = id')
+            ->leftJoin('event', 'event."id" = homework_event.event_id')
+/*            ->where(
                 [
                     'curriculumId' => $curriculumId,
                     'id' => $eventId,
-                ])
+                ])*/
             ->one();
-        $homework = null;
 
-        foreach ($event->homeworks as $homeworkFinder) {
-            if ($homeworkFinder->id === $homeworkId)
-                foreach ($homeworkFinder->answers as $answer) {
-                    if ($answer->studentId === Yii::$app->user->id) {
-
-                    }
-                    $homework = $homeworkFinder;
-                }
-        }
         if (!empty($homework)) {
             foreach ($homework->answers as $answer) {
                 if ($answer->mark === '5' || $answer->mark === 'Зачет') {
@@ -46,18 +42,30 @@ class HomeworkAnswerController extends \yii\web\Controller
         }
 
         if ($this->request->isPost) {
+
             if ($model->load($this->request->post())) {
+                $model->files = UploadedFile::getInstances($model, 'files');
                 $model->homeworkId = $homeworkId;
                 $model->studentId = Yii::$app->user->id;
                 if (!$model->validate() || !$model->save())
                 {
                     throw new Exception('not load or validate data');
                 }
-                return $this->redirect(['index', 'model' => $model, 'homework' => $homework, 'curriculumId' => $curriculumId, 'eventId' => $eventId, 'homeworkId' => $homeworkId, 'isBlockForm' => $isBlockForm]);
+
+                if ($model->upload()) {
+                    foreach ($model->files as $file) {
+                        $modelFile = new HomeworkFile();
+                        $modelFile->pathname = $file->name;
+                        $modelFile->homeworkAnswerId = $model->id;
+                        $modelFile->save();
+                    }
+                }
+
+                return $this->redirect(['index', 'form', 'model' => $model, 'homework' => $homework, 'curriculumId' => $curriculumId, 'eventId' => $eventId, 'homeworkId' => $homeworkId, 'isBlockForm' => $isBlockForm]);
             }
         }
 
-        return $this->render('index', ['model' => $model, 'homework' => $homework, 'curriculumId' => $curriculumId, 'eventId' => $eventId, 'homeworkId' => $homeworkId, 'isBlockForm' => $isBlockForm]);
+        return $this->render('index', ['model' => $model, 'form', 'homework' => $homework, 'curriculumId' => $curriculumId, 'eventId' => $eventId, 'homeworkId' => $homeworkId, 'isBlockForm' => $isBlockForm]);
     }
 
 }
