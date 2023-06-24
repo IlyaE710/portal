@@ -11,15 +11,15 @@ use yii\helpers\Url;
 /** @var app\modules\homework\models\HomeworkAnswer $model */
 
 $this->title = 'Ответ на Д/З: ' . $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Список Д/З', 'url' => ['list']];
+$this->params['breadcrumbs'][] = ['label' => 'Ответы студентов', 'url' => ['list']];
 $this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = 'Редактировать';
 ?>
 <div class="homework-answer-update">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-
+    <h1><?= Html::encode('Ответ студента') ?></h1>
     <p><?= $model->content ?></p>
+
 
     <?php if($model->getHomeworkFiles()->count() !== 0): ?>
         <?= GridView::widget([
@@ -30,7 +30,9 @@ $this->params['breadcrumbs'][] = 'Редактировать';
             'options' => ['class' => 'table-responsive'],
             'tableOptions' => ['class' => 'table table-striped'],
             'columns' => [
-                ['class' => SerialColumn::class],
+                [
+                    'class' => SerialColumn::class
+                ],
                 'pathname',
                 [
                     'format' => 'raw',
