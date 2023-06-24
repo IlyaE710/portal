@@ -87,6 +87,9 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                 !Yii::$app->user->isGuest ? Yii::$app->user->identity->role == 'teacher'
                     ? ['label' => 'Домашнии задания', 'url' => ['/homework/homework-answer-admin/list']]
                     : '' : '',
+                !Yii::$app->user->isGuest ? Yii::$app->user->identity->role == 'teacher'
+                    ? ['label' => 'Материалы', 'url' => ['/material/material-admin']]
+                    : '' : '',
                 ['label' => 'Профиль', 'url' => ['/profile']],
                 ['label' => 'Выход', 'url' => ['/site/logout'], 'linkOptions' => ['data-method' => 'post']],
             ] : [],
