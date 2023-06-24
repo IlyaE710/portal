@@ -44,7 +44,7 @@ $this->params['sidebar'] = SidebarWidget::widget([
             'type.name',
             [
                 'class' => ActionColumn::class,
-                'template' => '{view} {update}'
+                'template' => '{update}'
             ],
         ],
     ]); ?>

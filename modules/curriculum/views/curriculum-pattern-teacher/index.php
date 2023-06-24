@@ -40,7 +40,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'description:ntext',
             [
                 'class' => ActionColumn::class,
-                'template' => '{view} {update}'
+                'template' => '{update}'
             ],
         ],
     ]); ?>

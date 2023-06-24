@@ -73,6 +73,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'description:ntext',
             'semester',
             [
+                'template' => '{update}',
                 'class' => ActionColumn::class,
             ],
         ],
