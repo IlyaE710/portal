@@ -10,10 +10,35 @@ use app\modules\homework\models\HomeworkAnswer;
 use app\modules\homework\models\HomeworkFile;
 use Yii;
 use yii\db\Exception;
+use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
+use yii\web\ForbiddenHttpException;
 use yii\web\UploadedFile;
 
 class HomeworkAnswerController extends \yii\web\Controller
 {
+    public function behaviors(): array
+    {
+        return [
+            'access' => [
+                'class' => AccessControl::class,
+                'rules' => [
+                    [
+                        'roles' => ['banned'],
+                        'denyCallback' => function ($rule, $action) {
+                            throw new ForbiddenHttpException('Вы заблокированы!');
+                        }
+                    ],
+                    [
+                        'actions' => ['index'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
+        ];
+    }
+
     public function actionIndex(int $curriculumId, int $eventId, int $homeworkId)
     {
         $model = new HomeworkAnswer();
