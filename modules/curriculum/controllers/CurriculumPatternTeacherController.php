@@ -5,10 +5,33 @@ namespace app\modules\curriculum\controllers;
 use app\modules\curriculum\models\CurriculumPattern;
 use Yii;
 use yii\data\ActiveDataProvider;
+use yii\filters\AccessControl;
+use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
 
 class CurriculumPatternTeacherController extends \yii\web\Controller
 {
+    public function behaviors()
+    {
+        return [
+            'access' => [
+                'class' => AccessControl::class,
+                'rules' => [
+                    [
+                        'roles' => ['banned'],
+                        'denyCallback' => function ($rule, $action) {
+                            throw new ForbiddenHttpException('Вы заблокированы!');
+                        }
+                    ],
+                    [
+                        'actions' => ['update', 'index'],
+                        'allow' => true,
+                        'roles' => ['teacher'],
+                    ],
+                ],
+            ],
+        ];
+    }
     public function actionIndex(): string
     {
         $dataProvider = new ActiveDataProvider([

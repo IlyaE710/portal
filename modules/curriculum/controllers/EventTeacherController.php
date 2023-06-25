@@ -9,10 +9,35 @@ use app\modules\material\models\Material;
 use Exception;
 use Yii;
 use yii\data\ActiveDataProvider;
+use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
+use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
 
 class EventTeacherController extends \yii\web\Controller
 {
+    public function behaviors()
+    {
+        return [
+            'access' => [
+                'class' => AccessControl::class,
+                'rules' => [
+                    [
+                        'roles' => ['banned'],
+                        'denyCallback' => function ($rule, $action) {
+                            throw new ForbiddenHttpException('Вы заблокированы!');
+                        }
+                    ],
+                    [
+                        'actions' => ['index', 'update'],
+                        'allow' => true,
+                        'roles' => ['teacher'],
+                    ],
+                ],
+            ],
+        ];
+    }
+
     public function actionIndex(int $id): string
     {
         $dataProvider = new ActiveDataProvider([

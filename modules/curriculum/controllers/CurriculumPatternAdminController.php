@@ -19,19 +19,6 @@ use yii\web\Response;
  */
 class CurriculumPatternAdminController extends Controller
 {
-    public function beforeAction($action): bool
-    {
-        if (!Yii::$app->user->isGuest) {
-            $role = Yii::$app->user->identity->role;
-
-            if ($role === 'banned') {
-                throw new ForbiddenHttpException('Вам запрещен доступ к сайту.');
-            }
-        }
-
-        return parent::beforeAction($action);
-    }
-
     public function behaviors(): array
     {
         return [
@@ -39,14 +26,15 @@ class CurriculumPatternAdminController extends Controller
                 'class' => AccessControl::class,
                 'rules' => [
                     [
+                        'roles' => ['banned'],
+                        'denyCallback' => function ($rule, $action) {
+                            throw new ForbiddenHttpException('Вы заблокированы!');
+                        }
+                    ],
+                    [
                         'actions' => ['index', 'update', 'delete', 'create'],
                         'allow' => true,
                         'roles' => ['admin'],
-                    ],
-                    [
-                        'actions' => ['view', 'index', 'update'],
-                        'allow' => true,
-                        'roles' => ['teacher'],
                     ],
                 ],
             ],

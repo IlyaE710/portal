@@ -44,11 +44,6 @@ class EventAdminController extends Controller
                         'allow' => true,
                         'roles' => ['admin'],
                     ],
-                    [
-                        'actions' => ['index', 'view', 'update'],
-                        'allow' => true,
-                        'roles' => ['teacher'],
-                    ],
                 ],
             ],
             'verbs' => [

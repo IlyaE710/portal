@@ -22,25 +22,18 @@ use yii\web\UploadedFile;
  */
 class CurriculumAdminController extends Controller
 {
-    public function beforeAction($action): bool
-    {
-        if (!Yii::$app->user->isGuest) {
-            $role = Yii::$app->user->identity->role;
-
-            if ($role === 'banned') {
-                throw new ForbiddenHttpException('Вам запрещен доступ к сайту.');
-            }
-        }
-
-        return parent::beforeAction($action);
-    }
-
     public function behaviors()
     {
         return [
             'access' => [
                 'class' => AccessControl::class,
                 'rules' => [
+                    [
+                        'roles' => ['banned'],
+                        'denyCallback' => function ($rule, $action) {
+                            throw new ForbiddenHttpException('Вы заблокированы!');
+                        }
+                    ],
                     [
                         'actions' => ['index', 'view', 'update', 'delete', 'select-pattern', 'create', 'upload-image'],
                         'allow' => true,

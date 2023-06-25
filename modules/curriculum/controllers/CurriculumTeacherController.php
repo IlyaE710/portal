@@ -6,10 +6,34 @@ use app\modules\curriculum\models\Curriculum;
 use app\modules\curriculum\models\CurriculumTeacherSearch;
 use Yii;
 use yii\data\ActiveDataProvider;
+use yii\filters\AccessControl;
+use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
 
 class CurriculumTeacherController extends \yii\web\Controller
 {
+    public function behaviors()
+    {
+        return [
+            'access' => [
+                'class' => AccessControl::class,
+                'rules' => [
+                    [
+                        'roles' => ['banned'],
+                        'denyCallback' => function ($rule, $action) {
+                            throw new ForbiddenHttpException('Вы заблокированы!');
+                        }
+                    ],
+                    [
+                        'actions' => ['update', 'index'],
+                        'allow' => true,
+                        'roles' => ['teacher'],
+                    ],
+                ],
+            ],
+        ];
+    }
+
     public function actionIndex(): string
     {
         $searchModel = new CurriculumTeacherSearch();
