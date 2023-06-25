@@ -65,6 +65,8 @@ class m230512_223120_rbac extends Migration
 
         // Назначаем роли пользователям
         $auth->assign($studentRole, $student->id);
+        $auth->addChild($adminRole, $studentRole);
+        $auth->addChild($teacherRole, $studentRole);
     }
 
     /**

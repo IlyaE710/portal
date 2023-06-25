@@ -57,7 +57,7 @@ class DefaultController extends Controller
                         }
                     ],
                     [
-                        'actions' => ['index', 'changePassword', 'changeEmail'],
+                        'actions' => ['index', 'change-password', 'change-email'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
