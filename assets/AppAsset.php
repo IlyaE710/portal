@@ -25,7 +25,6 @@ class AppAsset extends AssetBundle
     ];
     public $js = [
         'js/main.js',
-        //'https://cdn.jsdelivr.net/npm/fullcalendar@6.1.7/index.global.min.js',
     ];
     public $depends = [
         'yii\web\YiiAsset',

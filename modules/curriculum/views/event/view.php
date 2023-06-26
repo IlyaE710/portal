@@ -112,10 +112,6 @@ Pjax::begin();
                         );
                     }
                 ],
-                [
-                    'class' => ActionColumn::class,
-                    'template' => '{delete}',
-                ],
             ],
         ]); ?>
         <?php endif; ?>

@@ -32,7 +32,7 @@ class CurriculumPatternAdminController extends Controller
                         }
                     ],
                     [
-                        'actions' => ['index', 'update', 'delete', 'create'],
+                        'actions' => ['index', 'update', 'delete', 'create', 'view'],
                         'allow' => true,
                         'roles' => ['admin'],
                     ],

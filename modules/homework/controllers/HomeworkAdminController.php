@@ -32,6 +32,11 @@ class HomeworkAdminController extends Controller
                         'allow' => true,
                         'roles' => ['admin'],
                     ],
+                    [
+                        'actions' => ['index', 'create', 'view'],
+                        'allow' => true,
+                        'roles' => ['teacher'],
+                    ],
                 ],
             ],
             'verbs' => [
