@@ -41,6 +41,11 @@ class EventPatternTeacherController extends \yii\web\Controller
         $dataProvider = new ActiveDataProvider([
             'query' => EventPattern::find()->where(['curriculumId' => $id])
                 ->andWhere(['lectorId' => Yii::$app->user->identity->id]),
+            'sort' => [
+                'defaultOrder' => [
+                    'startDate' => SORT_ASC,
+                ]
+            ],
         ]);
 
         return $this->render('index', [

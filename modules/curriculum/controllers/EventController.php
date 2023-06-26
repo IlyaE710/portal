@@ -42,8 +42,12 @@ class EventController extends Controller
 
     public function actionView($id): string
     {
+        $model = $this->findModel($id);
+        $events = Event::find()->where(['curriculumId' => $model->curriculumId])->orderBy(['startDate' => SORT_ASC])->all();
+
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $model,
+            'events' => $events,
         ]);
     }
 

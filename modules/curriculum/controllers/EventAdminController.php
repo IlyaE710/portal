@@ -69,6 +69,11 @@ class EventAdminController extends Controller
 
         $dataProvider = new ActiveDataProvider([
             'query' => Event::find()->where(['curriculumId' => $id]),
+            'sort' => [
+                'defaultOrder' => [
+                    'startDate' => SORT_ASC,
+                ]
+            ],
         ]);
 
         return $this->render('index', [

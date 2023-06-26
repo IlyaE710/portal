@@ -14,12 +14,13 @@ $this->params['breadcrumbs'][] = ['label' => 'Курс', 'url' => ['update', 'id
 $this->params['breadcrumbs'][] = $this->title;
 $itemsEvent = [];
 $items = [];
-foreach ($model->events as $event) {
+foreach ($model->getEvents()->orderBy(['startDate' => SORT_ASC])->all() as $event) {
     $itemsEvent[] = [
         'label' => $event->type->name . ' ' . $event->title,
         'url' => Url::toRoute(['event-admin/view', 'id' => $event->id]),
     ];
 }
+
 $this->params['sidebar'] = SidebarWidget::widget([
     'items' => [
         /*                [

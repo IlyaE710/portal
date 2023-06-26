@@ -23,7 +23,7 @@ $this->params['breadcrumbs'][] = $this->title;
 $currentUrl = Url::current();
 $itemsEvent = [];
 $items = [];
-foreach ($model->curriculum->events as $event) {
+foreach ($model->curriculum->getEvents()->orderBy(['startDate' => SORT_ASC])->all() as $event) {
     $url = Url::toRoute(['event/view', 'id' => $event->id]);
     if ($currentUrl === $url) {
         $url = Url::toRoute(['event/view', 'id' => $event->id, '#' => 'header']);

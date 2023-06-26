@@ -63,6 +63,11 @@ class EventPatternAdminController extends Controller
 
         $dataProvider = new ActiveDataProvider([
             'query' => EventPattern::find()->where(['curriculumId' => $id]),
+            'sort' => [
+                'defaultOrder' => [
+                    'startDate' => SORT_ASC,
+                ]
+            ],
         ]);
 
         return $this->render('index', [

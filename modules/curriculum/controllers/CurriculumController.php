@@ -4,6 +4,7 @@ namespace app\modules\curriculum\controllers;
 
 use app\modules\curriculum\models\Curriculum;
 use app\modules\curriculum\models\CurriculumPattern;
+use app\modules\curriculum\models\Event;
 use Yii;
 use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
@@ -43,8 +44,11 @@ class CurriculumController extends \yii\web\Controller
 
     public function actionView(int $id): string
     {
+        $events = Event::find()->where(['curriculumId' => $id])->orderBy(['startDate' => SORT_ASC])->all();
+
         return $this->render('view', [
             'model' => $this->findModel($id),
+            'events' => $events,
         ]);
     }
 

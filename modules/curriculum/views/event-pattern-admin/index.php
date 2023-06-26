@@ -2,6 +2,7 @@
 
 use app\modules\curriculum\models\EventPattern;
 use app\widgets\sidebar\SidebarWidget;
+use yii\grid\DataColumn;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
@@ -49,6 +50,11 @@ $this->params['sidebar'] = SidebarWidget::widget([
             ['class' => 'yii\grid\SerialColumn'],
             'title',
             'type.name',
+            [
+                'class' => DataColumn::className(), // Не обязательно
+                'attribute' => 'startDate',
+                'format' => 'text',
+            ],
             [
                 'class' => ActionColumn::class,
                 'template' => $template,

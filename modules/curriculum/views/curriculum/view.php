@@ -12,7 +12,7 @@ $this->title = $model->subject->name;
 $this->params['breadcrumbs'][] = $this->title;
 $itemsEvent = [];
 $items = [];
-foreach ($model->events as $event) {
+foreach ($events as $event) {
     $itemsEvent[] = [
         'label' => $event->type->name . ' ' . $event->title,
         'url' => Url::toRoute(['event/view', 'id' => $event->id]),

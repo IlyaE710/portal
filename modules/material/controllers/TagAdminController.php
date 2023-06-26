@@ -32,7 +32,7 @@ class TagAdminController extends Controller
                     [
                         'actions' => ['index', 'view', 'update', 'delete', 'create'],
                         'allow' => true,
-                        'roles' => ['admin'],
+                        'roles' => ['teacher'],
                     ],
                 ],
             ],

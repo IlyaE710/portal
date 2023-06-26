@@ -25,7 +25,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 $itemsEvent = [];
 $items = [];
-foreach ($model->curriculum->events as $event) {
+foreach ($model->curriculum->getEvents()->orderBy(['startDate' => SORT_ASC])->all() as $event) {
     $itemsEvent[] = [
         'label' => $event->type->name . ' ' . $event->title,
         'url' => Url::toRoute(['event-admin/view', 'id' => $event->id]),

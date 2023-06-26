@@ -102,7 +102,6 @@ class CurriculumAdminController extends Controller
                 $model->save();
 
                 $modelForm = CurriculumPattern::findOne($modelFormId);
-
                 foreach ($modelForm->eventPatterns as $eventPattern) {
                     $event = new Event();
                     $event->title = $eventPattern->title;
@@ -114,6 +113,10 @@ class CurriculumAdminController extends Controller
 
                     foreach ($eventPattern->materials as $material) {
                         $event->link('materials', $material);
+                    }
+
+                    foreach ($eventPattern->homeworks as $homework) {
+                        $event->link('homeworks', $homework);
                     }
                 }
 
