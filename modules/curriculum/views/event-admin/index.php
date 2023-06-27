@@ -10,7 +10,7 @@ use yii\grid\GridView;
 /** @var yii\web\View $this */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Меропрития';
+$this->title = 'Мероприятия';
 $this->params['breadcrumbs'][] = ['label' => 'Курсы', 'url' => ['/curriculum/curriculum-admin/index']];
 $this->params['breadcrumbs'][] = ['label' => 'Курс', 'url' => ['/curriculum/curriculum-admin/update', 'id' => $id]];
 $this->params['breadcrumbs'][] = $this->title;
