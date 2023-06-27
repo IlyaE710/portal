@@ -34,7 +34,13 @@ use kartik\select2\Select2;
     </div>
     <div class="col-md-6">
         <?= $form->field($model, 'subject')->widget(Select2::class, [
-            'data' => ArrayHelper::map(Subject::find()->all(), 'id', 'name'),
+            'data' => ArrayHelper::map(
+                    Subject::find()
+                        ->leftJoin('curriculum c', 'subject.id = c."subjectId"')
+                        ->leftJoin('"group" g', 'c."groupId" = g.id')
+                        ->leftJoin('user_group ug', 'g.id = ug.group_id')
+                        ->where(['user_id' => Yii::$app->user->id])
+                        ->all(), 'id', 'name'),
             'options' => ['class' => ['col'], 'placeholder' => 'Выберите предметы ...'],
             'pluginOptions' => [
                 'allowClear' => true,

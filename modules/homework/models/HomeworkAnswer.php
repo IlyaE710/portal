@@ -45,7 +45,7 @@ class HomeworkAnswer extends \yii\db\ActiveRecord
             [['studentId', 'homeworkId'], 'integer'],
             [['content', 'comment', 'mark'], 'string'],
             [['homeworkId'], 'exist', 'skipOnError' => true, 'targetClass' => Homework::class, 'targetAttribute' => ['homeworkId' => 'id']],
-            [['files'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg, jpeg, doc, docx, pdf', 'maxFiles' => 5, 'maxSize' => '5M'],
+            [['files'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg, jpeg, doc, docx, pdf, RAR, zip, 7Zip, pptx, xlsx, 7z', 'checkExtensionByMimeType' => false, 'maxFiles' => 5, 'maxSize' => 40 * 1024 * 1024],
             [['studentId'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['studentId' => 'id']],
         ];
     }

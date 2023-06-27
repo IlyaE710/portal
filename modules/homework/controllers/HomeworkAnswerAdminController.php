@@ -96,6 +96,9 @@ class HomeworkAnswerAdminController extends Controller
             //'dataProvider' => new ActiveDataProvider(['query' => HomeworkAnswer::find()->where(['id' => $answerIds])]),
             'dataProvider' => new ActiveDataProvider([
                 'query' => $answers,
+                'pagination' => [
+                    'pageSize' => 500,
+                ],
                 'sort' => [
                     'attributes' => [
                         'mark' => [

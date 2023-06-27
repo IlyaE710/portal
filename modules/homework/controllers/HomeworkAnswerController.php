@@ -55,7 +55,7 @@ class HomeworkAnswerController extends \yii\web\Controller
 
         if (!empty($homework)) {
             foreach ($homework->answers as $answer) {
-                if ($answer->mark === '5' || $answer->mark === 'Зачет' || $answer->mark === '4'  || $answer->mark === '3') {
+                if ($answer->studentId === Yii::$app->user->id && ($answer->mark === '5' || $answer->mark === 'Зачет' || $answer->mark === '4'  || $answer->mark === '3')) {
                     $isBlockForm = true;
                     break;
                 }
