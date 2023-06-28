@@ -3,8 +3,12 @@
 use app\modules\homework\models\FileUploadForm;
 use app\modules\homework\models\Homework;
 use app\modules\homework\models\HomeworkAnswer;
+use app\modules\homework\models\HomeworkFile;
 use kartik\file\FileInput;
 use mihaildev\ckeditor\CKEditor;
+use yii\data\ActiveDataProvider;
+use yii\grid\GridView;
+use yii\grid\SerialColumn;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\ActiveForm;
@@ -57,30 +61,55 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php if(!empty($homework->answers)): ?>
         <?= Html::encode('Ответы'); ?>
         <?php foreach($homework->answers as $oldAnswer): ?>
-        <?php if($oldAnswer->studentId === Yii::$app->user->id): ?>
+            <?php if($oldAnswer->studentId === Yii::$app->user->id): ?>
             <div class="card">
                 <div class="card-body">
                     <p class="card-text"><?= $oldAnswer->content; ?></p>
                 </div>
             </div>
-            <?php if(!empty($oldAnswer->mark)): ?>
-                <div class="mt-4">
-                    <h5>Оценка</h5>
-                    <div class="d-flex align-items-center">
-                        <div class="rating">
-                            <span class="badge bg-primary"><?= $oldAnswer->mark; ?></span>
+                <?php if($oldAnswer->getHomeworkFiles()->count() !== 0): ?>
+                    <?= GridView::widget([
+                        'id' => 'link-grid-view',
+                        'dataProvider' => new ActiveDataProvider([
+                            'query' => $oldAnswer->getHomeworkFiles(),
+                        ]),
+                        'options' => ['class' => 'table-responsive'],
+                        'tableOptions' => ['class' => 'table table-striped'],
+                        'columns' => [
+                            [
+                                'class' => SerialColumn::class
+                            ],
+                            'pathname',
+                            [
+                                'format' => 'raw',
+                                'value' => function (HomeworkFile $model) {
+                                    return Html::a(
+                                        'Посмотреть',
+                                        Yii::getAlias('@web/uploads/homeworks/'. $model->pathname), ['target' => '_blank', 'data-pjax' => '0']
+                                    );
+                                }
+                            ],
+                        ],
+                    ]); ?>
+                <?php endif; ?>
+                <?php if(!empty($oldAnswer->mark)): ?>
+                    <div class="mt-4">
+                        <h5>Оценка</h5>
+                        <div class="d-flex align-items-center">
+                            <div class="rating">
+                                <span class="badge bg-primary"><?= $oldAnswer->mark; ?></span>
+                            </div>
                         </div>
                     </div>
-                </div>
-            <?php endif; ?>
-            <?php if(!empty($oldAnswer->comment)): ?>
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Комментарий преподавателя</h5>
-                        <p class="card-text"><?=$oldAnswer->comment; ?></p>
+                <?php endif; ?>
+                <?php if(!empty($oldAnswer->comment)): ?>
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Комментарий преподавателя</h5>
+                            <p class="card-text"><?=$oldAnswer->comment; ?></p>
+                        </div>
                     </div>
-                </div>
-            <?php endif; ?>
+                <?php endif; ?>
             <?php endif; ?>
         <?php endforeach; ?>
     <?php endif; ?>

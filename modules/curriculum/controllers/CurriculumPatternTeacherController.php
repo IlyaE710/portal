@@ -38,6 +38,9 @@ class CurriculumPatternTeacherController extends \yii\web\Controller
             'query' => CurriculumPattern::find()
                 ->leftJoin('event_pattern', 'curriculum_pattern.id = event_pattern."curriculumId"')
                 ->andWhere(['lectorId' => Yii::$app->user->identity->id]),
+            'pagination' => [
+                'pageSize' => 500
+            ],
         ]);
 
         return $this->render('index', [

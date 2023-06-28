@@ -44,18 +44,18 @@ class HomeworkAnswerController extends \yii\web\Controller
         $model = new HomeworkAnswer();
         $isBlockForm = false;
         $homework = Homework::find()
-            ->leftJoin('homework_event', 'homework_event.homework_id = id')
-            ->leftJoin('event', 'event."id" = homework_event.event_id')
-/*            ->where(
+/*            ->leftJoin('homework_event', 'homework_event.homework_id = id')
+            ->leftJoin('event', 'event."id" = homework_event.event_id')*/
+            ->where(
                 [
-                    'curriculumId' => $curriculumId,
-                    'id' => $eventId,
-                ])*/
+                    'id' => $homeworkId,
+                ])
             ->one();
 
         if (!empty($homework)) {
-            foreach ($homework->answers as $answer) {
-                if ($answer->studentId === Yii::$app->user->id && ($answer->mark === '5' || $answer->mark === 'Зачет' || $answer->mark === '4'  || $answer->mark === '3')) {
+
+            foreach ($homework->getAnswers()->where(['studentId' => Yii::$app->user->id])->all() as $answer) {
+                if ($answer->mark === '5' || $answer->mark === 'Зачет' || $answer->mark === '4'  || $answer->mark === '3') {
                     $isBlockForm = true;
                     break;
                 }

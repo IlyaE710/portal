@@ -28,6 +28,15 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
             'title',
             [
+                'label' => 'Тэги',
+                'attribute' => 'tags',
+                'value' => function ($model) {
+                    /** @var Material $model */
+                    $tagNames = array_column($model->tags, 'name');
+                    return implode(', ', $tagNames);
+                },
+            ],
+            [
                 'attribute' => 'description',
                 'value' => function(Material $model): string {
                     return StringHelper::truncateWords($model->description, 20, '...');

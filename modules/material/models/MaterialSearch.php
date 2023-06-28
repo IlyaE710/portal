@@ -8,10 +8,11 @@ class MaterialSearch extends Material
 {
     public $title;
     public $description;
+    public $tags;
     public function rules() : array
     {
         return [
-            [['title', 'description'], 'string'],
+            [['title', 'description', 'tags'], 'string'],
         ];
     }
 
@@ -31,8 +32,11 @@ class MaterialSearch extends Material
 
         // Применяем фильтры к запросу
         $query
+            ->leftJoin('material_tag mt', 'mt."material_id" = material.id')
+            ->leftJoin('tag t', 't."id" = mt."tag_id"')
             ->andFilterWhere(['like', 'title', $this->title])
-            ->andFilterWhere(['like', 'description', $this->description]);
+            ->andFilterWhere(['like', 'description', $this->description])
+            ->andFilterWhere(['like', 'LOWER(t.name)', strtolower($this->tags)]);
 
         return $dataProvider;
     }

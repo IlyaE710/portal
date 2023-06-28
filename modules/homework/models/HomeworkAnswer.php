@@ -97,7 +97,7 @@ class HomeworkAnswer extends \yii\db\ActiveRecord
 
     public function upload(): bool
     {
-        if (!empty($this->files)) return false;
+        if (empty($this->files)) return false;
         if ($this->validate()) {
             foreach ($this->files as $file) {
                 $filename = $this->generateUniqueFileName($file->name);

@@ -16,7 +16,7 @@ class UploadForm extends Model
     public function rules(): array
     {
         return [
-            [['files'], 'file', 'skipOnEmpty' => false, 'extensions' => 'png, jpg, jpeg, doc, docx, pdf, RAR, zip, 7Zip, pptx, xlsx', 'checkExtensionByMimeType' => false, 'maxFiles' => 5, 'maxSize' => '5M'],
+            [['files'], 'file', 'skipOnEmpty' => false, 'extensions' => 'png, jpg, jpeg, doc, docx, pdf, RAR, zip, 7Zip, pptx, xlsx', 'checkExtensionByMimeType' => false, 'maxFiles' => 5, 'maxSize' => 40 * 1024 * 1024],
         ];
     }
 
@@ -28,7 +28,6 @@ class UploadForm extends Model
             }
             return true;
         }
-        echo '<pre>' . print_r($this->errors, true) . '</pre>';die;
         return false;
     }
 }

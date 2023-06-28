@@ -15,6 +15,7 @@ $this->title = 'Календарь с мероприятиями';
         const calendarEl = document.getElementById('calendar');
         const calendar = new FullCalendar.Calendar(calendarEl, {
             initialView: 'dayGridMonth',
+            firstDay: 1,
             locale: 'ru',
             height: 800,
             headerToolbar: {

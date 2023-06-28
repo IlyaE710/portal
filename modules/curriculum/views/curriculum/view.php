@@ -1,5 +1,6 @@
 <?php
 
+use app\modules\curriculum\models\Curriculum;
 use app\widgets\sidebar\SidebarWidget;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -41,7 +42,16 @@ $this->params['sidebar'] = SidebarWidget::widget([
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'author.fullname',
+            [
+                'label' => 'Лектор',
+                'value' => function (Curriculum $model) {
+                    $lectors = [];
+                    foreach ($model->events as $event) {
+                        $lectors[] = $event->lector->getFullname();
+                    }
+                    return implode(', ', array_unique($lectors));
+                }
+            ],
             'group.name',
             'subject.name',
             'description:ntext',

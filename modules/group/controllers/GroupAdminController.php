@@ -165,6 +165,7 @@ class GroupAdminController extends Controller
             if ($form->load($this->request->post()) && $form->validate()) {
                 $group = Group::findOne(['id' => $form->id]);
                 $group->name = $form->name;
+                $group->save();
             }
         }
 

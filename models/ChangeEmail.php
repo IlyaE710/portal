@@ -54,7 +54,6 @@ class ChangeEmail extends Model
             $user->save();
             return true;
         }
-        echo '<pre>' . print_r($this->errors, true) . '</pre>';die;
         return false;
     }
 

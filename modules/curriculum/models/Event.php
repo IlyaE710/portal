@@ -2,6 +2,7 @@
 
 namespace app\modules\curriculum\models;
 
+use app\models\User;
 use app\modules\homework\models\Homework;
 use app\modules\material\models\Material;
 use Yii;
@@ -116,5 +117,10 @@ class Event extends \yii\db\ActiveRecord
     public function getType(): \yii\db\ActiveQuery
     {
         return $this->hasOne(EventType::class, ['id' => 'typeId']);
+    }
+
+    public function getLector(): \yii\db\ActiveQuery
+    {
+        return $this->hasOne(User::class, ['id' => 'lectorId']);
     }
 }

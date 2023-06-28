@@ -8,6 +8,7 @@ use app\modules\curriculum\models\Event;
 use app\modules\group\models\Group;
 use Cassandra\Date;
 use DateTime;
+use DateTimeZone;
 use Yii;
 use yii\filters\AccessControl;
 use yii\helpers\Url;
@@ -140,13 +141,17 @@ class SiteController extends Controller
                 }
             }
         }
+        $timezone = new DateTimeZone('Europe/Moscow');
 
         foreach ($eventsModel as $eventModel) {
             if (empty($eventModel->startDate)) continue;
-            $date = (new DateTime($eventModel->startDate))->format(('Y-m-d\TH:i:s\Z'));
+            $dateTime = new DateTime($eventModel->startDate);
+
+            $date = $dateTime->format(('Y-m-d\TH:i:s\Z'));
+
             $events[] = [
-                'title' => $eventModel->title,
-                'start' => $date,
+                'title' => $eventModel->type->name . ' ' . $eventModel->curriculum->subject->name,
+                'start' => $eventModel->startDate,
                 'url' => Url::to(['curriculum/event/view', 'id' => $eventModel->id]),
             ];
         }

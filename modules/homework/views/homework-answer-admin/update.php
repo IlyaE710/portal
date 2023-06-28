@@ -17,7 +17,7 @@ $this->params['breadcrumbs'][] = 'Редактировать';
 ?>
 <div class="homework-answer-update">
 
-    <h1><?= Html::encode('Ответ студента') ?></h1>
+    <h2><?= Html::encode('Ответ студента') ?></h2>
     <p><?= $model->content ?></p>
 
 
@@ -46,6 +46,9 @@ $this->params['breadcrumbs'][] = 'Редактировать';
             ],
         ]); ?>
     <?php endif; ?>
+
+    <h2><?= Html::encode('Вопрос') ?></h2>
+    <?= $model->homework->content ?>
 
     <?= $this->render('_form', [
         'model' => $model,
